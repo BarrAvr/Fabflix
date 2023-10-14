@@ -26,7 +26,7 @@ public class StarsServlet extends HttpServlet {
 
     public void init(ServletConfig config) {
         try {
-            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedbexample");
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
         } catch (NamingException e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class StarsServlet extends HttpServlet {
 
             String query = "select m.id, m.title, m.year, m.director, r.rating " +
                     "from movies as m, ratings as r " +
-                    "where m.id = r.movieId  order by rating desc limit 20";
+                    "where m.id = r.movieId order by rating desc limit 20";
 
             // Perform the query
             ResultSet rs = statement.executeQuery(query);
