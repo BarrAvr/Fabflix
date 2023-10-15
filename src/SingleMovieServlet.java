@@ -104,10 +104,10 @@ public class SingleMovieServlet extends HttpServlet {
             rs.close();
 
             rs = statement.executeQuery(starQuery);
+            JsonArray starsJsonArray = new JsonArray();
             while (rs.next()) {
                 String starName = rs.getString("s.name");
                 String starId = rs.getString("s.id");
-
 
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("star_name", starName);
@@ -115,6 +115,8 @@ public class SingleMovieServlet extends HttpServlet {
 
                 jsonArray.add(jsonObject);
             }
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("end", "end");
             rs.close();
 
             statement.close();

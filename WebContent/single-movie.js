@@ -58,7 +58,10 @@ function handleResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
 
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < Math.min(11, resultData.length); i++) {
+    for (let i = 1; i < Math.min(11, resultData.length); i++) {
+        if (resultData[i]["end"] == "end") {
+            break;
+        }
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" + resultData[i]["star_name"] + "</th>";
