@@ -52,13 +52,9 @@ public class SingleMovieServlet extends HttpServlet {
         JsonArray jsonArray = new JsonArray();
 
 
-        // Get a connection from dataSource and let resource manager close the connection after usage.
+
         try (Connection conn = dataSource.getConnection()) {
             // Get a connection from dataSource
-
-            // Construct a query with parameter represented by "?"
-//            String query = "SELECT * from stars as s, stars_in_movies as sim, movies as m " +
-//                    "where m.id = sim.movieId and sim.starId = s.id and s.id = ?";
 
             String query = String.format("select m.title, m.year, m.director, r.rating " +
                     "from movies as m, ratings as r " +
@@ -70,27 +66,21 @@ public class SingleMovieServlet extends HttpServlet {
                     "limit 3", id);
 
 
-            // Declare our statement
+            // Declaring statement
             Statement statement = conn.createStatement();
-            //PreparedStatement statement = conn.prepareStatement(query);
-            //statement.executeQuery(query);
-
-            // Set the parameter represented by "?" in the query to the id we get from url,
-            // num 1 indicates the first "?" in the query
-            //statement.setString(1, id);
 
             // Perform the query
             ResultSet rs = statement.executeQuery(query);
 
             //JsonArray jsonArray = new JsonArray();
 
-            // Iterate through each row of rs
+            // Getting column values from rs
             while (rs.next()) {
                 String movieTitle = rs.getString("m.title");
                 String movieYear = rs.getString("m.year");
                 String movieDirector = rs.getString("m.director");
                 String movieRating = rs.getString("r.rating");
-                // Create a JsonObject based on the data we retrieve from rs
+                // Actually creating response[0] with the data we retrieve from rs
 
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("movie_title", movieTitle);
@@ -98,26 +88,26 @@ public class SingleMovieServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", movieDirector);
                 jsonObject.addProperty("movie_rating", movieRating);
 
+                // Adding JSOn with single movie info to response at index 0
                 jsonArray.add(jsonObject);
             }
 
             rs.close();
-
-            rs = statement.executeQuery(starQuery);
-            JsonArray starsJsonArray = new JsonArray();
-            while (rs.next()) {
-                String starName = rs.getString("s.name");
-                String starId = rs.getString("s.id");
-
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("star_name", starName);
-                jsonObject.addProperty("star_id", starId);
-
-                jsonArray.add(jsonObject);
-            }
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("end", "end");
-            rs.close();
+//            rs = statement.executeQuery(starQuery);
+//            JsonArray starsJsonArray = new JsonArray();
+//            while (rs.next()) {
+//                String starName = rs.getString("s.name");
+//                String starId = rs.getString("s.id");
+//
+//                JsonObject jsonObject = new JsonObject();
+//                jsonObject.addProperty("star_name", starName);
+//                jsonObject.addProperty("star_id", starId);
+//
+//                jsonArray.add(jsonObject);
+//            }
+//            JsonObject jsonObject = new JsonObject();
+//            jsonObject.addProperty("end", "end");
+//            rs.close();
 
             statement.close();
             conn.close();
