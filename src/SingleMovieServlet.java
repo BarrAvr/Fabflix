@@ -101,8 +101,8 @@ public class SingleMovieServlet extends HttpServlet {
             sampleStars.add("Star 2");
             sampleStars.add("Star 3");
 
-            testObj.addProperty("stars", String.valueOf(sampleStars));
-            request.getServletContext().log(sampleStars.getAsString());
+            testObj.addProperty("stars", sampleStars.toString());
+//            request.getServletContext().log(sampleStars.getAsString());
             jsonArray.add(testObj);
 
 //            -- TEST CODE OVER --
