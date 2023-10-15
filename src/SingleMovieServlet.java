@@ -95,38 +95,39 @@ public class SingleMovieServlet extends HttpServlet {
             rs.close();
 
 //          TEST CODE: Generating JsonArray of test stars to insert into response[1]
-            JsonObject testObj = new JsonObject();
-            JsonArray sampleStars = new JsonArray();
-            sampleStars.add("Star 1");
-            sampleStars.add("Star 2");
-            sampleStars.add("Star 3");
+//            JsonObject testObj = new JsonObject();
+//            JsonArray sampleStars = new JsonArray();
+//            sampleStars.add("Star 1");
+//            sampleStars.add("Star 2");
+//            sampleStars.add("Star 3");
 
-            testObj.addProperty("stars", sampleStars.toString());
+//            testObj.addProperty("stars", sampleStars.toString());
 //            request.getServletContext().log(sampleStars.getAsString());
-            jsonArray.add(testObj);
+//            jsonArray.add(testObj);
 
-//            -- TEST CODE OVER --
+            rs = statement.executeQuery(starQuery);
+            // Initializing starArray, the array of star objs that will
+            // eventually be stringified and put in response[1]
+            JsonArray starArray = new JsonArray();
+            // Looping through stars in result set, converting each to
+            // a JsonObject indivStarObj, and then adding each to the
+            // starArray described above
+            while (rs.next()) {
+                String starName = rs.getString("s.name");
+                String starId = rs.getString("s.id");
 
-//            MORE RANDOM CODE FROM TEST #2:
-//            JsonObject starsObj = new JsonObject();
-//            int starCount = 3;
-//            starsObj.addProperty("stars": starCount);
-
-//            rs = statement.executeQuery(starQuery);
-//            JsonArray starsJsonArray = new JsonArray();
-//            while (rs.next()) {
-//                String starName = rs.getString("s.name");
-//                String starId = rs.getString("s.id");
+                JsonObject indivStarObject = new JsonObject();
+                indivStarObject.addProperty("star_name", starName);
+                indivStarObject.addProperty("star_id", starId);
 //
-//                JsonObject jsonObject = new JsonObject();
-//                jsonObject.addProperty("star_name", starName);
-//                jsonObject.addProperty("star_id", starId);
-//
-//                jsonArray.add(jsonObject);
-//            }
-//            JsonObject jsonObject = new JsonObject();
-//            jsonObject.addProperty("end", "end");
-//            rs.close();
+                starArray.add(indivStarObject);
+            }
+            // Turn the final starArray into a string, + use addProperty
+            // to assign it to "stars" attribute in thr final object
+            JsonObject starsObj = new JsonObject();
+            starsObj.addProperty("stars", starArray.toString());
+//            request.getServletContext().log(sampleStars.getAsString());
+            jsonArray.add(starsObj);
 
             statement.close();
             conn.close();
