@@ -23,29 +23,79 @@ function handleStarResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
 
     // Iterate through resultData, no more than 10 entries
+    // for (let i = 0; i < Math.min(20, resultData.length); i++) {
+    //
+    //     // Concatenate the html tags with resultData jsonObject
+    //     let rowHTML = "";
+    //     rowHTML += "<tr>";
+    //     rowHTML +=
+    //         "<th>" +
+    //         // Add a link to single-star.html with id passed with GET url parameter
+    //         '<a href="single-movie.html?id=' + resultData[i]['movie_id'] + '">'
+    //         + resultData[i]["movie_title"] +     // display star_name for the link text
+    //         '</a>' +
+    //         "</th>";
+    //     // rowHTML += "<th>" + resultData[i]["movie_title"] + "</th>";
+    //     rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
+    //     rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
+    //     rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+    //     rowHTML += "</tr>";
+    //
+    //     // Append the row created to the table body, which will refresh the page
+    //     // starTableBodyElement.append(rowHTML);
+    //     movieTableBodyElement.append(rowHTML);
+    // }
+    let index = 0;
+    // Iterate through resultData, no more than 10 entries
     for (let i = 0; i < Math.min(20, resultData.length); i++) {
 
         // Concatenate the html tags with resultData jsonObject
+        //let index = i + j;
+        let genres = [];
+        let stars = [];
+        let movieId = resultData[index]['movie_id'];
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML +=
             "<th>" +
             // Add a link to single-star.html with id passed with GET url parameter
-            '<a href="single-movie.html?id=' + resultData[i]['movie_id'] + '">'
-            + resultData[i]["movie_title"] +     // display star_name for the link text
+            '<a href="single-movie.html?id=' + movieId + '">'
+            + resultData[index]["movie_title"] +     // display star_name for the link text
             '</a>' +
             "</th>";
         // rowHTML += "<th>" + resultData[i]["movie_title"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+        rowHTML += "<th>" + resultData[index]["movie_year"] + "</th>";
+        rowHTML += "<th>" + resultData[index]["movie_director"] + "</th>";
+        rowHTML += "<th>" + resultData[index]["movie_rating"] + "</th>";
+
+        let genreIndex = 0;
+        genres.push(resultData[index]);
+        while(index < resultData.length && resultData[index]['movie_id'] === movieId){
+            if(resultData[index]['genre_name'] === genres[0]){
+                stars.push([resultData[index]['star_id'], resultData[index]['star_name']]);
+            }else{
+                if (resultData[index]['genre_name'] !== genres[genreIndex-1]) {
+                    genres.push(resultData[index]['genre_name']);
+                    genreIndex++;
+                }
+            }
+            index++
+        }
+        // index++;
+
+
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
         // starTableBodyElement.append(rowHTML);
+        console.log("Genres:");
+        console.log(genres);
+        console.log("Stars:");
+        console.log(stars);
         movieTableBodyElement.append(rowHTML);
     }
 }
+
 
 
 /**
