@@ -88,11 +88,30 @@ public class SingleMovieServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", movieDirector);
                 jsonObject.addProperty("movie_rating", movieRating);
 
-                // Adding JSOn with single movie info to response at index 0
+                // Adding JSON with single movie info to response at index 0
                 jsonArray.add(jsonObject);
             }
 
             rs.close();
+
+//          TEST CODE: Generating JsonArray of test stars to insert into response[1]
+            JsonObject testObj = new JsonObject();
+            JsonArray sampleStars = new JsonArray();
+            sampleStars.add("Star 1");
+            sampleStars.add("Star 2");
+            sampleStars.add("Star 3");
+
+            testObj.addProperty("stars", String.valueOf(sampleStars));
+            request.getServletContext().log(sampleStars.getAsString());
+            jsonArray.add(testObj);
+
+//            -- TEST CODE OVER --
+
+//            MORE RANDOM CODE FROM TEST #2:
+//            JsonObject starsObj = new JsonObject();
+//            int starCount = 3;
+//            starsObj.addProperty("stars": starCount);
+
 //            rs = statement.executeQuery(starQuery);
 //            JsonArray starsJsonArray = new JsonArray();
 //            while (rs.next()) {
