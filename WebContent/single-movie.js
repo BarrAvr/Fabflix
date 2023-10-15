@@ -62,7 +62,8 @@ function handleResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
 
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < resultData[1].length && i < resultData[1].length; i++) {
+    let i = 0;
+    for (; i < Math.min(resultData[1].length, resultData[2].length); i++) {
         // if (resultData[i]["end"] == "end") {
         //     break;
         // }
@@ -75,6 +76,29 @@ function handleResult(resultData) {
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
     }
+    if (resultData[1].length > resultData[2].length) {
+        for (; i < resultData[1].length; i++) {
+            let rowHTML = "";
+            rowHTML += "<tr>";
+            rowHTML += "<th>" + resultData[1][i]["star_name"] + "</th>";
+            rowHTML += "</tr>";
+
+            // Append the row created to the table body, which will refresh the page
+            movieTableBodyElement.append(rowHTML);
+        }
+    } else {
+        for (; i < resultData[2].length; i++) {
+            let rowHTML = "";
+            rowHTML += "<tr>";
+            rowHTML += "<th>" + resultData[2][i]["genre_name"] + "</th>";
+            rowHTML += "</tr>";
+
+            // Append the row created to the table body, which will refresh the page
+            movieTableBodyElement.append(rowHTML);
+        }
+    }
+
+
 }
 
 /**

@@ -62,13 +62,11 @@ public class SingleMovieServlet extends HttpServlet {
 
             String starQuery = String.format("select s.name, s.id " +
                     "from stars as s, stars_in_movies as sim " +
-                    "where s.id = sim.starId and sim.movieId = \"%s\" " +
-                    "limit 3", id);
+                    "where s.id = sim.starId and sim.movieId = \"%s\"", id);
 
-            String genreQuery = String.format("select g.name" +
+            String genreQuery = String.format("select g.name " +
                     "from genres as g, genres_in_movies as gim " +
-                    "where g.id = gim.genreId and gim.movieId = \"%s\" " +
-                    "limit 3", id);
+                    "where g.id = gim.genreId and gim.movieId = \"%s\"", id);
 
 
             // Declaring statement
@@ -137,26 +135,26 @@ public class SingleMovieServlet extends HttpServlet {
 //            request.getServletContext().log(sampleStars.getAsString());
             jsonArray.add(starArray);
 
-//            rs = statement.executeQuery(genreQuery);
+            rs = statement.executeQuery(genreQuery);
+
+            JsonArray genreArray = new JsonArray();
+            // Looping through genres in result set and then adding each to the
+            // genreArray described above
+            while (rs.next()) {
+                String genreName = rs.getString("g.name");
+
+                JsonObject indivGenreObject = new JsonObject();
+                indivGenreObject.addProperty("genre_name", genreName);
 //
-//            JsonArray genreArray = new JsonArray();
-//            // Looping through genres in result set and then adding each to the
-//            // genreArray described above
-//            while (rs.next()) {
-//                String genreName = rs.getString("g.name");
-//
-//                JsonObject indivGenreObject = new JsonObject();
-//                indivGenreObject.addProperty("genre_name", genreName);
-////
-//                genreArray.add(indivGenreObject);
-//            }
-//            // Turn the final starArray into a string, + use addProperty
-//            // to assign it to "stars" attribute in thr final object
-////            starsObj.addProperty("stars", starArray);
-////            request.getServletContext().log(sampleStars.getAsString());
-//            jsonArray.add(genreArray);
-//
-//            rs.close();
+                genreArray.add(indivGenreObject);
+            }
+            // Turn the final starArray into a string, + use addProperty
+            // to assign it to "stars" attribute in thr final object
+//            starsObj.addProperty("stars", starArray);
+//            request.getServletContext().log(sampleStars.getAsString());
+            jsonArray.add(genreArray);
+
+            rs.close();
             statement.close();
             conn.close();
 
