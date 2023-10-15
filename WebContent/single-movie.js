@@ -39,7 +39,8 @@ function getParameterByName(target) {
 function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");
-
+    console.log("JSON from api call:");
+    console.log(resultData);
     // populate the star info h3
     // find the empty h3 body by id "star_info"
     let movieInfoElement = jQuery("#movie_info");

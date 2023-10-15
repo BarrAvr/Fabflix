@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
 @WebServlet(name = "SingleMovieServlet", urlPatterns = "/api/single-movie")
@@ -103,6 +104,57 @@ public class SingleMovieServlet extends HttpServlet {
             rs.close();
             statement.close();
 
+
+            // getting genres for single movie:
+            String genreQuery = "select.g.name " +
+                    "from genres as g, genres_in_movies as gim, movies as m " +
+                    "where g.id = gim.genreId and gim.movieId = m.id and m.id = ?";
+            PreparedStatement preparedGQ = conn.prepareStatement(genreQuery);
+            preparedGQ.setString(1, id);
+            ResultSet genreRS = preparedGQ.executeQuery();
+
+            ArrayList<String> genres = new ArrayList<String>();
+            while (genreRS.next()) {
+                System.out.println("For single movie with id" + id + ", received genre" + genreRS.getString("g.name"));
+                genres.add(genreRS.getString("g.name"));
+            }
+            genreRS.close();
+            preparedGQ.close();
+
+            JsonObject jsonObject2 = new JsonObject();
+            String genreString = String.join(", ", genres);
+            jsonObject2.addProperty("genres", genreString);
+            jsonArray.add(jsonObject2);
+
+            // getting stars for single movie:
+            // select s.name, s.id from stars as s, stars_in_movies as sim, movies as m where s.id = sim.starId and sim.movieId = m.id and m.id = "tt0395642" limit 3;
+            String starQuery = "select.s.name, sid " +
+                    "from stars as s, stars_in_movies as sim, movies as m " +
+                    "where s.id = sim.starId and sim.movieId = m.id and m.id = ? " +
+                    "limit 3";
+            PreparedStatement preparedSQ = conn.prepareStatement(starQuery);
+            preparedSQ.setString(1, id);
+            ResultSet starRS = preparedSQ.executeQuery();
+
+            ArrayList<String> stars = new ArrayList<String>();
+            while (starRS.next()) {
+                System.out.println("For single movie with id" + id + ", received star" + starRS.getString("s.name"));
+                genres.add(genreRS.getString("g.name"));
+                stars.add(starRS.getString("s.name"));
+            }
+            starRS.close();
+            preparedSQ.close();
+
+            JsonObject jsonObject3 = new JsonObject();
+            String starString = String.join(", ", stars);
+            jsonObject3.addProperty("stars", starString);
+            jsonArray.add(jsonObject3);
+
+            starRS.close();
+            preparedSQ.close();
+
+            // select g.name from genres as g, genres_in_movies as gim, movies as m where g.id = gim.genreId and gim.movieId = m.id and m.id = "tt0498362";
+
 //            String query2 = "select g.name " +
 //                    "from genres_in_movies as gm, genres as g " +
 //                    "where gm.id = g.id and gm.movieId = ?";
@@ -117,9 +169,11 @@ public class SingleMovieServlet extends HttpServlet {
 //                jsonObject.addProperty("movie_genre", movieGenre);
 //
 //                jsonArray.add(jsonObject);
+
 //            }
 //            rs2.close();
 //            statement2.close();
+
 
 
             // Write JSON string to output
