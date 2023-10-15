@@ -69,7 +69,14 @@ function handleResult(resultData) {
         // }
         let rowHTML = "";
         rowHTML += "<tr>";
-        rowHTML += "<th>" + resultData[1][i]["star_name"] + "</th>";
+        rowHTML +=
+            "<th>" +
+            // Add a link to single-star.html with id passed with GET url parameter
+            '<a href="single-star.html?id=' + resultData[1][i]['star_id'] + '">'
+            + resultData[1][i]["star_name"] +     // display star_name for the link text
+            '</a>' +
+            "</th>";
+        // rowHTML += "<th>" + resultData[1][i]["star_name"] + "</th>";
         rowHTML += "<th>" + resultData[2][i]["genre_name"] + "</th>";
         rowHTML += "</tr>";
 
@@ -80,7 +87,13 @@ function handleResult(resultData) {
         for (; i < resultData[1].length; i++) {
             let rowHTML = "";
             rowHTML += "<tr>";
-            rowHTML += "<th>" + resultData[1][i]["star_name"] + "</th>";
+            rowHTML +=
+                "<th>" +
+                // Add a link to single-star.html with id passed with GET url parameter
+                '<a href="single-star.html?id=' + resultData[1][i]['star_id'] + '">'
+                + resultData[1][i]["star_name"] +     // display star_name for the link text
+                '</a>' +
+                "</th>";
             rowHTML += "</tr>";
 
             // Append the row created to the table body, which will refresh the page
@@ -90,6 +103,7 @@ function handleResult(resultData) {
         for (; i < resultData[2].length; i++) {
             let rowHTML = "";
             rowHTML += "<tr>";
+
             rowHTML += "<th>" + resultData[2][i]["genre_name"] + "</th>";
             rowHTML += "</tr>";
 
