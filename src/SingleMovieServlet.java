@@ -65,6 +65,11 @@ public class SingleMovieServlet extends HttpServlet {
                     "where s.id = sim.starId and sim.movieId = \"%s\" " +
                     "limit 3", id);
 
+            String genreQuery = String.format("select g.name" +
+                    "from genres as g, genres_in_movies as gim " +
+                    "where g.id = gim.genreId and gim.movieId = \"%s\" " +
+                    "limit 3", id);
+
 
             // Declaring statement
             Statement statement = conn.createStatement();
@@ -122,13 +127,36 @@ public class SingleMovieServlet extends HttpServlet {
 //
                 starArray.add(indivStarObject);
             }
+
+            rs.close();
+
             // Turn the final starArray into a string, + use addProperty
             // to assign it to "stars" attribute in thr final object
             JsonObject starsObj = new JsonObject();
-            starsObj.addProperty("stars", starArray.toString());
+//            starsObj.addProperty("stars", starArray);
 //            request.getServletContext().log(sampleStars.getAsString());
-            jsonArray.add(starsObj);
+            jsonArray.add(starArray);
 
+//            rs = statement.executeQuery(genreQuery);
+//
+//            JsonArray genreArray = new JsonArray();
+//            // Looping through genres in result set and then adding each to the
+//            // genreArray described above
+//            while (rs.next()) {
+//                String genreName = rs.getString("g.name");
+//
+//                JsonObject indivGenreObject = new JsonObject();
+//                indivGenreObject.addProperty("genre_name", genreName);
+////
+//                genreArray.add(indivGenreObject);
+//            }
+//            // Turn the final starArray into a string, + use addProperty
+//            // to assign it to "stars" attribute in thr final object
+////            starsObj.addProperty("stars", starArray);
+////            request.getServletContext().log(sampleStars.getAsString());
+//            jsonArray.add(genreArray);
+//
+//            rs.close();
             statement.close();
             conn.close();
 

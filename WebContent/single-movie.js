@@ -41,6 +41,10 @@ function handleResult(resultData) {
     console.log("handleResult: populating star info from resultData");
     console.log("JSON from api call:");
     console.log(resultData);
+
+    console.log("stars object");
+    console.log();
+
     // populate the star info h3
     // find the empty h3 body by id "star_info"
     let movieInfoElement = jQuery("#movie_info");
@@ -58,14 +62,14 @@ function handleResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
 
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 1; i < Math.min(11, resultData.length); i++) {
-        if (resultData[i]["end"] == "end") {
-            break;
-        }
+    for (let i = 0; i < resultData[1].length && i < resultData[1].length; i++) {
+        // if (resultData[i]["end"] == "end") {
+        //     break;
+        // }
         let rowHTML = "";
         rowHTML += "<tr>";
-        rowHTML += "<th>" + resultData[i]["star_name"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["star_name"] + "</th>";
+        rowHTML += "<th>" + resultData[1][i]["star_name"] + "</th>";
+        rowHTML += "<th>" + resultData[2][i]["genre_name"] + "</th>";
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
