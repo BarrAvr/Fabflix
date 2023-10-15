@@ -128,7 +128,7 @@ public class SingleMovieServlet extends HttpServlet {
 
             // getting stars for single movie:
             // select s.name, s.id from stars as s, stars_in_movies as sim, movies as m where s.id = sim.starId and sim.movieId = m.id and m.id = "tt0395642" limit 3;
-            String starQuery = "select.s.name, sid " +
+            String starQuery = "select.s.name, s.id " +
                     "from stars as s, stars_in_movies as sim, movies as m " +
                     "where s.id = sim.starId and sim.movieId = m.id and m.id = ? " +
                     "limit 3";
