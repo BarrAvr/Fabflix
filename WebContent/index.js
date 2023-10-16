@@ -109,10 +109,6 @@ function handleStarResult(resultData) {
 
         // Append the row created to the table body, which will refresh the page
         // starTableBodyElement.append(rowHTML);
-        console.log("Genres:");
-        console.log(genres);
-        console.log("Stars:");
-        console.log(stars);
         movieTableBodyElement.append(rowHTML);
     }
 }
