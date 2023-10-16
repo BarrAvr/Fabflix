@@ -81,8 +81,29 @@ function handleStarResult(resultData) {
             }
             index++
         }
-        // index++;
 
+        let starString = "";
+        for (let i = 0; i < Math.min(3, stars.length); i++) {
+            starString += `<a href="single-star.html?id=${stars[i][0]}">${stars[i][1]}</a>, `;
+        }
+        starString = starString.slice(0, starString.length-2);
+
+        let genreString = "";
+        for (let i = 0; i < Math.min(3, genres.length); i++) {
+            genreString += `${genres[i]}, `;
+        }
+        genreString = genreString.slice(0, genreString.length-2);
+        // stars.forEach((star) => {
+        //    starString += `<a href="single-star.html?id=${star[0]}"></a>, `;
+        //    break;
+        // });
+        // starString = starString.slice(starString.length-2);
+        // starString += '</th>';
+
+
+        // index++;
+        rowHTML += "<th>" + genreString+ "</th>";
+        rowHTML += "<th>" + starString + "</th>";
 
         rowHTML += "</tr>";
 
