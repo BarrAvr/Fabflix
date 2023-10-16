@@ -1,0 +1,75 @@
+* {
+    --baby-powder-bg-white: #FDFFFC;
+    --red-poppy: #D33E43;
+    --turquiose: #41EAD4;
+    --space-cadet: #1C1F33;
+    --dim-gray: #666370;
+
+    --floral-white: #FFFCF2;
+    --steel-blue: #0582CA;
+    --picton-blue: #00A6FB;
+    --jet: #2F2F2F;
+
+    --cardinal: #C5283D;
+    --burnt-sienna: #E9724C;
+
+    --denim: #275DAD;
+    --persian-green: #18A999;
+    --paynes-gray: #5B616A;
+
+    --bistre: #432818;
+    --falu-red: #6F1D1B;
+    --cerulean: #428184;
+    --black-olive: #313628;
+
+    --night: #0C1713;
+}
+
+html, .page-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--night);
+}
+
+/*.headings {*/
+/*    margin-left: 30px;*/
+/*}*/
+
+.page-heading {
+    margin: 20px;
+    margin-left: 50px;
+    margin-top: 30px;
+    color: red;
+    font-family: 'Young Serif', serif;
+}
+
+.sub-heading {
+    margin: 20px;
+    margin-left: 50px;
+    color: white;
+    font-family: 'Young Serif', serif;
+}
+
+.back-button {
+    margin-top: 40px;
+    margin-left: 20px;
+    color: white;
+    font-family: 'Young Serif', serif;
+}
+
+table {
+    margin-top: 30px;
+    margin-left: 30px;
+    border-spacing: 20px;
+}
+
+th {
+    padding-left: 30px;
+    color: white;
+    font-family: 'Young Serif', serif;
+}
+
+a {
+    color: var(--cerulean);
+    font-family: 'Young Serif', serif;
+}

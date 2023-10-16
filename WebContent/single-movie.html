@@ -18,37 +18,49 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Single Movie</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap" rel="stylesheet">
+
 </head>
+<div class="page-container single-movie">
 <body>
-<h1>Single Movie Page</h1>
+    <div class="headings">
+        <h1 class="page-heading">Single Movie Page</h1>
 
-<!-- H3 body is left empty here, will be populated with the data retrieved with single-star.js -->
-<!-- single-star.js will find this html element by it's id "star_info" -->
-<h3 id="movie_info"></h3>
-<table id=movie_table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Stars</th>
-        <th>Genres</th>
-    </tr>
-    </thead>
+        <!-- H3 body is left empty here, will be populated with the data retrieved with single-star.js -->
+        <!-- single-star.js will find this html element by it's id "star_info" -->
+        <h3 class="sub-heading" id="movie_info"></h3>
+    </div>
+    <table id=movie_table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Stars</th>
+            <th>Genres</th>
+        </tr>
+        </thead>
 
-    <!-- Table body is left empty here, will be populated with the data retrieved with single-star.js -->
-    <!-- single-star.js will find this html element by it's id "movie_table_body" -->
-    <tbody id=movie_table_body></tbody>
-</table>
+        <!-- Table body is left empty here, will be populated with the data retrieved with single-star.js -->
+        <!-- single-star.js will find this html element by it's id "movie_table_body" -->
+        <tbody id=movie_table_body></tbody>
+    </table>
 
-<!-- Load jQuery and Bootstrap JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <a href="index.html" class="back-button"><-- Back to All Movies</a>
 
-<!-- Load our own JS file -->
-<!-- The path is relative to single-star.html, since these two files are in the same directory -->
-<!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
-     otherwise the url is relative to the root path-->
-<script src="single-movie.js"></script>
+    <!-- Load jQuery and Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Load our own JS file -->
+    <!-- The path is relative to single-star.html, since these two files are in the same directory -->
+    <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
+         otherwise the url is relative to the root path-->
+    <script src="single-movie.js"></script>
 </body>
+
+</div>
 
 
 </html>
