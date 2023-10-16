@@ -68,13 +68,13 @@ function handleStarResult(resultData) {
         rowHTML += "<th>" + resultData[index]["movie_director"] + "</th>";
         rowHTML += "<th>" + resultData[index]["movie_rating"] + "</th>";
 
-        let genreIndex = 0;
-        genres.push(resultData[index]);
-        while(index < resultData.length && resultData[index]['movie_id'] === movieId){
-            if(resultData[index]['genre_name'] === genres[0]){
+        let genreIndex = 1;
+        genres.push(resultData[index]['genre_name']);
+        while(index < resultData.length && resultData[index]['movie_id'] == movieId){
+            if(resultData[index]['genre_name'] == genres[0]){
                 stars.push([resultData[index]['star_id'], resultData[index]['star_name']]);
             }else{
-                if (resultData[index]['genre_name'] !== genres[genreIndex-1]) {
+                if (resultData[index]['genre_name'] != genres[genreIndex-1]) {
                     genres.push(resultData[index]['genre_name']);
                     genreIndex++;
                 }

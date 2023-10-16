@@ -49,7 +49,7 @@ public class MoviesServlet extends HttpServlet {
             Statement statement = conn.createStatement();
 
             String query = "select * from movies as m, ratings as r, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
-                    "where m.id = r.movieId and r.movieId = sim.movieId and sim.starId = s.id and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id";
+                    "where m.id = r.movieId and r.movieId = sim.movieId and sim.starId = s.id and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by r.rating desc";
 
             // Perform the query
             ResultSet rs = statement.executeQuery(query);
