@@ -54,7 +54,8 @@ public class SingleStarServlet extends HttpServlet {
             Connection conn = dataSource.getConnection();
 
             // Construct a query with parameter represented by "?"
-            String query = "select email, password from customers where email = \"%s\"";
+            String query = "SELECT * from stars as s, stars_in_movies as sim, movies as m " +
+                    "where m.id = sim.movieId and sim.starId = s.id and s.id = ?";
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
