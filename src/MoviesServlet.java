@@ -43,8 +43,9 @@ public class MoviesServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
-        try (Connection conn = dataSource.getConnection()) {
+        try {
 
+            Connection conn = dataSource.getConnection();
             // Declare our statement
             Statement statement = conn.createStatement();
 
@@ -86,6 +87,7 @@ public class MoviesServlet extends HttpServlet {
             }
             rs.close();
             statement.close();
+            conn.close();
 
             // Log to localhost log
             request.getServletContext().log("getting " + jsonArray.size() + " results");

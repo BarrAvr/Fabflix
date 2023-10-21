@@ -49,8 +49,9 @@ public class SingleStarServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
-        try (Connection conn = dataSource.getConnection()) {
+        try {
             // Get a connection from dataSource
+            Connection conn = dataSource.getConnection();
 
             // Construct a query with parameter represented by "?"
             String query = "SELECT * from stars as s, stars_in_movies as sim, movies as m " +
@@ -95,6 +96,7 @@ public class SingleStarServlet extends HttpServlet {
             }
             rs.close();
             statement.close();
+            conn.close();
 
             // Write JSON string to output
             out.write(jsonArray.toString());
