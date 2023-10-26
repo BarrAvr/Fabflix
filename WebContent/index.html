@@ -25,15 +25,26 @@
 </head>
 <div class="page-container all-movies">
 <body>
-
-    <h1 class="page-heading">Form Example</h1>
-
-    <form ACTION="form" METHOD="GET"  class="back-button">
-        Movie name: <input TYPE="TEXT" name="title"> (Use % to replace any strings. e.g. Title%)<br>
+    <h1 class="page-heading">Movie List</h1>
+    <form ACTION="search-results.html" METHOD="GET"  class="back-button">
+        Search By Title:
+        <label>
+            <input TYPE="TEXT" name="title">
+        </label>
+        Star:
+        <label>
+            <input TYPE="TEXT" name="star">
+        </label>
+        Year:
+        <label>
+            <input TYPE="TEXT" name="year">
+        </label>
+        Director:
+        <label>
+            <input TYPE="TEXT" name="director">
+        </label>
         <input TYPE="SUBMIT" VALUE="Search Movie">
     </form>
-
-    <h1 class="page-heading">Movie List</h1>
 
     <!-- Id "star_table" is useful for jQuery to find the html element with id, class here is mapping to Bootstrap defined class CSS -->
     <!--<table id=star_table class="table table-striped">-->
@@ -69,6 +80,7 @@
     <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
          otherwise the url is relative to the root path-->
     <script src="index.js"></script>
+<!--    <script src="search-results.js"></script>-->
 </body>
 </div>
 
