@@ -81,7 +81,7 @@ function handleStarResult(resultData) {
         // index++;
         rowHTML += "<th>" + genreString+ "</th>";
         rowHTML += "<th>" + starString + "</th>";
-
+        rowHTML += `<th><a href="items?newItem=${resultData[index-1]["movie_title"]}">Add to Cart</a></th>`;
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
