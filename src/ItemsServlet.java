@@ -13,13 +13,11 @@ import java.util.ArrayList;
 @WebServlet(name = "ItemServlet", urlPatterns = "/items")
 
 public class ItemsServlet extends HttpServlet {
-    //    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//
-//        // Get a instance of current session on the request
-//        HttpSession session = request.getSession();
-//
-//        // Retrieve data named "previousItems" from session
-//        ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
+        public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        HttpSession session = request.getSession();
+
+        ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
 //
 //        // If "previousItems" is not found on session, means this is a new user, thus we create a new previousItems
 //        // ArrayList for the user
@@ -67,7 +65,8 @@ public class ItemsServlet extends HttpServlet {
 //        }
 //
 //        out.println("</body></html>");
-//    }
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
@@ -82,16 +81,17 @@ public class ItemsServlet extends HttpServlet {
         System.out.println(previousItems);
 //      // If "previousItems" is not found on session, means this is a new user, thus we create a new previousItems
         // ArrayList for the user
-        if (previousItems == null) {
-            previousItems = new ArrayList<String>();
+        synchronized (previousItems) {
+            if (previousItems == null) {
+                previousItems = new ArrayList<String>();
+            }
+            previousItems.add(newItem);
+
+            session.setAttribute("previousItems", previousItems);
+
+            result.addProperty("message", "added item " + newItem);
+            result.addProperty("new previousItems", previousItems.toString());
         }
-        previousItems.add(newItem);
-
-        session.setAttribute("previousItems", previousItems);
-
-        result.addProperty("message", "added item " + newItem);
-        result.addProperty("new previousItems", previousItems.toString());
-
         out.write(result.toString());
     }
 }
