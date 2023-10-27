@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @WebServlet(name = "ItemServlet", urlPatterns = "/items")
 
 public class ItemsServlet extends HttpServlet {
-//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    //    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 //
 //        // Get a instance of current session on the request
 //        HttpSession session = request.getSession();
