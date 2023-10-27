@@ -68,30 +68,46 @@ public class ItemsServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
-        JsonObject result = new JsonObject();
 
-        String newItem = request.getParameter("newItem");
-        // Get a instance of current session on the request
-        HttpSession session = request.getSession();
+        try {
+            response.setContentType("application/json");
+            JsonObject result = new JsonObject();
+
+            String newItem = request.getParameter("newItem");
+            // Get a instance of current session on the request
+            HttpSession session = request.getSession();
 
 //      // Retrieve data named "previousItems" from session
-        ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
-        System.out.println(previousItems);
-//      // If "previousItems" is not found on session, means this is a new user, thus we create a new previousItems
-        // ArrayList for the user
-        synchronized (previousItems) {
+            ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
+            System.out.println(previousItems);
+
             if (previousItems == null) {
                 previousItems = new ArrayList<String>();
             }
-            previousItems.add(newItem);
+//      // If "previousItems" is not found on session, means this is a new user, thus we create a new previousItems
+            // ArrayList for the user
+            synchronized (previousItems) {
 
-            session.setAttribute("previousItems", previousItems);
+                previousItems.add(newItem);
 
-            result.addProperty("message", "added item " + newItem);
-            result.addProperty("new previousItems", previousItems.toString());
+                session.setAttribute("previousItems", previousItems);
+
+                result.addProperty("message", "added item " + newItem);
+                result.addProperty("new previousItems", previousItems.toString());
+
+                out.write(result.toString());
+            }
+        } catch (Exception e) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("errorMessage", e.getMessage());
+            e.printStackTrace();
+            out.write(jsonObject.toString());
+
+            // Set response status to 500 (Internal Server Error)
+            response.setStatus(500);
+        } finally {
+            out.close();
         }
-        out.write(result.toString());
     }
 }
