@@ -15,7 +15,6 @@ function getParameterByName(target) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-
 function handleSearchResult(resultData) {
     iToIndexMapping = new Array();
     console.log("handleResult: populating movie info from resultData");
@@ -86,15 +85,15 @@ function handleSearchResult(resultData) {
         console.log("Row Info in addToCartButtons");
         console.log(addToCartButtons[i]);
         addToCartButtons[i].onclick = function () {
-            let movieToPost = {};
-            if (i == 0) {
-                movieToPost = resultData[0];
-            } else {
-                movieToPost = resultData[iToIndexMapping[i-1]];
-            }
+
+            // alert("Adding " + resultData[iToIndexMapping[(i === 0 ? 0 : i-1)]]["movieTitle"] + " to cart!");
+            console.log(resultData);
+            console.log(iToIndexMapping[i === 0 ? 0 : i-1])
+            console.log(resultData[iToIndexMapping[i === 0 ? 0 : i-1]]);
+            console.log(resultData[iToIndexMapping[i === 0 ? 0 : i-1]]["movie_title"]);
 
             const data = {
-                newItem: movieToPost["movie_title"]
+                newItem: resultData[iToIndexMapping[i === 0 ? 0 : i-1]]["movie_title"]
             };
 
             $.ajax({
@@ -106,7 +105,7 @@ function handleSearchResult(resultData) {
                 },
                 dataType: "json"
             });
-            alert("Adding " + movieToPost["movieTitle"] + " to cart!");
+
         };
     }
 }
