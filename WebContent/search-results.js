@@ -17,7 +17,7 @@ function getParameterByName(target) {
 
 
 function handleSearchResult(resultData) {
-
+    iToIndexMapping = new Array();
     console.log("handleResult: populating movie info from resultData");
     console.log("JSON from api call:");
     console.log(resultData);
@@ -71,9 +71,35 @@ function handleSearchResult(resultData) {
 
         rowHTML += "<th>" + genreString + "</th>";
         rowHTML += "<th>" + starString + "</th>";
+        rowHTML += `<th class="clickable-text add-to-cart">Add ${i} ${index} ${genreIndex} to Cart</th>`;
         rowHTML += "</tr>";
-
+        console.log(`During iToIndexMapping construction, as we're pushing index ${i} to the mapping array, row ${i} with title ${resultData[index]["movie_title"]} has index ${index}`)
+        console.log(iToIndexMapping.push(index));
         movieTableBodyElement.append(rowHTML);
+    }
+    console.log("iToIndexMapping");
+    console.log(iToIndexMapping);
+    let addToCartButtons = document.getElementsByClassName("add-to-cart");
+    for (let i = 0; i < addToCartButtons.length; i++) {
+        console.log("Row Info in addToCartButtons");
+        console.log(addToCartButtons[i]);
+        addToCartButtons[i].onclick = function () {
+            const data = {
+                newItem: resultData[index]["movie_title"]
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "items",
+                data: data,
+                success: function (result) {
+                    console.log(result);
+                },
+                dataType: "json"
+            });
+            console.log(resultData[i]);
+            alert("Added " + i + " to cart!");
+        };
     }
 }
 

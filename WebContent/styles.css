@@ -59,7 +59,7 @@ html, .page-container {
 
 .flex-container {
     display: flex;
-    width: 40vw;
+    width: 70vw;
     flex-wrap: wrap;
     justify-content: space-between;
     margin: auto;
@@ -82,4 +82,13 @@ th {
 a {
     color: var(--cerulean);
     font-family: 'Young Serif', serif;
+}
+
+.clickable-text {
+    color: var(--cerulean);
+}
+
+.clickable-text:hover {
+    color: var(--cerulean);
+    text-decoration: underline;
 }

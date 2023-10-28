@@ -81,13 +81,36 @@ function handleStarResult(resultData) {
         // index++;
         rowHTML += "<th>" + genreString+ "</th>";
         rowHTML += "<th>" + starString + "</th>";
-        rowHTML += `<th><a href="items?newItem=${resultData[index-1]["movie_title"]}">Add to Cart</a></th>`;
+        rowHTML += `<th class="clickable-text add-to-cart">Add to Cart</th>`;
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
         // starTableBodyElement.append(rowHTML);
         movieTableBodyElement.append(rowHTML);
+
     }
+    let addToCartButtons = document.getElementsByClassName("add-to-cart");
+
+    for (let i = 0; i < addToCartButtons.length; i++) {
+        addToCartButtons[i].onclick = function () {
+            const data = {
+                newItem: "hi"
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "items",
+                data: data,
+                success: function (result) {
+                    console.log(result);
+                },
+                dataType: "json"
+            });
+            // console.log("Added " + resultData[i] + " to cart!");
+            console.log(resultData[i]);
+        };
+    }
+    console.log(addToCartButtons);
 }
 
 
