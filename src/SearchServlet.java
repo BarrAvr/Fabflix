@@ -41,11 +41,16 @@ public class SearchServlet extends HttpServlet {
 
 
         String query = "";
-        if(request.getParameter("type").equals("genre")){
+        String type = request.getParameter("type");
+        if(type.equals("genre")){
 //            displayGenreSearchResult(request, response);
             String genre = request.getParameter("genre");
             query = getGenreQuery(genre);
             System.out.println("genre searching...");
+        }else if(type.equals("prefix")){
+            String prefix = request.getParameter("prefix");
+            query = getPrefixQuery(prefix);
+            System.out.println("prefix searching...");
         }else{
 //            displayGeneralSearchResult(request, response);
             String title = request.getParameter("title");
@@ -161,6 +166,29 @@ public class SearchServlet extends HttpServlet {
                 "from selected_movies as sm, ratings as r where sm.id = r.movieId order by r.rating desc) " +
                 "select * from top_movies as m, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
                 "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by m.rating desc, m.title, g.name, s.name";
+        return query;
+    }
+
+    private static String getPrefixQuery(String prefix) {
+//        query = "with top_movies(id, title, year, director, rating) as (" +
+//                "with selected_movies(id, title, year, director) as ";
+//        query += String.format("(select m.id, m.title, m.year, m.director " +
+//                "from movies as m, genres_in_movies as gim, genres as g " +
+//                "where g.name = \"%s\" and m.id = gim.movieId and gim.genreId = g.id) ", prefix);
+//        query +="select sm.id, sm.title, sm.year, sm.director, r.rating " +
+//                "from selected_movies as sm, ratings as r where sm.id = r.movieId order by r.rating desc) " +
+//                "select * from top_movies as m, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
+//                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by m.rating desc, m.title, g.name, s.name";
+
+        String query = String.format("with top_movies(id, title, year, director, rating) as " +
+                "(select mo.id, mo.title, mo.year, mo.director, r.rating " +
+                "from movies as mo, ratings as r " +
+                "where mo.id = r.movieId and mo.title like \"%s%%\" " +
+                "order by r.rating desc) ", prefix);
+        query +="select * from top_movies as m, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
+                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by m.rating desc, m.title, g.name, s.name";
+
+
         return query;
     }
 

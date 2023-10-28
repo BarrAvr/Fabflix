@@ -100,4 +100,14 @@ jQuery.ajax({
     success: (resultData) => handleSearchResult(resultData)
 });
 
+let prefix = getParameterByName('prefix');
+
+// Makes the HTTP GET request and registers on success callback function handleStarResult
+jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: "api/search-results?type=prefix&prefix=" + prefix,
+    success: (resultData) => handleSearchResult(resultData)
+});
+
 // search_results.submit(submitSearch);
