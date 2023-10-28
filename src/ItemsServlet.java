@@ -1,3 +1,4 @@
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,9 +23,14 @@ public class ItemsServlet extends HttpServlet {
         }
 
         PrintWriter out = response.getWriter();
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("cart", previousItems.toString());
-        out.write(jsonObject.toString());
+        JsonArray jsonArray = new JsonArray();
+        for (String item : previousItems) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("itemName", item);
+            jsonArray.add(jsonObject);
+        }
+
+        out.write(jsonArray.toString());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
