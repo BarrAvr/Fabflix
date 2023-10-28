@@ -59,11 +59,11 @@ html, .page-container {
 
 .flex-container {
     display: flex;
+    width: 40vw;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: auto;
     flex-direction: row;
-    color: white;
-}
-.flex-container div {
-    margin: 10px;
     color: white;
 }
 
