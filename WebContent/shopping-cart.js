@@ -2,8 +2,15 @@
 
 function handleShoppingCartData(resultData) {
     let shoppingCartElement = jQuery("#shopping-cart");
+    console.log(shoppingCartElement);
+    const cartArray = JSON.parse(resultData["cart"]);
     console.log(resultData);
-    resultData["cart"].forEach((item) => {
+    console.log(cartArray);
+    console.log(typeof cartArray);
+    if (cartArray.length == 0) {
+        shoppingCartElement.innerHTML = "<p>No items in cart</p>";
+    }
+    cartArray.forEach((item) => {
         shoppingCartElement.append(`<li>${item}</li>`)
     });
 }
