@@ -40,24 +40,30 @@ public class SearchServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 
+        String query = "";
+        if(request.getParameter("type").equals("genre")){
+//            displayGenreSearchResult(request, response);
+            String genre = request.getParameter("genre");
+            query = getGenreQuery(genre);
+            System.out.println("genre searching...");
+        }else{
+//            displayGeneralSearchResult(request, response);
+            String title = request.getParameter("title");
+            String star = request.getParameter("star");
+            String year = request.getParameter("year");
+            String director = request.getParameter("director");
+            query = getGeneralSearchQuery(star, year, title, director);
+            System.out.println("general searching...");
+        }
+        System.out.println(query);
+
         response.setContentType("application/json");
-        //response.setContentType("text/html");    // Response mime type
+//        String genre = request.getParameter("genre");
+//
+//        request.getServletContext().log("getting genre: " + genre);
+//        System.out.println("getting genre: " + genre);
 
-        // Retrieve parameter "name" from the http request, which refers to the value of <input name="name"> in index.html
-        String title = request.getParameter("title");
-        String star = request.getParameter("star");
-        String year = request.getParameter("year");
-        String director = request.getParameter("director");
-
-        request.getServletContext().log("getting title: " + title);
-        System.out.println("getting title: " + title);
-
-        // Output stream to STDOUT
         PrintWriter out = response.getWriter();
-//        // Building page head with title
-//        out.println("<html><head><title>MovieDB: Found Records</title></head>");
-//        // Building page body
-//        out.println("<body><h1>MovieDB: Found Records</h1>");
         System.out.println("searching...");
 
         try {
@@ -70,41 +76,8 @@ public class SearchServlet extends HttpServlet {
             Statement statement = conn.createStatement();
             System.out.println("statementing...");
 
-            // Generate a SQL query
-            String query = "";
-            if(star.isEmpty() && year.isEmpty()){
-                query = String.format("SELECT * from movies as m where " +
-                        "m.title like \"%%%s%%\" " +
-                        "and m.director like \"%%%s%%\"", title, director);
-            }else if(star.isEmpty()){
-                query = String.format("SELECT * from movies as m where " +
-                        "m.title like \"%%%s%%\" " +
-                        "and m.director like \"%%%s%%\" " +
-                        "and m.year like \"%s\"", title, director, year);
-            }else if(year.isEmpty()){
-                query = String.format("SELECT * from movies as m, stars as s, stars_in_movies as sim where " +
-                        "m.title like \"%%%s%%\" " +
-                        "and m.director like \"%%%s%%\" " +
-                        "and s.name like \"%s\" " +
-                        "and m.id = sim.movieId and sim.starId = s.id", title, director, star);
-            }else{
-                query = String.format("SELECT * from movies as m, stars as s, stars_in_movies as sim where " +
-                        "m.title like \"%%%s%%\" " +
-                        "and m.director like \"%%%s%%\" " +
-                        "and m.year like \"%%%s%%\" " +
-                        "and s.name like \"%s\" " +
-                        "and m.id = sim.movieId and sim.starId = s.id", title, director, year, star);
-            }
-//            String query = "SELECT * from movies";
-//            query += " where";
-//            query += String.format(" title like \"%%%s%%\" and director like \"%%%s%%\"", title, director);
-//            String query = String.format("SELECT * from movies as m, stars as s, stars_in_movies as sim where " +
-//                    "m.title like \"%%%s%%\" " +
-//                    "and m.director like \"%%%s%%\" " +
-//                    "and m.year like \"%%%s%%\" " +
-//                    "and s.name like \"%%%s%%\" " +
-//                    "and m.id = sim.movieId and sim.starId = s.id", title, director, year, star);
-
+//            // Generate a SQL query
+//            String query = getGenreQuery(genre);
 
             // Log to localhost log
             request.getServletContext().log("query：" + query);
@@ -112,34 +85,33 @@ public class SearchServlet extends HttpServlet {
 
 
             // Perform the query
-            ResultSet rs = statement.executeQuery(query);
             System.out.println("querying...");
             System.out.println(query);
-            // Create a html <table>
-//            out.println("<table border>");
-//
-//            // Iterate through each row of rs and create a table row <tr>
-//            out.println("<tr><td>ID</td><td>Name</td></tr>");
-//            while (rs.next()) {
-////                String m_ID = rs.getString("ID");
-////                String m_Name = rs.getString("name");
-//                String m_ID = rs.getString("id");
-//                String m_Title = rs.getString("title");
-//                out.println(String.format("<tr><td>%s</td><td>%s</td></tr>", m_ID, m_Title));
-//            }
-//            out.println("</table>");
+            ResultSet rs = statement.executeQuery(query);
 
             JsonArray jsonArray = new JsonArray();
 
             while (rs.next()) {
-                String movieID = rs.getString("m.id");
-                String movieTitle = rs.getString("m.title");
-                String movieYear = rs.getString("m.year");
+                String movie_id = rs.getString("m.id");
+                String movie_title = rs.getString("m.title");
+                String movie_year = rs.getString("m.year");
+                String movie_director = rs.getString("m.director");
+                String movie_rating = rs.getString("m.rating");
+                String star_id = rs.getString("s.id");
+                String star_name = rs.getString("s.name");
+                String genre_name = rs.getString("g.name");
 
+                // Create a JsonObject based on the data we retrieve from rs
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("movie_id", movieID);
-                jsonObject.addProperty("movie_title", movieTitle);
-                jsonObject.addProperty("movie_year", movieYear);
+                jsonObject.addProperty("movie_id", movie_id);
+                jsonObject.addProperty("movie_title", movie_title);
+                jsonObject.addProperty("movie_year", movie_year);
+                jsonObject.addProperty("movie_director", movie_director);
+                jsonObject.addProperty("movie_rating", movie_rating);
+                jsonObject.addProperty("star_id", star_id);
+                jsonObject.addProperty("star_name", star_name);
+                jsonObject.addProperty("genre_name", genre_name);
+
                 jsonArray.add(jsonObject);
             }
 
@@ -163,10 +135,6 @@ public class SearchServlet extends HttpServlet {
              *   tail -100 catalina.out
              * This can help you debug your program after deploying it on AWS.
              */
-//            request.getServletContext().log("Error: ", e);
-//
-//            // Output Error Massage to html
-//            out.println(String.format("<html><head><title>MovieDB: Error</title></head>\n<body><p>SQL error in doGet: %s</p></body></html>", e.getMessage()));
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("errorMessage", e.getMessage());
             out.write(jsonObject.toString());
@@ -179,5 +147,48 @@ public class SearchServlet extends HttpServlet {
         }finally {
             out.close();
         }
+
+    }
+
+    private static String getGenreQuery(String genre) {
+        String query;
+        query = "with top_movies(id, title, year, director, rating) as (" +
+                "with selected_movies(id, title, year, director) as ";
+        query += String.format("(select m.id, m.title, m.year, m.director " +
+                "from movies as m, genres_in_movies as gim, genres as g " +
+                "where g.name = \"%s\" and m.id = gim.movieId and gim.genreId = g.id) ", genre);
+        query +="select sm.id, sm.title, sm.year, sm.director, r.rating " +
+                "from selected_movies as sm, ratings as r where sm.id = r.movieId order by r.rating desc) " +
+                "select * from top_movies as m, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
+                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by m.rating desc, m.title, g.name, s.name";
+        return query;
+    }
+
+    private static String getGeneralSearchQuery(String star, String year, String title, String director) {
+        String query = "with top_movies(id, title, year, director, rating) as (" +
+                "with selected_movies(id, title, year, director) as ";
+
+        if(star.isEmpty() && year.isEmpty()){
+            query += String.format("(select m.id, m.title, m.year, m.director " +
+                    "from movies as m where m.title like \"%%%s%%\" and m.director like \"%%%s%%\") ", title, director);
+        }else if(star.isEmpty()){
+            query += String.format("(select m.id, m.title, m.year, m.director from movies as m " +
+                    "where m.title like \"%%%s%%\" and m.director like \"%%%s%%\" and m.year = %s) ", title, director, year);
+        }else if(year.isEmpty()){
+            query += String.format("(select m.id, m.title, m.year, m.director from movies as m, stars_in_movies as sim, stars as s " +
+                    "where m.title like \"%%%s%%\" and m.director like \"%%%s%%\" and s.name like \"%%%s%%\" " +
+                    "and m.id = sim.movieId and sim.starId = s.id) ", title, director, star);
+        }else{
+            query += String.format("(select m.id, m.title, m.year, m.director " +
+                    "from movies as m, stars_in_movies as sim, stars as s " +
+                    "where m.title like \"%%%s%%\" and m.director like \"%%%s%%\" " +
+                    "and m.year = %s and s.name like \"%%%s%%\" " +
+                    "and m.id = sim.movieId and sim.starId = s.id) ", title, director, year, star);
+        }
+        query += "select sm.id, sm.title, sm.year, sm.director, r.rating " +
+                "from selected_movies as sm, ratings as r where sm.id = r.movieId order by r.rating desc) " +
+                "select * from top_movies as m, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
+                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by m.rating desc, m.title, g.name, s.name";
+        return query;
     }
 }
