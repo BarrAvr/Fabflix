@@ -16,6 +16,7 @@ public class ItemsServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
+
         if (previousItems == null) {
             previousItems = new ArrayList<String>();
         }
@@ -54,6 +55,7 @@ public class ItemsServlet extends HttpServlet {
                 result.addProperty("new previousItems", previousItems.toString());
 
                 out.write(result.toString());
+                response.setStatus(200);
             }
         } catch (Exception e) {
             JsonObject jsonObject = new JsonObject();
