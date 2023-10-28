@@ -73,9 +73,11 @@ function handleSearchResult(resultData) {
         rowHTML += "<th>" + starString + "</th>";
         rowHTML += `<th class="clickable-text add-to-cart">Add ${i} ${index} ${genreIndex} to Cart</th>`;
         rowHTML += "</tr>";
-        console.log(`During iToIndexMapping construction, as we're pushing index ${i} to the mapping array, row ${i} with title ${resultData[index]["movie_title"]} has index ${index}`)
+
+        // console.log(`During iToIndexMapping construction, as we're pushing index ${i} to the mapping array, row ${i} with title ${resultData[index]["movie_title"]} has index ${index}`)
         console.log(iToIndexMapping.push(index));
         movieTableBodyElement.append(rowHTML);
+
     }
     console.log("iToIndexMapping");
     console.log(iToIndexMapping);
@@ -84,8 +86,15 @@ function handleSearchResult(resultData) {
         console.log("Row Info in addToCartButtons");
         console.log(addToCartButtons[i]);
         addToCartButtons[i].onclick = function () {
+            let movieToPost = {};
+            if (i == 0) {
+                movieToPost = resultData[0];
+            } else {
+                movieToPost = resultData[iToIndexMapping[i-1]];
+            }
+
             const data = {
-                newItem: resultData[index]["movie_title"]
+                newItem: movieToPost["movie_title"]
             };
 
             $.ajax({
@@ -97,8 +106,7 @@ function handleSearchResult(resultData) {
                 },
                 dataType: "json"
             });
-            console.log(resultData[i]);
-            alert("Added " + i + " to cart!");
+            alert("Adding " + movieToPost["movieTitle"] + " to cart!");
         };
     }
 }
