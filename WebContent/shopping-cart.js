@@ -12,7 +12,7 @@ function buildShoppingCartFreqMap(arr) {
 }
 function handleShoppingCartData(resultData) {
     let shoppingCartElement = jQuery("#shopping-cart");
-    let message = jQuery("#message");
+    let messageElement = jQuery("#message");
     console.log(shoppingCartElement);
     console.log(resultData);
 
@@ -28,18 +28,22 @@ function handleShoppingCartData(resultData) {
            let count = movieTitlesAndQuantities[item];
            console.log("appending item " + item + " to cart as li");
             // shoppingCartElement.append(`<li>${item["itemName"]}<a id="decrement-quantity">-</a> ${} <a id="increment-quantity">+</a></li>`);
-           shoppingCartElement.append(`<li>${item} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a></li>`);
+           shoppingCartElement.append(`<li>${item} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> Price: <span class="price">${99 * count}</span> USD</li>`);
         });
        const counts = document.getElementsByClassName("count");
+        const prices = document.getElementsByClassName("price");
        const incrementButtons = document.getElementsByClassName("increment-quantity");
        const decrementButtons = document.getElementsByClassName("decrement-quantity");
        for (let i = 0; i < incrementButtons.length; i++) {
            incrementButtons[i].onclick = function () {
+               console.log("message");
+               console.log(message);
                alert("Incremented quantity of " + movieTitles[i] + " by 1");
                oldCount = movieTitlesAndQuantities[movieTitles[i]]
                newCount = oldCount + 1;
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
                counts[i].innerHTML = newCount;
+               prices[i].innerHTML = 99 * newCount;
                const data = {
                    type: "add",
                    newItem: movieTitles[i]
@@ -56,12 +60,16 @@ function handleShoppingCartData(resultData) {
                });
            };
            decrementButtons[i].onclick = function () {
+               console.log("message");
+               console.log(message);
                alert("Decremented quantity of " + movieTitles[i] + " by 1");
-                   oldCount = movieTitlesAndQuantities[movieTitles[i]]
+               oldCount = movieTitlesAndQuantities[movieTitles[i]]
                newCount = oldCount - 1;
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
+               counts[i].innerHTML = newCount;
+               prices[i].innerHTML = 99 * newCount;
                if (newCount === 0) {
-                   this.parentElement.remove();
+                   // this.parentElement.remove();
                    // totalMovieCount -= 1;
                    // console.log("totalMovieCount is " + totalMovieCount);
 

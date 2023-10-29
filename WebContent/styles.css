@@ -92,3 +92,6 @@ a {
     color: var(--cerulean);
     text-decoration: underline;
 }
+#single-movie-add-to-cart-button {
+    color: var(--cerulean);
+}

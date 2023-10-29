@@ -105,15 +105,41 @@ function handleResult(resultData) {
             rowHTML += "<tr>";
 
             rowHTML += "<th>" + resultData[2][i]["genre_name"] + "</th>";
+            rowHTML += `<th class="clickable-text add-to-cart" id="add-to-cart-button">Add to Cart</th>`;
+            rowHTML += "</tr>";
             rowHTML += "</tr>";
 
             // Append the row created to the table body, which will refresh the page
             movieTableBodyElement.append(rowHTML);
+
         }
     }
 
 
+    $("#single-movie-add-to-cart-button").click(function () {
+
+        alert("Added " + resultData[0]["movie_title"] + " to cart!");
+        console.log(resultData);
+
+        const data = {
+            type: "add",
+            newItem: resultData[0]["movie_title"]
+        };
+
+
+        $.ajax({
+            type: "POST",
+            url: "items",
+            data: data,
+            success: function (result) {
+                console.log(result);
+            },
+            dataType: "json"
+        });
+
+    });
 }
+
 
 /**
  * Once this .js is loaded, following scripts will be executed by the browser\
