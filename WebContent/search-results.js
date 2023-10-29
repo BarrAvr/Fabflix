@@ -139,6 +139,21 @@ if (type === "general") {
         url: "list-state?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
         success: function (result) {
             console.log(result);
+            jQuery.ajax({
+                dataType: "json",
+                method: "GET",
+                url: "list-state",
+                success: function (listResult) {
+                    console.log(listResult.type)
+                    jQuery.ajax({
+                        dataType: "json",
+                        method: "GET",
+                        url: "api/search-results",
+                        data : listResult,
+                        success: (resultData) => handleSearchResult(resultData)
+                    });
+                }
+            });
         }
     });
 
@@ -160,6 +175,21 @@ else if (type === "genre") {
         url: "list-state?type=genre&genre=" + genre + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
         success: function (result) {
             console.log(result);
+            jQuery.ajax({
+                dataType: "json",
+                method: "GET",
+                url: "list-state",
+                success: function (listResult) {
+                    console.log(listResult.type)
+                    jQuery.ajax({
+                        dataType: "json",
+                        method: "GET",
+                        url: "api/search-results",
+                        data : listResult,
+                        success: (resultData) => handleSearchResult(resultData)
+                    });
+                }
+            });
         }
     });
 
@@ -187,6 +217,21 @@ else {
         },
         success: function (result) {
             console.log(result);
+            jQuery.ajax({
+                dataType: "json",
+                method: "GET",
+                url: "list-state",
+                success: function (listResult) {
+                    console.log(listResult.type)
+                    jQuery.ajax({
+                        dataType: "json",
+                        method: "GET",
+                        url: "api/search-results",
+                        data : listResult,
+                        success: (resultData) => handleSearchResult(resultData)
+                    });
+                }
+            });
         }
     });
 }
