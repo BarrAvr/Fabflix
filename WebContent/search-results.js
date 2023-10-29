@@ -1,4 +1,6 @@
 // let search_results = $("#search_results");
+let sort_option_form = $("#sort-option");
+
 function getParameterByName(target) {
     // Get request URL
     let url = window.location.href;
@@ -188,4 +190,32 @@ else {
         success: (resultData) => handleSearchResult(resultData)
     });
 }
-// search_results.submit(submitSearch);
+
+function submitSort(formSubmitEvent) {
+    console.log("submit sort option");
+    /**
+     * When users click the submit button, the browser will not direct
+     * users to the url defined in HTML form. Instead, it will call this
+     * event handler when the event is triggered.
+     */
+    formSubmitEvent.preventDefault();
+    const select = $("#sort-option");
+    console.log("sort option:");
+    console.log(select);
+    const data = {
+
+    };
+
+    $.ajax(
+        "list-state", {
+            method: "POST",
+            data: data,
+            success: function (result) {
+                console.log(result);
+            }
+        }
+    );
+}
+
+// Bind the submit action of the form to a handler function
+sort_option_form.submit(submitSort);

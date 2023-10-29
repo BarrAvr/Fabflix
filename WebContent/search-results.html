@@ -23,6 +23,20 @@
         <h1 class="page-heading">Search Results</h1>
         <h3 class="sub-heading" id="movie_info"></h3>
     </div>
+    <form ACTION="search-results.html" METHOD="GET"  class="back-button" id="sort-option">
+        <label for="sorting">Sort By:</label>
+        <select id="sorting" name="sort-option">
+            <option value="1">Title Asc, Rating Asc</option>
+            <option value="2">Title Asc, Rating Desc</option>
+            <option value="3">Title Desc, Rating Asc</option>
+            <option value="4">Title Desc, Rating Desc</option>
+            <option value="5">Rating Asc, Title Asc</option>
+            <option value="6">Rating Asc, Title Desc</option>
+            <option value="7">Rating Desc, Title Asc</option>
+            <option value="8">Rating Desc, Title Desc</option>
+        </select>
+        <input type="submit">
+    </form>
     <table id=movie_table class="table table-striped">
         <thead>
         <tr>
