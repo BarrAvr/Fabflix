@@ -12,6 +12,7 @@ function buildShoppingCartFreqMap(arr) {
 }
 function handleShoppingCartData(resultData) {
     let shoppingCartElement = jQuery("#shopping-cart");
+    let message = jQuery("#message");
     console.log(shoppingCartElement);
     console.log(resultData);
 
@@ -19,7 +20,8 @@ function handleShoppingCartData(resultData) {
         shoppingCartElement.append("<li>No items in cart</li>");
     } else {
        const movieTitlesAndQuantities = buildShoppingCartFreqMap(resultData);
-       console.log("movieTitlesAndQuantities:");
+        let totalMovieCount = movieTitlesAndQuantities.length;
+            console.log("movieTitlesAndQuantities:");
        console.log(movieTitlesAndQuantities);
        const movieTitles = Object.keys(movieTitlesAndQuantities);
        movieTitles.forEach((item, index) => {
@@ -33,7 +35,7 @@ function handleShoppingCartData(resultData) {
        const decrementButtons = document.getElementsByClassName("decrement-quantity");
        for (let i = 0; i < incrementButtons.length; i++) {
            incrementButtons[i].onclick = function () {
-               console.log("Incrementing quantity of " + movieTitles[i] + " by 1");
+               alert("Incremented quantity of " + movieTitles[i] + " by 1");
                oldCount = movieTitlesAndQuantities[movieTitles[i]]
                newCount = oldCount + 1;
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
@@ -54,14 +56,14 @@ function handleShoppingCartData(resultData) {
                });
            };
            decrementButtons[i].onclick = function () {
-               oldCount = movieTitlesAndQuantities[movieTitles[i]]
+               alert("Decremented quantity of " + movieTitles[i] + " by 1");
+                   oldCount = movieTitlesAndQuantities[movieTitles[i]]
                newCount = oldCount - 1;
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
                if (newCount === 0) {
-                   if (shoppingCartElement.children.length === 1) {
-                       shoppingCartElement.append("<li>No items in cart</li>")
-                   }
                    this.parentElement.remove();
+                   // totalMovieCount -= 1;
+                   // console.log("totalMovieCount is " + totalMovieCount);
 
                }
                else {
