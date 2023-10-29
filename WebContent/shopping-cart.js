@@ -1,4 +1,12 @@
 
+function getTotalPrice(movieObject) {
+    let sum = 0;
+    const movieCounts = Object.values(movieObject);
+    movieCounts.forEach(c => {
+        sum += c;
+    })
+    return sum * 99;
+}
 function buildShoppingCartFreqMap(arr) {
     const map = {};
     arr.forEach(item => {
@@ -12,6 +20,7 @@ function buildShoppingCartFreqMap(arr) {
 }
 function handleShoppingCartData(resultData) {
     let shoppingCartElement = jQuery("#shopping-cart");
+    let totalPriceElement = document.getElementById("total-price");
     let messageElement = document.getElementById("message");
     console.log(shoppingCartElement);
     console.log(resultData);
@@ -30,6 +39,7 @@ function handleShoppingCartData(resultData) {
             // shoppingCartElement.append(`<li>${item["itemName"]}<a id="decrement-quantity">-</a> ${} <a id="increment-quantity">+</a></li>`);
            shoppingCartElement.append(`<li>${item} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> Price: <a class="delete" color="green">Delete</a> <span class="price">${99 * count}</span> USD</li>`);
         });
+       totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
        const counts = document.getElementsByClassName("count");
         const prices = document.getElementsByClassName("price");
        const incrementButtons = document.getElementsByClassName("increment-quantity");
@@ -45,6 +55,7 @@ function handleShoppingCartData(resultData) {
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
                counts[i].innerHTML = newCount;
                prices[i].innerHTML = 99 * newCount;
+               totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
                console.log(movieTitlesAndQuantities);
                const data = {
                    type: "add",
@@ -70,12 +81,10 @@ function handleShoppingCartData(resultData) {
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
                counts[i].innerHTML = newCount;
                prices[i].innerHTML = 99 * newCount;
+               totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
                console.log(movieTitlesAndQuantities);
                if (newCount === 0) {
-                   // this.parentElement.remove();
-                   // totalMovieCount -= 1;
-                   // console.log("totalMovieCount is " + totalMovieCount);
-
+                   // doesn't properly handle empty cart after deletion of last movie
                }
                else {
                    counts[i].innerHTML = newCount;
@@ -102,10 +111,8 @@ function handleShoppingCartData(resultData) {
                messageElement.innerHTML = "Deleted " + movieTitles[i] + " from cart";
                delete movieTitlesAndQuantities[movieTitles[i]];
                console.log(movieTitlesAndQuantities);
-               // movieTitlesAndQuantities[movieTitles[i]] = newCount;
-               // counts[i].innerHTML = newCount;
-               // prices[i].innerHTML = 99 * newCount;
                this.parentElement.remove();
+               totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
                let data = {
                    type: "delete",
                    itemToDelete: movieTitles[i]
