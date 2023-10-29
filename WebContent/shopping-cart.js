@@ -12,7 +12,7 @@ function buildShoppingCartFreqMap(arr) {
 }
 function handleShoppingCartData(resultData) {
     let shoppingCartElement = jQuery("#shopping-cart");
-    let messageElement = jQuery("#message");
+    let messageElement = document.getElementById("message");
     console.log(shoppingCartElement);
     console.log(resultData);
 
@@ -38,7 +38,7 @@ function handleShoppingCartData(resultData) {
            incrementButtons[i].onclick = function () {
                console.log("message");
                console.log(message);
-               alert("Incremented quantity of " + movieTitles[i] + " by 1");
+               messageElement.innerHTML = "Incremented quantity of " + movieTitles[i] + " by 1";
                oldCount = movieTitlesAndQuantities[movieTitles[i]]
                newCount = oldCount + 1;
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
@@ -62,7 +62,7 @@ function handleShoppingCartData(resultData) {
            decrementButtons[i].onclick = function () {
                console.log("message");
                console.log(message);
-               alert("Decremented quantity of " + movieTitles[i] + " by 1");
+               messageElement.innerHTML = "Decremented quantity of " + movieTitles[i] + " by 1";
                oldCount = movieTitlesAndQuantities[movieTitles[i]]
                newCount = oldCount - 1;
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
