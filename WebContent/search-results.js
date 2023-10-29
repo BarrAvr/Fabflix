@@ -1,5 +1,5 @@
 // let search_results = $("#search_results");
-let sort_option_form = $("#sort-option");
+// let sort_option_form = $("#sort-option");
 
 function getParameterByName(target) {
     // Get request URL
@@ -27,7 +27,6 @@ function handleSearchResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
 
     // let index = 0;
-    // Iterate through resultData, no more than 10 entries
     for (let index = 0; index < resultData.length;) {
         let genres = [];
         let stars = [];
@@ -113,17 +112,13 @@ function handleSearchResult(resultData) {
     }
 }
 
-// listState = {
-//     sortconfigURL: "/search-results?type=genre&",
-// };
-
 let type = getParameterByName("type");
-// WORKING ON THIS
-
 
 let sortBy = getParameterByName('sortBy');
 let titleOrder = getParameterByName('titleOrder');
 let ratingOrder = getParameterByName('ratingOrder');
+let page = getParameterByName('page');
+let count = getParameterByName('count');
 
 
 let movieTitle = encodeURIComponent(getParameterByName('title'));
@@ -146,7 +141,9 @@ if (type === "general") {
             director: movieDirector,
             sortBy: sortBy,
             titleOrder: titleOrder,
-            ratingOrder: ratingOrder
+            ratingOrder: ratingOrder,
+            page: page,
+            count: count
         },
         success: function (result) {
             console.log(result);
@@ -167,13 +164,6 @@ if (type === "general") {
             });
         }
     });
-
-    // jQuery.ajax({
-    //     dataType: "json",
-    //     method: "GET",
-    //     url: "api/search-results?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
-    //     success: (resultData) => handleSearchResult(resultData)
-    // });
 }
 
 
@@ -189,7 +179,9 @@ else if (type === "genre") {
             genre: genre,
             sortBy: sortBy,
             titleOrder: titleOrder,
-            ratingOrder: ratingOrder
+            ratingOrder: ratingOrder,
+            page: page,
+            count: count
         },
         success: function (result) {
             console.log(result);
@@ -210,13 +202,6 @@ else if (type === "genre") {
             });
         }
     });
-
-    // jQuery.ajax({
-    //     dataType: "json",
-    //     method: "GET",
-    //     url: "api/search-results?type=genre&genre=" + genre + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
-    //     success: (resultData) => handleSearchResult(resultData)
-    // });
 }
 else {
     let prefix = getParameterByName('prefix');
@@ -231,7 +216,9 @@ else {
             prefix: prefix,
             sortBy: sortBy,
             titleOrder: titleOrder,
-            ratingOrder: ratingOrder
+            ratingOrder: ratingOrder,
+            page: page,
+            count: count
         },
         success: function (result) {
             console.log(result);
@@ -253,58 +240,3 @@ else {
         }
     });
 }
-
-jQuery.ajax({
-    dataType: "json",
-    method: "GET",
-    url: "list-state",
-    success: function (listResult) {
-        console.log(listResult.type)
-        jQuery.ajax({
-            dataType: "json",
-            method: "GET",
-            url: "api/search-results",
-            data : listResult,
-            success: (resultData) => handleSearchResult(resultData)
-        });
-    }
-});
-
-// jQuery.ajax({
-//     dataType: "json",
-//     method: "GET",
-//     url: "list-state",
-//     success: function(resultData) {
-//         handleSearchResult(resultData);
-//     }
-// });
-
-
-function submitSort(formSubmitEvent) {
-    console.log("submit sort option");
-    /**
-     * When users click the submit button, the browser will not direct
-     * users to the url defined in HTML form. Instead, it will call this
-     * event handler when the event is triggered.
-     */
-    formSubmitEvent.preventDefault();
-    const select = $("#sort-option");
-    console.log("sort option:");
-    console.log(select.val());
-    const data = {
-
-    };
-
-    $.ajax(
-        "list-state", {
-            method: "POST",
-            data: data,
-            success: function (result) {
-                console.log(result);
-            }
-        }
-    );
-}
-
-// Bind the submit action of the form to a handler function
-sort_option_form.submit(submitSort);

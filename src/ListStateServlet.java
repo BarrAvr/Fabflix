@@ -55,8 +55,8 @@ public class ListStateServlet extends HttpServlet {
             String sortBy = request.getParameter("sortBy");
             String titleOrder = request.getParameter("titleOrder");
             String ratingOrder = request.getParameter("ratingOrder");
-            String pageSize = request.getParameter("pageSize");
-            String currentPage = request.getParameter("currentPage");
+            String page = request.getParameter("page");
+            String count = request.getParameter("count");
 
             synchronized (listState) {
 
@@ -92,11 +92,11 @@ public class ListStateServlet extends HttpServlet {
                 if (ratingOrder != null) {
                     newState.addProperty("ratingOrder", ratingOrder);
                 }
-                if (pageSize != null) {
-                    newState.addProperty("pageSize", pageSize);
+                if (page != null) {
+                    newState.addProperty("page", page);
                 }
-                if (currentPage != null) {
-                    newState.addProperty("currentPage", currentPage);
+                if (count != null) {
+                    newState.addProperty("count", count);
                 }
 
                 session.setAttribute("listState", newState);

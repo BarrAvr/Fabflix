@@ -25,7 +25,7 @@ function handleBrowseGenresDisplay(resultData) {
         let rowHTML =
             "<p>" +
             // Add a link to single-star.html with id passed with GET url parameter
-            '<a href="search-results.html?type=genre&genre=' + genre + '&sortBy=title&titleOrder=asc&ratingOrder=desc">'
+            '<a href="search-results.html?type=genre&genre=' + genre + '&sortBy=title&titleOrder=asc&ratingOrder=desc&page=1&count=20">'
             + genre +     // display star_name for the link text
             '</a>' +
             "</p>";

@@ -40,6 +40,12 @@ function handleJumpBack(listState) {
        url += "&";
 
        url += "ratingOrder=" + listState["ratingOrder"];
+       url += "&";
+
+       url += "page=" + listState["page"];
+       url += "&";
+
+       url += "count=" + listState["count"];
 
     window.location.replace(url);
 }
@@ -86,6 +92,12 @@ function handleUpdateSort(listState, sortBy, titleOrder, ratingOrder) {
     url += "&";
 
     url += "ratingOrder=" + ratingOrder;
+    url += "&";
+
+    url += "page=" + listState["page"];
+    url += "&";
+
+    url += "count=" + listState["count"];
 
     window.location.replace(url);
 }
