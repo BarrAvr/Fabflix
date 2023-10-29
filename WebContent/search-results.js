@@ -17,6 +17,7 @@ function getParameterByName(target) {
 
 function handleSearchResult(resultData) {
     iToIndexMapping = new Array();
+    iToIndexMapping.push(0);
     console.log("handleResult: populating movie info from resultData");
     console.log("JSON from api call:");
     console.log(resultData);
@@ -88,12 +89,15 @@ function handleSearchResult(resultData) {
 
             // alert("Adding " + resultData[iToIndexMapping[(i === 0 ? 0 : i-1)]]["movieTitle"] + " to cart!");
             console.log(resultData);
-            console.log(iToIndexMapping[i === 0 ? 0 : i-1])
-            console.log(resultData[iToIndexMapping[i === 0 ? 0 : i-1]]);
-            console.log(resultData[iToIndexMapping[i === 0 ? 0 : i-1]]["movie_title"]);
+            console.log("The index we retrieved from iToIndexMapping:");
+            console.log(iToIndexMapping[i])
+            console.log("The json object at that specific index:");
+            console.log(resultData[iToIndexMapping[i]]);
+            // console.log("The index we retrieved from iToIndexMapping:");
+            // console.log(resultData[iToIndexMapping[i === 0 ? 0 : i-1]]["movie_title"]);
 
             const data = {
-                newItem: resultData[iToIndexMapping[i === 0 ? 0 : i-1]]["movie_title"]
+                newItem: resultData[iToIndexMapping[i]]["movie_title"]
             };
 
             $.ajax({
