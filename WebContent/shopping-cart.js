@@ -28,12 +28,13 @@ function handleShoppingCartData(resultData) {
            let count = movieTitlesAndQuantities[item];
            console.log("appending item " + item + " to cart as li");
             // shoppingCartElement.append(`<li>${item["itemName"]}<a id="decrement-quantity">-</a> ${} <a id="increment-quantity">+</a></li>`);
-           shoppingCartElement.append(`<li>${item} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> Price: <span class="price">${99 * count}</span> USD</li>`);
+           shoppingCartElement.append(`<li>${item} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> Price: <a class="delete" color="green">Delete</a> <span class="price">${99 * count}</span> USD</li>`);
         });
        const counts = document.getElementsByClassName("count");
         const prices = document.getElementsByClassName("price");
        const incrementButtons = document.getElementsByClassName("increment-quantity");
        const decrementButtons = document.getElementsByClassName("decrement-quantity");
+       const deleteButtons = document.getElementsByClassName("delete");
        for (let i = 0; i < incrementButtons.length; i++) {
            incrementButtons[i].onclick = function () {
                console.log("message");
@@ -44,6 +45,7 @@ function handleShoppingCartData(resultData) {
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
                counts[i].innerHTML = newCount;
                prices[i].innerHTML = 99 * newCount;
+               console.log(movieTitlesAndQuantities);
                const data = {
                    type: "add",
                    newItem: movieTitles[i]
@@ -68,6 +70,7 @@ function handleShoppingCartData(resultData) {
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
                counts[i].innerHTML = newCount;
                prices[i].innerHTML = 99 * newCount;
+               console.log(movieTitlesAndQuantities);
                if (newCount === 0) {
                    // this.parentElement.remove();
                    // totalMovieCount -= 1;
@@ -77,6 +80,32 @@ function handleShoppingCartData(resultData) {
                else {
                    counts[i].innerHTML = newCount;
                }
+               let data = {
+                   type: "remove",
+                   itemToRemove: movieTitles[i]
+               };
+
+               $.ajax({
+                   type: "POST",
+                   url: "items",
+                   data: data,
+                   success: function (result) {
+                       console.log(result);
+                   },
+                   dataType: "json"
+               });
+           };
+
+           deleteButtons[i].onclick = function () {
+               console.log("message");
+               console.log(message);
+               messageElement.innerHTML = "Deleted " + movieTitles[i] + " from cart";
+               delete movieTitlesAndQuantities[movieTitles[i]];
+               console.log(movieTitlesAndQuantities);
+               // movieTitlesAndQuantities[movieTitles[i]] = newCount;
+               // counts[i].innerHTML = newCount;
+               // prices[i].innerHTML = 99 * newCount;
+               this.parentElement.remove();
                let data = {
                    type: "delete",
                    itemToDelete: movieTitles[i]

@@ -64,22 +64,32 @@ public class ItemsServlet extends HttpServlet {
 
                     out.write(result.toString());
                     response.setStatus(200);
-                } else {
-                    String itemToDelete = request.getParameter("itemToDelete");
+                } else if (type.equals("remove")) {
+                    String itemToRemove = request.getParameter("itemToRemove");
                     previousItems = (ArrayList<String>) session.getAttribute("previousItems");
                     System.out.println(previousItems);
 
                     if (previousItems == null) {
                         JsonObject jsonObject = new JsonObject();
-                        jsonObject.addProperty("message", "Error: you can't delete any items if your cart is empty");
+                        jsonObject.addProperty("message", "Error: you can't remove any items if your cart is empty");
                         out.write(jsonObject.toString());
                     } else {
-                        previousItems.remove(itemToDelete);
+                        previousItems.remove(itemToRemove);
                         JsonObject jsonObject = new JsonObject();
-                        jsonObject.addProperty("message", "deleted item " + itemToDelete);
+                        jsonObject.addProperty("message", "removed item " + itemToRemove);
                         jsonObject.addProperty("previousItems", previousItems.toString());
                         out.write(jsonObject.toString());
                     }
+                } else if (type.equals("delete")) {
+                    String itemToDelete = request.getParameter("itemToDelete");
+                    previousItems = (ArrayList<String>) session.getAttribute("previousItems");
+                    previousItems.removeIf(m -> m.equals(itemToDelete));
+                    session.setAttribute("previousItems", previousItems);
+
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("message", "deleted item " + itemToDelete);
+                    jsonObject.addProperty("previousItems", previousItems.toString());
+                    out.write(jsonObject.toString());
                 }
             }
         } catch (Exception e) {
