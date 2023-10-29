@@ -17,16 +17,58 @@ public class ListStateServlet extends HttpServlet {
         HttpSession session = request.getSession();
         JsonObject listState = (JsonObject) session.getAttribute("listState");
 
-        if (listState == null) {
-            PrintWriter out = response.getWriter();
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("listState", "null");
-            out.write(jsonObject.toString());
+//        if (listState == null) {
+//            PrintWriter out = response.getWriter();
+//            JsonObject jsonObject = new JsonObject();
+//            jsonObject.addProperty("message", "no previous ");
+//            out.write(jsonObject.toString());
+//        }
+
+        String url = "/search-results?";
+
+        if (listState.get("type").getAsString().equals("genre")) {
+            url += "type=genre&";
+            url += "genre=" + listState.get("genre").getAsString();
+            url += "&";
+        } else if (listState.get("type").getAsString().equals("prefix")) {
+            url += "type=prefix&";
+            url += "prefix=" + listState.get("prefix").getAsString();
+            url += "&";
+        } else {
+            url += "type=general&";
+            url += "title=";
+            if (listState.get("title") != null) {
+                url += listState.get("title").getAsString();
+            }
+            url += "&";
+            url += "star=";
+            if (listState.get("star") != null) {
+                url += listState.get("star").getAsString();
+            }
+            url += "&";
+            url += "year=";
+            if (listState.get("year") != null) {
+                url += listState.get("year").getAsString();
+            }
+            url += "&";
+            url += "director=";
+            if (listState.get("director") != null) {
+                url += listState.get("director").getAsString();
+            }
+            url += "&";
+
         }
+        url += "sortBy=" + listState.get("sortBy").getAsString();
+        url += "&";
+
+        url += "titleOrder=" + listState.get("titleOrder").getAsString();
+        url += "&";
+
+        url += "ratingOrder=" + listState.get("ratingOrder").getAsString();
 
         PrintWriter out = response.getWriter();
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("listState", listState.toString());
+        jsonObject.addProperty("url", url);
         out.write(jsonObject.toString());
     }
 
@@ -45,21 +87,25 @@ public class ListStateServlet extends HttpServlet {
                 listState = new JsonObject();
             }
 
+            String type = request.getParameter("type"); // genre, prefix, general
             String genre = request.getParameter("genre");
             String prefix = request.getParameter("prefix");
             String titleSearch = request.getParameter("titleSearch");
             String starSearch = request.getParameter("starSearch");
             String yearSearch = request.getParameter("yearSearch");
             String directorSearch = request.getParameter("directorSearch");
-            String sortOrder = request.getParameter("sortOrder");
-            String titleAscending = request.getParameter("titleAscending");
-            String ratingAscending = request.getParameter("ratingAscending");
+            String sortBy = request.getParameter("sortBy");
+            String titleOrder = request.getParameter("titleOrder");
+            String ratingOrder = request.getParameter("ratingOrder");
             String pageSize = request.getParameter("pageSize");
             String currentPage = request.getParameter("currentPage");
 
             synchronized (listState) {
 
                 JsonObject newState = new JsonObject();
+                if (type != null) {
+                    newState.addProperty("type", type);
+                }
                 if (genre != null) {
                     newState.addProperty("genre", genre);
                 }
@@ -78,14 +124,14 @@ public class ListStateServlet extends HttpServlet {
                 if (directorSearch != null) {
                     newState.addProperty("directorSearch", directorSearch);
                 }
-                if (sortOrder != null) {
-                    newState.addProperty("sortOrder", sortOrder);
+                if (sortBy != null) {
+                    newState.addProperty("sortBy", sortBy);
                 }
-                if (titleAscending != null) {
-                    newState.addProperty("titleAscending", titleAscending);
+                if (titleOrder != null) {
+                    newState.addProperty("titleOrder", titleOrder);
                 }
-                if (ratingAscending != null) {
-                    newState.addProperty("ratingAscending", ratingAscending);
+                if (ratingOrder != null) {
+                    newState.addProperty("ratingOrder", ratingOrder);
                 }
                 if (pageSize != null) {
                     newState.addProperty("pageSize", pageSize);

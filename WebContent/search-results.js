@@ -110,6 +110,11 @@ function handleSearchResult(resultData) {
     }
 }
 
+listState = {
+    sortconfigURL: "/search-results?type=genre&",
+
+};
+
 let movieTitle = encodeURIComponent(getParameterByName('title'));
 let movieStar = encodeURIComponent(getParameterByName('star'));
 let movieYear = encodeURIComponent(getParameterByName('year'));

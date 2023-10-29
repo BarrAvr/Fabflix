@@ -58,10 +58,11 @@ function handleShoppingCartData(resultData) {
                newCount = oldCount - 1;
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
                if (newCount === 0) {
-                   this.parentElement.remove();
-                   if (shoppingCartElement.children.length === 0) {
+                   if (shoppingCartElement.children.length === 1) {
                        shoppingCartElement.append("<li>No items in cart</li>")
                    }
+                   this.parentElement.remove();
+
                }
                else {
                    counts[i].innerHTML = newCount;
