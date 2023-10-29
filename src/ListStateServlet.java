@@ -24,7 +24,7 @@ public class ListStateServlet extends HttpServlet {
 //            out.write(jsonObject.toString());
 //        }
 
-        String url = "/search-results?";
+        String url = "/search-results.html?";
 
         if (listState.get("type").getAsString().equals("genre")) {
             url += "type=genre&";

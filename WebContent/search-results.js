@@ -96,6 +96,7 @@ function handleSearchResult(resultData) {
                 newItem: resultData[iToIndexMapping[i]]["movie_title"]
             };
 
+
             $.ajax({
                 type: "POST",
                 url: "items",
@@ -110,10 +111,14 @@ function handleSearchResult(resultData) {
     }
 }
 
-listState = {
-    sortconfigURL: "/search-results?type=genre&",
+// listState = {
+//     sortconfigURL: "/search-results?type=genre&",
+// };
 
-};
+let type = getParameterByName("type");
+// WORKING ON THIS
+
+
 
 let movieTitle = encodeURIComponent(getParameterByName('title'));
 let movieStar = encodeURIComponent(getParameterByName('star'));
@@ -121,31 +126,62 @@ let movieYear = encodeURIComponent(getParameterByName('year'));
 let movieDirector = encodeURIComponent(getParameterByName('director'));
 
 // Makes the HTTP GET request and registers on success callback function handleStarResult
-jQuery.ajax({
-    dataType: "json",
-    method: "GET",
-    url: "api/search-results?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector,
-    success: (resultData) => handleSearchResult(resultData)
-});
+if (type === "general") {
+    jQuery.ajax({
+        dataType: "json",
+        method: "POST",
+        url: "list-state?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=title&titleOrder=asc&ratingOrder=desc",
+        success: function (result) {
+            console.log(result);
+        }
+    });
 
-let genre = getParameterByName('genre');
+    jQuery.ajax({
+        dataType: "json",
+        method: "GET",
+        url: "api/search-results?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector,
+        success: (resultData) => handleSearchResult(resultData)
+    });
+}
 
-// Makes the HTTP GET request and registers on success callback function handleStarResult
-jQuery.ajax({
-    dataType: "json",
-    method: "GET",
-    url: "api/search-results?type=genre&genre=" + genre,
-    success: (resultData) => handleSearchResult(resultData)
-});
 
-let prefix = getParameterByName('prefix');
+else if (type === "genre") {
+    let genre = getParameterByName('genre');
+    // Makes the HTTP GET request and registers on success callback function handleStarResult
+    jQuery.ajax({
+        dataType: "json",
+        method: "POST",
+        url: "list-state?type=genre&genre=" + genre  + "&sortBy=title&titleOrder=asc&ratingOrder=desc",
+        success: function (result) {
+            console.log(result);
+        }
+    });
 
-// Makes the HTTP GET request and registers on success callback function handleStarResult
-jQuery.ajax({
-    dataType: "json",
-    method: "GET",
-    url: "api/search-results?type=prefix&prefix=" + prefix,
-    success: (resultData) => handleSearchResult(resultData)
-});
+    jQuery.ajax({
+        dataType: "json",
+        method: "GET",
+        url: "api/search-results?type=genre&genre=" + genre,
+        success: (resultData) => handleSearchResult(resultData)
+    });
+}
+else {
+    let prefix = getParameterByName('prefix');
 
+    // Makes the HTTP GET request and registers on success callback function handleStarResult
+    jQuery.ajax({
+        dataType: "json",
+        method: "POST",
+        url: "list-state?type=prefix&prefix=" + prefix + "&sortBy=title&titleOrder=asc&ratingOrder=desc",
+        success: function (result) {
+            console.log(result);
+        }
+    });
+
+    jQuery.ajax({
+        dataType: "json",
+        method: "GET",
+        url: "api/search-results?type=prefix&prefix=" + prefix,
+        success: (resultData) => handleSearchResult(resultData)
+    });
+}
 // search_results.submit(submitSearch);
