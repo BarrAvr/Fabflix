@@ -23,17 +23,17 @@
         <h1 class="page-heading">Search Results</h1>
         <h3 class="sub-heading" id="movie_info"></h3>
     </div>
-    <form ACTION="search-results.html" METHOD="GET"  class="back-button" id="sort-option">
+    <form ACTION="list-state" METHOD="GET"  class="back-button" id="sort-option">
         <label for="sorting">Sort By:</label>
         <select id="sorting" name="sortBy">
             <option value="title">Title Asc, Rating Asc</option>
             <option value="title">Title Asc, Rating Desc</option>
             <option value="title">Title Desc, Rating Asc</option>
             <option value="title">Title Desc, Rating Desc</option>
-            <option value="title">Rating Asc, Title Asc</option>
-            <option value="title">Rating Asc, Title Desc</option>
-            <option value="title">Rating Desc, Title Asc</option>
-            <option value="title">Rating Desc, Title Desc</option>
+            <option value="Rating">Rating Asc, Title Asc</option>
+            <option value="Rating">Rating Asc, Title Desc</option>
+            <option value="Rating">Rating Desc, Title Asc</option>
+            <option value="Rating">Rating Desc, Title Desc</option>
         </select>
         <input type="submit">
     </form>
