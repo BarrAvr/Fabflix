@@ -71,30 +71,25 @@ function handleSearchResult(resultData) {
 
         rowHTML += "<th>" + genreString + "</th>";
         rowHTML += "<th>" + starString + "</th>";
-        rowHTML += `<th class="clickable-text add-to-cart">Add ${i} ${index} ${genreIndex} to Cart</th>`;
+        rowHTML += `<th class="clickable-text add-to-cart">Add to Cart</th>`;
         rowHTML += "</tr>";
 
-        // console.log(`During iToIndexMapping construction, as we're pushing index ${i} to the mapping array, row ${i} with title ${resultData[index]["movie_title"]} has index ${index}`)
         console.log(iToIndexMapping.push(index));
         movieTableBodyElement.append(rowHTML);
 
     }
-    console.log("iToIndexMapping");
-    console.log(iToIndexMapping);
     let addToCartButtons = document.getElementsByClassName("add-to-cart");
     for (let i = 0; i < addToCartButtons.length; i++) {
         console.log("Row Info in addToCartButtons");
         console.log(addToCartButtons[i]);
         addToCartButtons[i].onclick = function () {
 
-            // alert("Adding " + resultData[iToIndexMapping[(i === 0 ? 0 : i-1)]]["movieTitle"] + " to cart!");
+            alert("Added " + resultData[iToIndexMapping[i]]["movie_title"] + " to cart!");
             console.log(resultData);
             console.log("The index we retrieved from iToIndexMapping:");
             console.log(iToIndexMapping[i])
             console.log("The json object at that specific index:");
             console.log(resultData[iToIndexMapping[i]]);
-            // console.log("The index we retrieved from iToIndexMapping:");
-            // console.log(resultData[iToIndexMapping[i === 0 ? 0 : i-1]]["movie_title"]);
 
             const data = {
                 newItem: resultData[iToIndexMapping[i]]["movie_title"]
