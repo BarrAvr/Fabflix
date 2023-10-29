@@ -9,7 +9,7 @@ function handleBrowsePrefixesDisplay(resultData) {
         let rowHTML =
             "<p>" +
             // Add a link to single-star.html with id passed with GET url parameter
-            '<a href="search-results.html?type=prefix&prefix=' + prefix + '">'
+            '<a href="search-results.html?type=prefix&prefix=' + prefix + '&sortBy=title&titleOrder=asc&ratingOrder=desc">'
             + prefix +     // display star_name for the link text
             '</a>' +
             "</p>";

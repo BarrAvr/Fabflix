@@ -119,6 +119,10 @@ let type = getParameterByName("type");
 // WORKING ON THIS
 
 
+let sortBy = getParameterByName('sortBy');
+let titleOrder = getParameterByName('titleOrder');
+let ratingOrder = getParameterByName('ratingOrder');
+
 
 let movieTitle = encodeURIComponent(getParameterByName('title'));
 let movieStar = encodeURIComponent(getParameterByName('star'));
@@ -130,7 +134,7 @@ if (type === "general") {
     jQuery.ajax({
         dataType: "json",
         method: "POST",
-        url: "list-state?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=title&titleOrder=asc&ratingOrder=desc",
+        url: "list-state?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
         success: function (result) {
             console.log(result);
         }
@@ -139,7 +143,7 @@ if (type === "general") {
     jQuery.ajax({
         dataType: "json",
         method: "GET",
-        url: "api/search-results?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector,
+        url: "api/search-results?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
         success: (resultData) => handleSearchResult(resultData)
     });
 }
@@ -151,7 +155,7 @@ else if (type === "genre") {
     jQuery.ajax({
         dataType: "json",
         method: "POST",
-        url: "list-state?type=genre&genre=" + genre  + "&sortBy=title&titleOrder=asc&ratingOrder=desc",
+        url: "list-state?type=genre&genre=" + genre + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
         success: function (result) {
             console.log(result);
         }
@@ -160,7 +164,7 @@ else if (type === "genre") {
     jQuery.ajax({
         dataType: "json",
         method: "GET",
-        url: "api/search-results?type=genre&genre=" + genre,
+        url: "api/search-results?type=genre&genre=" + genre + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
         success: (resultData) => handleSearchResult(resultData)
     });
 }
@@ -171,7 +175,7 @@ else {
     jQuery.ajax({
         dataType: "json",
         method: "POST",
-        url: "list-state?type=prefix&prefix=" + prefix + "&sortBy=title&titleOrder=asc&ratingOrder=desc",
+        url: "list-state?type=prefix&prefix=" + prefix + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
         success: function (result) {
             console.log(result);
         }
@@ -180,7 +184,7 @@ else {
     jQuery.ajax({
         dataType: "json",
         method: "GET",
-        url: "api/search-results?type=prefix&prefix=" + prefix,
+        url: "api/search-results?type=prefix&prefix=" + prefix + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
         success: (resultData) => handleSearchResult(resultData)
     });
 }

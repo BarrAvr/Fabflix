@@ -42,14 +42,18 @@ public class SearchServlet extends HttpServlet {
 
         String query = "";
         String type = request.getParameter("type");
+        String sortBy = request.getParameter("sortBy");
+        String titleOrder = request.getParameter("titleOrder");
+        String ratingOrder = request.getParameter("ratingOrder");
         if(type.equals("genre")){
 //            displayGenreSearchResult(request, response);
             String genre = request.getParameter("genre");
-            query = getGenreQuery(genre);
+            String title_order, rating_order, title_first;
+            query = getGenreQuery(genre, sortBy, titleOrder, ratingOrder);
             System.out.println("genre searching...");
         }else if(type.equals("prefix")){
             String prefix = request.getParameter("prefix");
-            query = getPrefixQuery(prefix);
+            query = getPrefixQuery(prefix, sortBy, titleOrder, ratingOrder);
             System.out.println("prefix searching...");
         }else{
 //            displayGeneralSearchResult(request, response);
@@ -57,16 +61,12 @@ public class SearchServlet extends HttpServlet {
             String star = request.getParameter("star");
             String year = request.getParameter("year");
             String director = request.getParameter("director");
-            query = getGeneralSearchQuery(star, year, title, director);
+            query = getGeneralSearchQuery(star, year, title, director, sortBy, titleOrder, ratingOrder);
             System.out.println("general searching...");
         }
         System.out.println(query);
 
         response.setContentType("application/json");
-//        String genre = request.getParameter("genre");
-//
-//        request.getServletContext().log("getting genre: " + genre);
-//        System.out.println("getting genre: " + genre);
 
         PrintWriter out = response.getWriter();
         System.out.println("searching...");
@@ -155,7 +155,7 @@ public class SearchServlet extends HttpServlet {
 
     }
 
-    private static String getGenreQuery(String genre) {
+    private static String getGenreQuery(String genre, String sortBy, String titleOrder, String ratingOrder) {
         String query;
         query = "with top_movies(id, title, year, director, rating) as (" +
                 "with selected_movies(id, title, year, director) as ";
@@ -165,34 +165,81 @@ public class SearchServlet extends HttpServlet {
         query +="select sm.id, sm.title, sm.year, sm.director, r.rating " +
                 "from selected_movies as sm, ratings as r where sm.id = r.movieId order by r.rating desc) " +
                 "select * from top_movies as m, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
-                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by m.rating desc, m.title, g.name, s.name";
+                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id ";
+
+        if(sortBy.equals("title")){
+            query +="order by m.title ";
+            if(titleOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+            query +="m.rating ";
+            if(ratingOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+        }else{
+            query +="order by m.rating ";
+            if(ratingOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+            query +="m.title ";
+            if(titleOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+        }
+        query +="g.name, s.name";
         return query;
     }
 
-    private static String getPrefixQuery(String prefix) {
-//        query = "with top_movies(id, title, year, director, rating) as (" +
-//                "with selected_movies(id, title, year, director) as ";
-//        query += String.format("(select m.id, m.title, m.year, m.director " +
-//                "from movies as m, genres_in_movies as gim, genres as g " +
-//                "where g.name = \"%s\" and m.id = gim.movieId and gim.genreId = g.id) ", prefix);
-//        query +="select sm.id, sm.title, sm.year, sm.director, r.rating " +
-//                "from selected_movies as sm, ratings as r where sm.id = r.movieId order by r.rating desc) " +
-//                "select * from top_movies as m, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
-//                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by m.rating desc, m.title, g.name, s.name";
-
+    private static String getPrefixQuery(String prefix, String sortBy, String titleOrder, String ratingOrder) {
         String query = String.format("with top_movies(id, title, year, director, rating) as " +
                 "(select mo.id, mo.title, mo.year, mo.director, r.rating " +
                 "from movies as mo, ratings as r " +
                 "where mo.id = r.movieId and mo.title like \"%s%%\" " +
                 "order by r.rating desc) ", prefix);
         query +="select * from top_movies as m, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
-                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by m.rating desc, m.title, g.name, s.name";
+                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id ";
 
+        if(sortBy.equals("title")){
+            query +="order by m.title ";
+            if(titleOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+            query +="m.rating ";
+            if(ratingOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+        }else{
+            query +="order by m.rating ";
+            if(ratingOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+            query +="m.title ";
+            if(titleOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+        }
+        query +="g.name, s.name";
 
         return query;
     }
 
-    private static String getGeneralSearchQuery(String star, String year, String title, String director) {
+    private static String getGeneralSearchQuery(String star, String year, String title, String director, String sortBy, String titleOrder, String ratingOrder) {
         String query = "with top_movies(id, title, year, director, rating) as (" +
                 "with selected_movies(id, title, year, director) as ";
 
@@ -216,7 +263,37 @@ public class SearchServlet extends HttpServlet {
         query += "select sm.id, sm.title, sm.year, sm.director, r.rating " +
                 "from selected_movies as sm, ratings as r where sm.id = r.movieId order by r.rating desc) " +
                 "select * from top_movies as m, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
-                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by m.rating desc, m.title, g.name, s.name";
+                "where m.id = sim.movieId and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id ";
+
+        if(sortBy.equals("title")){
+            query +="order by m.title ";
+            if(titleOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+            query +="m.rating ";
+            if(ratingOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+        }else{
+            query +="order by m.rating ";
+            if(ratingOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+            query +="m.title ";
+            if(titleOrder.equals("desc")){
+                query +="desc, ";
+            }else{
+                query +="asc, ";
+            }
+        }
+        query +="g.name, s.name";
+
         return query;
     }
 }
