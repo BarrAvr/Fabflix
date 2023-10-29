@@ -201,7 +201,7 @@ function submitSort(formSubmitEvent) {
     formSubmitEvent.preventDefault();
     const select = $("#sort-option");
     console.log("sort option:");
-    console.log(select);
+    console.log(select.val());
     const data = {
 
     };
