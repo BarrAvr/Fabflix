@@ -136,7 +136,18 @@ if (type === "general") {
     jQuery.ajax({
         dataType: "json",
         method: "POST",
-        url: "list-state?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
+        // url: "list-state?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
+        url: "list-state",
+        data : {
+            type: "general",
+            title: movieTitle,
+            star: movieStar,
+            year: movieYear,
+            director: movieDirector,
+            sortBy: sortBy,
+            titleOrder: titleOrder,
+            ratingOrder: ratingOrder
+        },
         success: function (result) {
             console.log(result);
             jQuery.ajax({
@@ -172,7 +183,14 @@ else if (type === "genre") {
     jQuery.ajax({
         dataType: "json",
         method: "POST",
-        url: "list-state?type=genre&genre=" + genre + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
+        url: "list-state",
+        data : {
+            type: "genre",
+            genre: genre,
+            sortBy: sortBy,
+            titleOrder: titleOrder,
+            ratingOrder: ratingOrder
+        },
         success: function (result) {
             console.log(result);
             jQuery.ajax({

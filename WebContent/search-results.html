@@ -23,17 +23,17 @@
         <h1 class="page-heading">Search Results</h1>
         <h3 class="sub-heading" id="movie_info"></h3>
     </div>
-    <form ACTION="list-state" METHOD="GET"  class="back-button" id="sort-option">
-        <label for="sorting">Sort By:</label>
-        <select id="sorting" name="sortBy">
-            <option value="title">Title Asc, Rating Asc</option>
-            <option value="title">Title Asc, Rating Desc</option>
-            <option value="title">Title Desc, Rating Asc</option>
-            <option value="title">Title Desc, Rating Desc</option>
-            <option value="Rating">Rating Asc, Title Asc</option>
-            <option value="Rating">Rating Asc, Title Desc</option>
-            <option value="Rating">Rating Desc, Title Asc</option>
-            <option value="Rating">Rating Desc, Title Desc</option>
+    <form onsubmit="return handleSelection()">
+        <label for="selection" class="back-button">Sort By:</label>
+        <select id="selection">
+            <option value="title-asc-asc">Title Asc, Rating Asc</option>
+            <option value="title-asc-desc">Title Asc, Rating Desc</option>
+            <option value="title-desc-asc">Title Desc, Rating Asc</option>
+            <option value="title-desc-desc">Title Desc, Rating Desc</option>
+            <option value="rating-asc-asc">Rating Asc, Title Asc</option>
+            <option value="rating-asc-desc">Rating Asc, Title Desc</option>
+            <option value="rating-desc-asc">Rating Desc, Title Asc</option>
+            <option value="rating-desc-desc">Rating Desc, Title Desc</option>
         </select>
         <input type="submit">
     </form>
@@ -63,6 +63,7 @@
     <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
          otherwise the url is relative to the root path-->
     <script src="search-results.js"></script>
+    <script src="jumpFunctionality.js"></script>
     </body>
 
 </div>

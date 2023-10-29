@@ -25,55 +25,7 @@ public class ListStateServlet extends HttpServlet {
             out.close();
         }
 
-//        String url = "api/search-results.html?";
-//
-//        if (listState.get("type").getAsString().equals("genre")) {
-//            url += "type=genre&";
-//            url += "genre=" + listState.get("genre").getAsString();
-//            url += "&";
-//        } else if (listState.get("type").getAsString().equals("prefix")) {
-//            url += "type=prefix&";
-//            url += "prefix=" + listState.get("prefix").getAsString();
-//            url += "&";
-//        } else {
-//            url += "type=general&";
-//            url += "title=";
-//            if (listState.get("title") != null) {
-//                url += listState.get("title").getAsString();
-//            }
-//            url += "&";
-//            url += "star=";
-//            if (listState.get("star") != null) {
-//                url += listState.get("star").getAsString();
-//            }
-//            url += "&";
-//            url += "year=";
-//            if (listState.get("year") != null) {
-//                url += listState.get("year").getAsString();
-//            }
-//            url += "&";
-//            url += "director=";
-//            if (listState.get("director") != null) {
-//                url += listState.get("director").getAsString();
-//            }
-//            url += "&";
-//
-//        }
-//        url += "sortBy=" + listState.get("sortBy").getAsString();
-//        url += "&";
-//
-//        url += "titleOrder=" + listState.get("titleOrder").getAsString();
-//        url += "&";
-//
-//        url += "ratingOrder=" + listState.get("ratingOrder").getAsString();
-//
         PrintWriter out = response.getWriter();
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("url", url);
-//        System.out.println("url printing...");
-//        System.out.println(url);
-//        System.out.println(jsonObject.toString());
-//        out.write(jsonObject.toString());
         out.write(listState.toString());
         out.close();
     }
@@ -134,6 +86,7 @@ public class ListStateServlet extends HttpServlet {
                     newState.addProperty("sortBy", sortBy);
                 }
                 if (titleOrder != null) {
+                    System.out.println("Title Order: " + titleOrder);
                     newState.addProperty("titleOrder", titleOrder);
                 }
                 if (ratingOrder != null) {
