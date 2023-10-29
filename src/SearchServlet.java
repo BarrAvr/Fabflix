@@ -243,13 +243,13 @@ public class SearchServlet extends HttpServlet {
         String query = "with top_movies(id, title, year, director, rating) as (" +
                 "with selected_movies(id, title, year, director) as ";
 
-        if(star.isEmpty() && year.isEmpty()){
+        if((star == null || star.isEmpty()) && (year == null || year.isEmpty())){
             query += String.format("(select m.id, m.title, m.year, m.director " +
                     "from movies as m where m.title like \"%%%s%%\" and m.director like \"%%%s%%\") ", title, director);
-        }else if(star.isEmpty()){
+        }else if(star == null || star.isEmpty()){
             query += String.format("(select m.id, m.title, m.year, m.director from movies as m " +
                     "where m.title like \"%%%s%%\" and m.director like \"%%%s%%\" and m.year = %s) ", title, director, year);
-        }else if(year.isEmpty()){
+        }else if(year == null || year.isEmpty()){
             query += String.format("(select m.id, m.title, m.year, m.director from movies as m, stars_in_movies as sim, stars as s " +
                     "where m.title like \"%%%s%%\" and m.director like \"%%%s%%\" and s.name like \"%%%s%%\" " +
                     "and m.id = sim.movieId and sim.starId = s.id) ", title, director, star);

@@ -17,59 +17,65 @@ public class ListStateServlet extends HttpServlet {
         HttpSession session = request.getSession();
         JsonObject listState = (JsonObject) session.getAttribute("listState");
 
-//        if (listState == null) {
-//            PrintWriter out = response.getWriter();
-//            JsonObject jsonObject = new JsonObject();
-//            jsonObject.addProperty("message", "no previous ");
-//            out.write(jsonObject.toString());
-//        }
-
-        String url = "/search-results.html?";
-
-        if (listState.get("type").getAsString().equals("genre")) {
-            url += "type=genre&";
-            url += "genre=" + listState.get("genre").getAsString();
-            url += "&";
-        } else if (listState.get("type").getAsString().equals("prefix")) {
-            url += "type=prefix&";
-            url += "prefix=" + listState.get("prefix").getAsString();
-            url += "&";
-        } else {
-            url += "type=general&";
-            url += "title=";
-            if (listState.get("title") != null) {
-                url += listState.get("title").getAsString();
-            }
-            url += "&";
-            url += "star=";
-            if (listState.get("star") != null) {
-                url += listState.get("star").getAsString();
-            }
-            url += "&";
-            url += "year=";
-            if (listState.get("year") != null) {
-                url += listState.get("year").getAsString();
-            }
-            url += "&";
-            url += "director=";
-            if (listState.get("director") != null) {
-                url += listState.get("director").getAsString();
-            }
-            url += "&";
-
+        if (listState == null) {
+            PrintWriter out = response.getWriter();
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("message", "no previous ");
+            out.write(jsonObject.toString());
+            out.close();
         }
-        url += "sortBy=" + listState.get("sortBy").getAsString();
-        url += "&";
 
-        url += "titleOrder=" + listState.get("titleOrder").getAsString();
-        url += "&";
-
-        url += "ratingOrder=" + listState.get("ratingOrder").getAsString();
-
+//        String url = "api/search-results.html?";
+//
+//        if (listState.get("type").getAsString().equals("genre")) {
+//            url += "type=genre&";
+//            url += "genre=" + listState.get("genre").getAsString();
+//            url += "&";
+//        } else if (listState.get("type").getAsString().equals("prefix")) {
+//            url += "type=prefix&";
+//            url += "prefix=" + listState.get("prefix").getAsString();
+//            url += "&";
+//        } else {
+//            url += "type=general&";
+//            url += "title=";
+//            if (listState.get("title") != null) {
+//                url += listState.get("title").getAsString();
+//            }
+//            url += "&";
+//            url += "star=";
+//            if (listState.get("star") != null) {
+//                url += listState.get("star").getAsString();
+//            }
+//            url += "&";
+//            url += "year=";
+//            if (listState.get("year") != null) {
+//                url += listState.get("year").getAsString();
+//            }
+//            url += "&";
+//            url += "director=";
+//            if (listState.get("director") != null) {
+//                url += listState.get("director").getAsString();
+//            }
+//            url += "&";
+//
+//        }
+//        url += "sortBy=" + listState.get("sortBy").getAsString();
+//        url += "&";
+//
+//        url += "titleOrder=" + listState.get("titleOrder").getAsString();
+//        url += "&";
+//
+//        url += "ratingOrder=" + listState.get("ratingOrder").getAsString();
+//
         PrintWriter out = response.getWriter();
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("url", url);
-        out.write(jsonObject.toString());
+//        JsonObject jsonObject = new JsonObject();
+//        jsonObject.addProperty("url", url);
+//        System.out.println("url printing...");
+//        System.out.println(url);
+//        System.out.println(jsonObject.toString());
+//        out.write(jsonObject.toString());
+        out.write(listState.toString());
+        out.close();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -90,10 +96,10 @@ public class ListStateServlet extends HttpServlet {
             String type = request.getParameter("type"); // genre, prefix, general
             String genre = request.getParameter("genre");
             String prefix = request.getParameter("prefix");
-            String titleSearch = request.getParameter("titleSearch");
-            String starSearch = request.getParameter("starSearch");
-            String yearSearch = request.getParameter("yearSearch");
-            String directorSearch = request.getParameter("directorSearch");
+            String title = request.getParameter("title");
+            String star = request.getParameter("star");
+            String year = request.getParameter("year");
+            String director = request.getParameter("director");
             String sortBy = request.getParameter("sortBy");
             String titleOrder = request.getParameter("titleOrder");
             String ratingOrder = request.getParameter("ratingOrder");
@@ -112,17 +118,17 @@ public class ListStateServlet extends HttpServlet {
                 if (prefix != null) {
                     newState.addProperty("prefix", prefix);
                 }
-                if (titleSearch != null) {
-                    newState.addProperty("titleSearch", titleSearch);
+                if (title != null) {
+                    newState.addProperty("title", title);
                 }
-                if (starSearch != null) {
-                    newState.addProperty("starSearch", starSearch);
+                if (star != null) {
+                    newState.addProperty("star", star);
                 }
-                if (yearSearch != null) {
-                    newState.addProperty("yearSearch", yearSearch);
+                if (year != null) {
+                    newState.addProperty("year", year);
                 }
-                if (directorSearch != null) {
-                    newState.addProperty("directorSearch", directorSearch);
+                if (director != null) {
+                    newState.addProperty("director", director);
                 }
                 if (sortBy != null) {
                     newState.addProperty("sortBy", sortBy);

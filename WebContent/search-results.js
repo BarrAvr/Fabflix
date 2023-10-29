@@ -26,9 +26,9 @@ function handleSearchResult(resultData) {
 
     let movieTableBodyElement = jQuery("#movie_table_body");
 
-    let index = 0;
+    // let index = 0;
     // Iterate through resultData, no more than 10 entries
-    for (let i = 0; i < Math.min(20, resultData.length); i++) {
+    for (let index = 0; index < resultData.length;) {
         let genres = [];
         let stars = [];
         let movieId = resultData[index]['movie_id'];
@@ -142,12 +142,12 @@ if (type === "general") {
         }
     });
 
-    jQuery.ajax({
-        dataType: "json",
-        method: "GET",
-        url: "api/search-results?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
-        success: (resultData) => handleSearchResult(resultData)
-    });
+    // jQuery.ajax({
+    //     dataType: "json",
+    //     method: "GET",
+    //     url: "api/search-results?type=general&title=" + movieTitle + "&star=" + movieStar + "&year=" + movieYear + "&director=" + movieDirector + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
+    //     success: (resultData) => handleSearchResult(resultData)
+    // });
 }
 
 
@@ -163,12 +163,12 @@ else if (type === "genre") {
         }
     });
 
-    jQuery.ajax({
-        dataType: "json",
-        method: "GET",
-        url: "api/search-results?type=genre&genre=" + genre + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
-        success: (resultData) => handleSearchResult(resultData)
-    });
+    // jQuery.ajax({
+    //     dataType: "json",
+    //     method: "GET",
+    //     url: "api/search-results?type=genre&genre=" + genre + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
+    //     success: (resultData) => handleSearchResult(resultData)
+    // });
 }
 else {
     let prefix = getParameterByName('prefix');
@@ -177,19 +177,45 @@ else {
     jQuery.ajax({
         dataType: "json",
         method: "POST",
-        url: "list-state?type=prefix&prefix=" + prefix + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
+        url: "list-state",
+        data : {
+            type: "prefix",
+            prefix: prefix,
+            sortBy: sortBy,
+            titleOrder: titleOrder,
+            ratingOrder: ratingOrder
+        },
         success: function (result) {
             console.log(result);
         }
     });
-
-    jQuery.ajax({
-        dataType: "json",
-        method: "GET",
-        url: "api/search-results?type=prefix&prefix=" + prefix + "&sortBy=" + sortBy + "&titleOrder=" + titleOrder + "asc&ratingOrder=" + ratingOrder,
-        success: (resultData) => handleSearchResult(resultData)
-    });
 }
+
+jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: "list-state",
+    success: function (listResult) {
+        console.log(listResult.type)
+        jQuery.ajax({
+            dataType: "json",
+            method: "GET",
+            url: "api/search-results",
+            data : listResult,
+            success: (resultData) => handleSearchResult(resultData)
+        });
+    }
+});
+
+// jQuery.ajax({
+//     dataType: "json",
+//     method: "GET",
+//     url: "list-state",
+//     success: function(resultData) {
+//         handleSearchResult(resultData);
+//     }
+// });
+
 
 function submitSort(formSubmitEvent) {
     console.log("submit sort option");
