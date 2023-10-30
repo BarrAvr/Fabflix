@@ -94,8 +94,7 @@ function handleSearchResult(resultData) {
 
             const data = {
                 type: "add",
-                newItemTitle: resultData[iToIndexMapping[i]]["movie_title"],
-                newItemId: resultData[iToIndexMapping[i]]["movie_id"]
+                newItem: resultData[iToIndexMapping[i]]["movie_id"]
             };
 
 

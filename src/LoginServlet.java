@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
             // Declare our statement
             Statement statement = conn.createStatement();
 
-            String query = String.format("select email, password from customers where email = \"%s\"", userEnteredUsername);
+            String query = String.format("select email, password, id from customers where email = \"%s\"", userEnteredUsername);
 //            String query = "select * from movies as m, ratings as r, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
 //                    "where m.id = r.movieId and r.movieId = sim.movieId and sim.starId = s.id and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by r.rating desc";
 
@@ -62,11 +62,12 @@ public class LoginServlet extends HttpServlet {
             int loginCase = 0;
 
             int size = 0;
-            String email = "", pass = "";
+            String email = "", pass = "", id = "";
             while (rs.next()) {
                 size++;
                 email = rs.getString("email");
                 pass = rs.getString("password");
+                id = rs.getString("id");
             }
 
             if (size > 0) {
@@ -97,9 +98,12 @@ public class LoginServlet extends HttpServlet {
 
                 // set this user into the session
                 request.getSession().setAttribute("user", new User(userEnteredUsername));
+                request.getSession().setAttribute("id", id);
+                request.getSession().setAttribute("email", email);
 
                 responseJsonObject.addProperty("status", "success");
                 responseJsonObject.addProperty("message", "success");
+//                responseJsonObject.addProperty("email, id", email + " " + id);
 
             } else {
                 // Login fail

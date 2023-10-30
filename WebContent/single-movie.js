@@ -123,7 +123,7 @@ function handleResult(resultData) {
 
         const data = {
             type: "add",
-            newItem: resultData[0]["movie_title"]
+            newItem: resultData[0]["movie_id"]
         };
 
 

@@ -9,12 +9,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import javax.sql.DataSource;
+import javax.swing.plaf.nimbus.State;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 
 @WebServlet(name = "PaymentServlet", urlPatterns = "/api/payment")
@@ -71,6 +76,8 @@ public class PaymentServlet extends HttpServlet {
                 dbLastName = rs.getString("lastName");
                 dbExpiration = rs.getDate("expiration");
             }
+            rs.close();
+            statement.close();
 
             if (size > 0) {
                 System.out.println("Found " + dbFirstName + " " + dbLastName + " " + dbExpiration.toString());
@@ -83,6 +90,25 @@ public class PaymentServlet extends HttpServlet {
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
                     out.write(responseJsonObject.toString());
+
+//                    String insertQuery = String
+//                    INSERT INTO creditcards VALUES('490001', 'James', 'Brown', '2007/09/20');
+//                    INSERT INTO creditcards VALUES('490002', 'Margaret', 'Black', '2006/05/20');
+//                    INSERT INTO creditcards VALUES('490003', 'Keith', 'Black', '2006/06/25');
+//                    INSERT INTO creditcards VALUES('490004', 'Kyle', 'Shaw', '2008/04/21');
+
+                    HttpSession session = request.getSession();
+                    ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
+                    String customerId = (String) session.getAttribute("id");
+                    for (String movieId : previousItems) {
+                        String insertQuery = String.format("INSERT INTO sales (customerId, movieId, saleDate) VALUES (%s, '%s', CURDATE())", customerId, movieId);
+                        PreparedStatement statement2 = conn.prepareStatement(insertQuery);
+                        System.out.println(insertQuery);
+                        statement2.executeUpdate();
+                        statement2.close();
+                        System.out.println("Query executed");
+                    }
+
                 } else {
                     JsonObject responseJsonObject = new JsonObject();
                     responseJsonObject.addProperty("status", "failure");

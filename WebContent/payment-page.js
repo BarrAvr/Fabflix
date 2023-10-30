@@ -18,6 +18,7 @@ function handlePaymentResult(resultDataString) {
     // If login succeeds, it will redirect the user to index.html
     if (resultDataString["status"] === "success") {
         console.log(resultDataString);
+        window.location.replace("confirmation-page.html");
     } else {
         // If login fails, the web page will display
         // error messages on <div> with id "login_error_message"
@@ -45,7 +46,6 @@ function submitPaymentForm(formSubmitEvent) {
         lastName: document.getElementById("lastName").value,
         id: document.getElementById("id").value,
         expiration: document.getElementById("expiration").value
-        movieInfo: []
     };
 
     console.log("data");
