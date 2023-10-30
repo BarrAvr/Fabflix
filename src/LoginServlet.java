@@ -112,9 +112,11 @@ public class LoginServlet extends HttpServlet {
                 request.getServletContext().log("Login failed");
                 // sample error messages. in practice, it is not a good idea to tell user which one is incorrect/not exist.
                 if (loginCase == 3) {
-                    responseJsonObject.addProperty("message", "user " + userEnteredUsername + " does not exist");
+//                    responseJsonObject.addProperty("message", "user " + userEnteredUsername + " does not exist");
+                    responseJsonObject.addProperty("message", "Login failed: either your username or password was incorrect");
                 } else {
-                    responseJsonObject.addProperty("message", "user " + userEnteredUsername + " found, but password incorrect");
+//                    responseJsonObject.addProperty("message", "user " + userEnteredUsername + " found, but password incorrect");
+                    responseJsonObject.addProperty("message", "Login failed: either your username or password was incorrect");
                 }
             }
             String jsonOutput = responseJsonObject.toString();
