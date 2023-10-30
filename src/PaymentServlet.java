@@ -1,5 +1,6 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.sql.Date;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -61,53 +62,39 @@ public class PaymentServlet extends HttpServlet {
             // The log message can be found in localhost log
             request.getServletContext().log("getting id: " + id);
 
-//            cases:
-//            1 - success; 2 - username matched but password didn't; 3 - user not found / nothing matched
-//            int loginCase = 0;
-//
-//            int size = 0;
-//            String email = "", pass = "";
-//            while (rs.next()) {
-//                size++;
-//                email = rs.getString("email");
-//                pass = rs.getString("password");
-//            }
-//
-//            if (size > 0) {
-//                System.out.println("Found " + email + " " + pass);
-//                boolean usernameMatch = email.equals(userEnteredUsername);
-//                boolean passwordMatch = pass.equals(userEnteredPassword);
-//                System.out.println("Comparison: " + usernameMatch + " " + passwordMatch);
-//                if (usernameMatch && passwordMatch) {
-//                    loginCase = 1;
-//                } else if (usernameMatch && !passwordMatch) {
-//                    loginCase = 2;
-//                }
-//            } else {
-//                System.out.println("Did not find username in DB");
-//                loginCase = 3;
-//            }
-//
-//
-//
-//
-//
-//            // Output stream to STDOUT
-            JsonObject responseJsonObject = new JsonObject();
+            int size = 0;
+            String dbFirstName = "", dbLastName = "";
+            Date dbExpiration = null;
+            while (rs.next()) {
+                size++;
+                dbFirstName = rs.getString("firstName");
+                dbLastName = rs.getString("lastName");
+                dbExpiration = rs.getDate("expiration");
+            }
 
-//            if (loginCase == 1) {
-                // Login success:
-
-
-                // set this user into the session
-
-
-            responseJsonObject.addProperty("status", "success");
-            responseJsonObject.addProperty("message", "success");
-
-
-
-            response.getWriter().write(responseJsonObject.toString());
+            if (size > 0) {
+                System.out.println("Found " + dbFirstName + " " + dbLastName + " " + dbExpiration.toString());
+                boolean firstNameMatch = firstName.equals(dbFirstName);
+                boolean lastNameMatch = lastName.equals(dbLastName);
+                boolean expirationMatch = expiration.equals(dbExpiration.toString());
+                System.out.println("Matches: " + firstNameMatch + " " + lastNameMatch + " " + expirationMatch);
+                if (firstNameMatch && lastNameMatch && expirationMatch) {
+                    JsonObject responseJsonObject = new JsonObject();
+                    responseJsonObject.addProperty("status", "success");
+                    responseJsonObject.addProperty("message", "success");
+                    out.write(responseJsonObject.toString());
+                } else {
+                    JsonObject responseJsonObject = new JsonObject();
+                    responseJsonObject.addProperty("status", "failure");
+                    responseJsonObject.addProperty("message", "one of the fields did not match");
+                    out.write(responseJsonObject.toString());
+                }
+            } else {
+                JsonObject responseJsonObject = new JsonObject();
+                responseJsonObject.addProperty("status", "failure");
+                responseJsonObject.addProperty("message", "id not found");
+                out.write(responseJsonObject.toString());
+            }
 
             response.setStatus(200);
 
