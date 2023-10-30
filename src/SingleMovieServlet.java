@@ -56,7 +56,7 @@ public class SingleMovieServlet extends HttpServlet {
         try (Connection conn = dataSource.getConnection()) {
             // Get a connection from dataSource
 
-            String query = String.format("select m.title, m.year, m.director, r.rating " +
+            String query = String.format("select m.id, m.title, m.year, m.director, r.rating " +
                     "from movies as m, ratings as r " +
                     "where m.id = r.movieId and m.id = \"%s\"", id);
 
@@ -83,6 +83,7 @@ public class SingleMovieServlet extends HttpServlet {
                 String movieYear = rs.getString("m.year");
                 String movieDirector = rs.getString("m.director");
                 String movieRating = rs.getString("r.rating");
+                String movieId = rs.getString("m.id");
                 // Actually creating response[0] with the data we retrieve from rs
 
                 JsonObject jsonObject = new JsonObject();
@@ -90,6 +91,7 @@ public class SingleMovieServlet extends HttpServlet {
                 jsonObject.addProperty("movie_year", movieYear);
                 jsonObject.addProperty("movie_director", movieDirector);
                 jsonObject.addProperty("movie_rating", movieRating);
+                jsonObject.addProperty("movie_id", movieId);
 
                 // Adding JSON with single movie info to response at index 0
                 jsonArray.add(jsonObject);
