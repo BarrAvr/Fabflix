@@ -57,10 +57,10 @@ public class SearchServlet extends HttpServlet {
             System.out.println("prefix searching...");
         }else{
 //            displayGeneralSearchResult(request, response);
-            String title = request.getParameter("title");
-            String star = request.getParameter("star");
+            String title = java.net.URLDecoder.decode(request.getParameter("title"), "UTF-8");
+            String star = java.net.URLDecoder.decode(request.getParameter("star"), "UTF-8");
             String year = request.getParameter("year");
-            String director = request.getParameter("director");
+            String director = java.net.URLDecoder.decode(request.getParameter("director"), "UTF-8");
             query = getGeneralSearchQuery(star, year, title, director, sortBy, titleOrder, ratingOrder, page, count);
             System.out.println("general searching...");
         }

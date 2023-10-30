@@ -18,7 +18,7 @@ function buildShoppingCartFreqMap(arr) {
     });
     return map;
 }
-function handleShoppingCartData(resultData) {
+async function handleShoppingCartData(resultData) {
     let shoppingCartElement = jQuery("#shopping-cart");
     let totalPriceElement = document.getElementById("total-price");
     let messageElement = document.getElementById("message");
@@ -29,27 +29,31 @@ function handleShoppingCartData(resultData) {
         shoppingCartElement.append("<li>No items in cart</li>");
     } else {
        const movieTitlesAndQuantities = buildShoppingCartFreqMap(resultData);
-        let totalMovieCount = movieTitlesAndQuantities.length;
-            console.log("movieTitlesAndQuantities:");
+       let totalMovieCount = movieTitlesAndQuantities.length;
+       console.log("movieTitlesAndQuantities:");
        console.log(movieTitlesAndQuantities);
        const movieTitles = Object.keys(movieTitlesAndQuantities);
-       movieTitles.forEach((item, index) => {
+       for (const item of movieTitles) {
+           const searched_title = await fetchData(item);
            let count = movieTitlesAndQuantities[item];
+
+           console.log("appending item " + searched_title + " to cart as li");
            console.log("appending item " + item + " to cart as li");
-            // shoppingCartElement.append(`<li>${item["itemName"]}<a id="decrement-quantity">-</a> ${} <a id="increment-quantity">+</a></li>`);
-           shoppingCartElement.append(`<li>${item} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> Price: <a class="delete" color="green">Delete</a> <span class="price">${99 * count}</span> USD</li>`);
-        });
+           shoppingCartElement.append(`<li>${searched_title} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> Price: <a class="delete" color="green">Delete</a> <span class="price">${99 * count}</span> USD</li>`);
+       }
        totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
        const counts = document.getElementsByClassName("count");
-        const prices = document.getElementsByClassName("price");
+       const prices = document.getElementsByClassName("price");
        const incrementButtons = document.getElementsByClassName("increment-quantity");
        const decrementButtons = document.getElementsByClassName("decrement-quantity");
        const deleteButtons = document.getElementsByClassName("delete");
        for (let i = 0; i < incrementButtons.length; i++) {
-           incrementButtons[i].onclick = function () {
+           incrementButtons[i].onclick = async function () {
                console.log("message");
                console.log(message);
-               messageElement.innerHTML = "Incremented quantity of " + movieTitles[i] + " by 1";
+               let title = await fetchData(movieTitles[i]);
+               messageElement.innerHTML = "Incremented quantity of " + title + " by 1";
+               // messageElement.innerHTML = "Incremented quantity of " + movieTitles[i] + " by 1";
                oldCount = movieTitlesAndQuantities[movieTitles[i]]
                newCount = oldCount + 1;
                movieTitlesAndQuantities[movieTitles[i]] = newCount;
@@ -72,43 +76,79 @@ function handleShoppingCartData(resultData) {
                    dataType: "json"
                });
            };
-           decrementButtons[i].onclick = function () {
+           decrementButtons[i].onclick = async function () {
                console.log("message");
                console.log(message);
-               messageElement.innerHTML = "Decremented quantity of " + movieTitles[i] + " by 1";
-               oldCount = movieTitlesAndQuantities[movieTitles[i]]
-               newCount = oldCount - 1;
-               movieTitlesAndQuantities[movieTitles[i]] = newCount;
-               counts[i].innerHTML = newCount;
-               prices[i].innerHTML = 99 * newCount;
-               totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
-               console.log(movieTitlesAndQuantities);
-               if (newCount === 0) {
-                   // doesn't properly handle empty cart after deletion of last movie
-               }
-               else {
+               if(movieTitlesAndQuantities[movieTitles[i]] > 0){
+                   let title = await fetchData(movieTitles[i]);
+                   messageElement.innerHTML = "Decremented quantity of " + title + " by 1";
+                   // messageElement.innerHTML = "Decremented quantity of " + movieTitles[i] + " by 1";
+                   oldCount = movieTitlesAndQuantities[movieTitles[i]]
+                   newCount = oldCount - 1;
+                   movieTitlesAndQuantities[movieTitles[i]] = newCount;
                    counts[i].innerHTML = newCount;
-               }
-               let data = {
-                   type: "remove",
-                   itemToRemove: movieTitles[i]
-               };
+                   prices[i].innerHTML = 99 * newCount;
+                   totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
+                   console.log(movieTitlesAndQuantities);
+                   if (newCount === 0) {
+                       // doesn't properly handle empty cart after deletion of last movie
+                   }
+                   else {
+                       counts[i].innerHTML = newCount;
+                   }
+                   let data = {
+                       type: "remove",
+                       itemToRemove: movieTitles[i]
+                   };
 
-               $.ajax({
-                   type: "POST",
-                   url: "items",
-                   data: data,
-                   success: function (result) {
-                       console.log(result);
-                   },
-                   dataType: "json"
-               });
+                   $.ajax({
+                       type: "POST",
+                       url: "items",
+                       data: data,
+                       success: function (result) {
+                           console.log(result);
+                       },
+                       dataType: "json"
+                   });
+               }
+               // let title = await fetchData(movieTitles[i]);
+               // messageElement.innerHTML = "Decremented quantity of " + title + " by 1";
+               // // messageElement.innerHTML = "Decremented quantity of " + movieTitles[i] + " by 1";
+               // oldCount = movieTitlesAndQuantities[movieTitles[i]]
+               // newCount = oldCount - 1;
+               // movieTitlesAndQuantities[movieTitles[i]] = newCount;
+               // counts[i].innerHTML = newCount;
+               // prices[i].innerHTML = 99 * newCount;
+               // totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
+               // console.log(movieTitlesAndQuantities);
+               // if (newCount === 0) {
+               //     // doesn't properly handle empty cart after deletion of last movie
+               // }
+               // else {
+               //     counts[i].innerHTML = newCount;
+               // }
+               // let data = {
+               //     type: "remove",
+               //     itemToRemove: movieTitles[i]
+               // };
+               //
+               // $.ajax({
+               //     type: "POST",
+               //     url: "items",
+               //     data: data,
+               //     success: function (result) {
+               //         console.log(result);
+               //     },
+               //     dataType: "json"
+               // });
            };
 
-           deleteButtons[i].onclick = function () {
+           deleteButtons[i].onclick = async function () {
                console.log("message");
                console.log(message);
-               messageElement.innerHTML = "Deleted " + movieTitles[i] + " from cart";
+               let title = await fetchData(movieTitles[i]);
+               messageElement.innerHTML = "Deleted " + title + " from cart";
+               // messageElement.innerHTML = "Deleted " + movieTitles[i] + " from cart";
                delete movieTitlesAndQuantities[movieTitles[i]];
                console.log(movieTitlesAndQuantities);
                this.parentElement.remove();
@@ -132,6 +172,26 @@ function handleShoppingCartData(resultData) {
     }
 
 }
+
+async function fetchData(movie_id) {
+    let title = "";
+    try {
+        // let title = "";
+        await $.ajax({
+            type: "GET",
+            url: "id-to-title",
+            data: { movie_id: movie_id },
+            success: function (result) {
+                title = result["movie_title"];
+            }
+        });
+        console.log("AJAX call completed with:", title);
+    } catch (error) {
+        console.error("Error in AJAX call:", error);
+    }
+    return title;
+}
+
 
 
 
