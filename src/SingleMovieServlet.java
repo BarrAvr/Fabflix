@@ -60,9 +60,16 @@ public class SingleMovieServlet extends HttpServlet {
                     "from movies as m, ratings as r " +
                     "where m.id = r.movieId and m.id = \"%s\"", id);
 
-            String starQuery = String.format("select s.name, s.id " +
-                    "from stars as s, stars_in_movies as sim " +
-                    "where s.id = sim.starId and sim.movieId = \"%s\" ORDER BY s.name", id);
+//            String starQuery = String.format("select s.name, s.id " +
+//                    "from stars as s, stars_in_movies as sim " +
+//                    "where s.id = sim.starId and sim.movieId = \"%s\" ORDER BY s.name", id);
+
+            String starQuery = String.format("SELECT s.name, s.id, COUNT(sim.movieId) AS movieCount " +
+                    "FROM stars AS s " +
+                    "JOIN stars_in_movies AS sim ON s.id = sim.starId " +
+                    "WHERE sim.starId IN (SELECT starId FROM stars_in_movies WHERE movieId = \"%s\") " +
+                    "GROUP BY s.id, s.name " +
+                    "ORDER BY COUNT(sim.movieId) DESC, s.name", id);
 
             String genreQuery = String.format("select g.name " +
                     "from genres as g, genres_in_movies as gim " +
