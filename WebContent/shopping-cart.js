@@ -39,7 +39,7 @@ async function handleShoppingCartData(resultData) {
 
            console.log("appending item " + searched_title + " to cart as li");
            console.log("appending item " + item + " to cart as li");
-           shoppingCartElement.append(`<li>${searched_title} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> Price: <a class="delete" color="green">Delete</a> <span class="price">${99 * count}</span> USD</li>`);
+           shoppingCartElement.append(`<li style="margin-top: 50px; color: white; font-family: 'Young Serif', serif;">${searched_title} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> <a class="delete" color="green">Delete</a> Price: <span class="price">${99 * count}</span> USD</li>`);
        }
        totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
        const counts = document.getElementsByClassName("count");
