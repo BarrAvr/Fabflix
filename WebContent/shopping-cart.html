@@ -12,8 +12,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <ul id="shopping-cart" style="list-style-type: none;">
-    </ul>
+    <table id="cart_table" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="color: white; font-family: 'Young Serif', serif">Movie Title</th>
+            <th style="color: white; font-family: 'Young Serif', serif">Quantity</th>
+            <th style="color: white; font-family: 'Young Serif', serif">Delete</th>
+            <th style="color: white; font-family: 'Young Serif', serif">Price</th>
+        </tr>
+        </thead>
+        <tbody id="cart_table_body"></tbody>
+    </table>
+
     <p id="message" style="color: white; font-family: 'Young Serif', serif;"></p>
     <h3 id="total-price" style="color: white; font-family: 'Young Serif', serif"></h3>
     <a href="payment-page.html" style="display: block; font-family: 'Young Serif', serif; color: #428184;">Proceed to Payment</a>

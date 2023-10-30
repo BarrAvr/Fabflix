@@ -19,7 +19,7 @@ function buildShoppingCartFreqMap(arr) {
     return map;
 }
 async function handleShoppingCartData(resultData) {
-    let shoppingCartElement = jQuery("#shopping-cart");
+    let shoppingCartElement = jQuery("#cart_table_body");
     let totalPriceElement = document.getElementById("total-price");
     let messageElement = document.getElementById("message");
     console.log(shoppingCartElement);
@@ -39,7 +39,14 @@ async function handleShoppingCartData(resultData) {
 
            console.log("appending item " + searched_title + " to cart as li");
            console.log("appending item " + item + " to cart as li");
-           shoppingCartElement.append(`<li style="margin-top: 50px; color: white; font-family: 'Young Serif', serif;">${searched_title} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> <a class="delete" color="green">Delete</a> Price: <span class="price">${99 * count}</span> USD</li>`);
+           let rowHTML = "<tr>";
+           rowHTML +=
+               `<th style="color: white; font-family: 'Young Serif', serif">` + searched_title + "</th>";
+           rowHTML += `<th style="color: white; font-family: 'Young Serif', serif">` + `<a class="decrement-quantity">-</a> <span className="count">${count}</span><a className="increment-quantity">+</a>` + "</th>";
+           rowHTML += "<th style=\"color: white; font-family: 'Young Serif', serif\">" + `<a class="delete">Delete</a>` + "</th>";
+           rowHTML += `<th style="color: white; font-family: 'Young Serif', serif">` + `Price: <span class="price">${99 * count}</span> USD` + "</th>";
+           // shoppingCartElement.append(`<li style="margin-top: 50px; color: white; font-family: 'Young Serif', serif;">${searched_title} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> <a class="delete" color="green">Delete</a> Price: <span class="price">${99 * count}</span> USD</li>`);
+        shoppingCartElement.append(rowHTML);
        }
        totalPriceElement.innerHTML = "Total Price: $" + getTotalPrice(movieTitlesAndQuantities);
        const counts = document.getElementsByClassName("count");
