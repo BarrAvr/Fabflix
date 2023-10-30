@@ -1,30 +1,37 @@
 <!-- This page will be redirected from any url if you are not logged in -->
 <!DOCTYPE html>
-<html lang="en">
+<!--  --->
+<html lang="en" style="height: 100vh;width:100vw;background-color: #0C1713;">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap" rel="stylesheet">
     <title>Login to Fablix</title>
 </head>
 <body>
-<link rel="stylesheet" href="styles.css">
-<div class="page-container all-movies">
+<div class="page-container all-movies" style="width:500px;height: 400px;margin: auto;display: flex;flex-direction: column;">
 
-<h2 class="project2-header">Login to Fablix</h2>
+<!--<h2 id="login-header" style="margin-left: 50px;margin-top: 30px;color:white;font-family: 'Young Serif', serif;">Login to Fablix</h2>-->
+    <h2 id="login-header" style="margin-top: 200px;text-align: center;color:white;font-family: 'Young Serif', serif;">Login to Fablix</h2>
 <!-- Set the method to POST to avoid showing the username/password in the URL
      The default action is disabled to allow your own implementation. -->
     <div class="project2-container">
-        <form id="login_form" method="post" action="#">
-            <label><b>Username</b></label>
-            <label>
-                <input name="username" placeholder="Enter Username" type="text">
-            </label>
+        <form id="login_form" method="post" action="#" style="display: flex;flex-direction: column">
+            <div class="form-input-div" style="width:216px;">
+                <label style="color: white; font-family: 'Young Serif', serif;"><b>Username</b></label>
+                <label>
+                    <input name="username" placeholder="Enter Username" type="text" style="padding:5px; border: 1px solid #5B616A; border-radius: 10px">
+                </label>
+            </div>
             <br>
-            <label><b>Password</b></label>
-            <label>
-                <input name="password" placeholder="Enter Password" type="password">
-            </label>
+            <div class="form-input-div" style="width:216px;">
+                <label style="color: white; font-family: 'Young Serif', serif;"><b>Password</b></label>
+                <label>
+                    <input name="password" placeholder="Enter Password" type="password" style="padding:5px; border: 1px solid #5B616A; border-radius: 10px">
+                </label>
+            </div>
             <br>
-            <input type="submit" value="Login">
+            <input type="submit" value="Login" style="width:75px;border:0;">
         </form>
     </div>
 </div>
