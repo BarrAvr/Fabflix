@@ -102,6 +102,112 @@ function handleUpdateSort(listState, sortBy, titleOrder, ratingOrder) {
     window.location.replace(url);
 }
 
+function handleJumpNextPage(listState) {
+    let url = "search-results.html?";
+
+    if (listState["type"] === "genre") {
+        url += "type=genre&";
+        url += "genre=" + listState["genre"];
+        url += "&";
+    } else if (listState["type"] === "prefix") {
+        url += "type=prefix&";
+        url += "prefix=" + listState["prefix"];
+        url += "&";
+    } else {
+        url += "type=general&";
+        url += "title=";
+        if (listState["title"] != null) {
+            url += listState["title"];
+        }
+        url += "&";
+        url += "star=";
+        if (listState["star"] != null) {
+            url += listState["star"];
+        }
+        url += "&";
+        url += "year=";
+        if (listState["year"] != null) {
+            url += listState["year"];
+        }
+        url += "&";
+        url += "director=";
+        if (listState["director"] != null) {
+            url += listState["director"];
+        }
+        url += "&";
+
+    }
+    url += "sortBy=" + listState["sortBy"];
+    url += "&";
+
+    url += "titleOrder=" + listState["titleOrder"];
+    url += "&";
+
+    url += "ratingOrder=" + listState["ratingOrder"];
+    url += "&";
+
+    let nextPage = parseInt(listState["page"]) + 1;
+    url += "page=" + nextPage;
+    url += "&";
+
+    url += "count=" + listState["count"];
+
+    window.location.replace(url);
+}
+
+function handleJumpPrevPage(listState) {
+    let url = "search-results.html?";
+
+    if (listState["type"] === "genre") {
+        url += "type=genre&";
+        url += "genre=" + listState["genre"];
+        url += "&";
+    } else if (listState["type"] === "prefix") {
+        url += "type=prefix&";
+        url += "prefix=" + listState["prefix"];
+        url += "&";
+    } else {
+        url += "type=general&";
+        url += "title=";
+        if (listState["title"] != null) {
+            url += listState["title"];
+        }
+        url += "&";
+        url += "star=";
+        if (listState["star"] != null) {
+            url += listState["star"];
+        }
+        url += "&";
+        url += "year=";
+        if (listState["year"] != null) {
+            url += listState["year"];
+        }
+        url += "&";
+        url += "director=";
+        if (listState["director"] != null) {
+            url += listState["director"];
+        }
+        url += "&";
+
+    }
+    url += "sortBy=" + listState["sortBy"];
+    url += "&";
+
+    url += "titleOrder=" + listState["titleOrder"];
+    url += "&";
+
+    url += "ratingOrder=" + listState["ratingOrder"];
+    url += "&";
+
+    let nextPage = parseInt(listState["page"]) - 1;
+    url += "page=" + nextPage;
+    url += "&";
+
+    url += "count=" + listState["count"];
+
+    window.location.replace(url);
+}
+
 function jumpBack() {
     jQuery.ajax({
         dataType: "json",
@@ -117,6 +223,48 @@ function updateSort(sortBy, titleOrder, ratingOrder) {
         method: "GET",
         url: "list-state",
         success: (resultData) => handleUpdateSort(resultData, sortBy, titleOrder, ratingOrder)
+    });
+}
+
+function jumpNextPage(){
+    jQuery.ajax({
+        dataType: "json",
+        method: "GET",
+        url: "list-state",
+        success: function(listState) {
+            jQuery.ajax({
+                dataType: "json",
+                method: "GET",
+                url: "total-movie-count",
+                success: function(total_count) {
+                    let number_of_movies_requested = parseInt(listState["page"]) * parseInt(listState["count"]);
+                    console.log(total_count);
+                    if (parseInt(total_count["total_movies"]) > number_of_movies_requested){
+                        handleJumpNextPage(listState);
+                    }else{
+                        handleJumpBack(listState);
+                    }
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+        }
+    });
+}
+
+function jumpPrevPage(){
+    jQuery.ajax({
+        dataType: "json",
+        method: "GET",
+        url: "list-state",
+        success: function(listState) {
+            if (parseInt(listState["page"]) > 1){
+                handleJumpPrevPage(listState);
+            }else{
+                handleJumpBack(listState);
+            }
+        }
     });
 }
 

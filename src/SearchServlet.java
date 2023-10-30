@@ -48,9 +48,7 @@ public class SearchServlet extends HttpServlet {
         String page = request.getParameter("page");
         String count = request.getParameter("count");
         if(type.equals("genre")){
-//            displayGenreSearchResult(request, response);
             String genre = request.getParameter("genre");
-            String title_order, rating_order, title_first;
             query = getGenreQuery(genre, sortBy, titleOrder, ratingOrder, page, count);
             System.out.println("genre searching...");
         }else if(type.equals("prefix")){
