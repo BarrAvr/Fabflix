@@ -62,17 +62,18 @@ public class SingleMovieServlet extends HttpServlet {
 
             String starQuery = String.format("select s.name, s.id " +
                     "from stars as s, stars_in_movies as sim " +
-                    "where s.id = sim.starId and sim.movieId = \"%s\"", id);
+                    "where s.id = sim.starId and sim.movieId = \"%s\" ORDER BY s.name", id);
 
             String genreQuery = String.format("select g.name " +
                     "from genres as g, genres_in_movies as gim " +
-                    "where g.id = gim.genreId and gim.movieId = \"%s\"", id);
+                    "where g.id = gim.genreId and gim.movieId = \"%s\" ORDER BY g.name", id);
 
 
             // Declaring statement
             Statement statement = conn.createStatement();
 
             // Perform the query
+            System.out.println(query);
             ResultSet rs = statement.executeQuery(query);
 
             //JsonArray jsonArray = new JsonArray();
@@ -109,7 +110,7 @@ public class SingleMovieServlet extends HttpServlet {
 //            testObj.addProperty("stars", sampleStars.toString());
 //            request.getServletContext().log(sampleStars.getAsString());
 //            jsonArray.add(testObj);
-
+            System.out.println(starQuery);
             rs = statement.executeQuery(starQuery);
             // Initializing starArray, the array of star objs that will
             // eventually be stringified and put in response[1]
@@ -136,7 +137,7 @@ public class SingleMovieServlet extends HttpServlet {
 //            starsObj.addProperty("stars", starArray);
 //            request.getServletContext().log(sampleStars.getAsString());
             jsonArray.add(starArray);
-
+            System.out.println(genreQuery);
             rs = statement.executeQuery(genreQuery);
 
             JsonArray genreArray = new JsonArray();
