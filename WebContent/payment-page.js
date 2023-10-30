@@ -40,11 +40,22 @@ function submitPaymentForm(formSubmitEvent) {
      */
     formSubmitEvent.preventDefault();
 
+    const data = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        id: document.getElementById("id").value,
+        expiration: document.getElementById("expiration").value
+        movieInfo: []
+    };
+
+    console.log("data");
+    console.log(data);
+
     $.ajax(
         "api/payment", {
             method: "POST",
             // Serialize the login form to the data sent by POST request
-            data: payment_form.serialize(),
+            data: data,
             success: handlePaymentResult
         }
     );
