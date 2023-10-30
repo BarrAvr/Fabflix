@@ -22,6 +22,7 @@
     <div class="headings">
         <h1 class="page-heading">Search Results</h1>
         <h3 class="sub-heading" id="movie_info"></h3>
+        <a href="shopping-cart.html" class="checkout-button">Checkout</a>
     </div>
     <a href="#" onclick="jumpPrevPage()" class="back-button">Prev Page</a>
     <a href="#" onclick="jumpNextPage()" class="back-button">Next Page</a>
@@ -36,6 +37,16 @@
             <option value="rating-asc-desc">Rating Asc, Title Desc</option>
             <option value="rating-desc-asc">Rating Desc, Title Asc</option>
             <option value="rating-desc-desc">Rating Desc, Title Desc</option>
+        </select>
+        <input type="submit">
+    </form>
+    <form onsubmit="return handlePageCountSelection()">
+        <label for="count-selection" class="back-button">Count:</label>
+        <select id="count-selection">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
         </select>
         <input type="submit">
     </form>
