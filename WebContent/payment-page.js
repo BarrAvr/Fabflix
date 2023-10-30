@@ -1,5 +1,9 @@
 let payment_form = $("#payment_form");
 
+function doPayment() {
+
+}
+
 /**
  * Handle the data returned by LoginServlet
  * @param resultDataString jsonObject
@@ -18,7 +22,21 @@ function handlePaymentResult(resultDataString) {
     // If login succeeds, it will redirect the user to index.html
     if (resultDataString["status"] === "success") {
         console.log(resultDataString);
+        let data = {
+            type: "clear"
+        };
+        $.ajax(
+            "/items", {
+                method: "POST",
+                // Serialize the login form to the data sent by POST request
+                data: data,
+                success: function () {
+                    console.log("cleared shopping cart");
+                }
+            }
+        )
         window.location.replace("confirmation-page.html");
+
     } else {
         // If login fails, the web page will display
         // error messages on <div> with id "login_error_message"

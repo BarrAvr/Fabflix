@@ -78,6 +78,7 @@ public class ItemsServlet extends HttpServlet {
                         JsonObject jsonObject = new JsonObject();
                         jsonObject.addProperty("message", "removed item " + itemToRemove);
                         jsonObject.addProperty("previousItems", previousItems.toString());
+                        session.setAttribute("previousItems", previousItems);
                         out.write(jsonObject.toString());
                     }
                 } else if (type.equals("delete")) {
@@ -89,6 +90,14 @@ public class ItemsServlet extends HttpServlet {
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("message", "deleted item " + itemToDelete);
                     jsonObject.addProperty("previousItems", previousItems.toString());
+                    out.write(jsonObject.toString());
+                } else if (type.equals("clear")) {
+//                    session.setAttribute("previousItems", new ArrayList<String>());
+                    JsonObject jsonObject = new JsonObject();
+                    ArrayList<String> emptyCart = new ArrayList<String>();
+                    jsonObject.addProperty("message", "cleared cart");
+                    session.setAttribute("previousItems", emptyCart);
+                    jsonObject.addProperty("previousItems", emptyCart.toString());
                     out.write(jsonObject.toString());
                 }
             }

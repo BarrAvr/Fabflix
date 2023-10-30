@@ -65,8 +65,17 @@ function handleSearchResult(resultData) {
 
         let genreString = "";
         for (let i = 0; i < Math.min(3, genres.length); i++) {
-            genreString += `${genres[i]}, `;
+            let genre = encodeURIComponent(genres[i]);
+            genreString = `<a href="search-results.html?type=genre&genre=${genre}&sortBy=title&titleOrder=asc&ratingOrder=desc&page=1&count=10">${genre}</a>, `;
+            // rowHTML += "<th>" +
+                // Add a link to single-star.html with id passed with GET url parameter
+            // genreString += search-results.html?type=genre&genre=' + genre + '&sortBy=title&titleOrder=asc&ratingOrder=desc&page=1&count=10">'
+            //
         }
+            // + genre +
+        //     '</a>' +
+        //     "</th>";
+        // genreString += `${genres[i]}, `;
 
         genreString = genreString.slice(0, genreString.length - 2);
 

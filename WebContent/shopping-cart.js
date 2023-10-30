@@ -42,7 +42,7 @@ async function handleShoppingCartData(resultData) {
            let rowHTML = "<tr>";
            rowHTML +=
                `<th style="color: white; font-family: 'Young Serif', serif">` + searched_title + "</th>";
-           rowHTML += `<th style="color: white; font-family: 'Young Serif', serif">` + `<a class="decrement-quantity">-</a> <span className="count">${count}</span><a className="increment-quantity">+</a>` + "</th>";
+           rowHTML += `<th style="color: white; font-family: 'Young Serif', serif">` + `<a class="decrement-quantity">-</a> <span class="count">${count}</span><a class="increment-quantity">+</a>` + "</th>";
            rowHTML += "<th style=\"color: white; font-family: 'Young Serif', serif\">" + `<a class="delete">Delete</a>` + "</th>";
            rowHTML += `<th style="color: white; font-family: 'Young Serif', serif">` + `Price: <span class="price">${99 * count}</span> USD` + "</th>";
            // shoppingCartElement.append(`<li style="margin-top: 50px; color: white; font-family: 'Young Serif', serif;">${searched_title} <a class="decrement-quantity">-</a> <span class="count">${count}</span> <a class="increment-quantity">+</a> <a class="delete" color="green">Delete</a> Price: <span class="price">${99 * count}</span> USD</li>`);

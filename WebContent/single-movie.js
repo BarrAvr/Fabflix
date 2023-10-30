@@ -77,7 +77,14 @@ function handleResult(resultData) {
             '</a>' +
             "</th>";
         // rowHTML += "<th>" + resultData[1][i]["star_name"] + "</th>";
-        rowHTML += "<th>" + resultData[2][i]["genre_name"] + "</th>";
+        let genre = resultData[2][i]["genre_name"];
+        rowHTML += "<th>" +
+            // Add a link to single-star.html with id passed with GET url parameter
+            '<a href="search-results.html?type=genre&genre=' + genre + '&sortBy=title&titleOrder=asc&ratingOrder=desc&page=1&count=10">'
+            + genre +     // display star_name for the link text
+            '</a>' +
+            "</th>";
+        // rowHTML += "<th>" + resultData[2][i]["genre_name"] + "</th>";
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
