@@ -48,8 +48,9 @@ public class RecaptchaVerifyUtils {
             // verification succeed
             return;
         }
-
-        throw new Exception("recaptcha verification failed: response is " + jsonObject);
+        // uncomment the line below to see response from Google API for debugging purposes
+//        throw new Exception("recaptcha verification failed: response is " + jsonObject);
+        throw new Exception("Error: Recaptcha verification failed");
     }
 
 }
