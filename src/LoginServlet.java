@@ -45,25 +45,19 @@ public class LoginServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        try {
-            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-            JsonObject responseJsonObject = new JsonObject();
-            responseJsonObject.addProperty("status", "success");
-            responseJsonObject.addProperty("message", "success");
-            out.write(responseJsonObject.toString());
-            System.out.println("success - Writing " + responseJsonObject.toString() + " to out");
-            out.close();
-        }
-        catch (Exception e) {
-            JsonObject responseJsonObject = new JsonObject();
-            System.out.println("Entered catch block due to Recaptcha errror: " + e.getMessage());
-            responseJsonObject.addProperty("status", "fail");
-            responseJsonObject.addProperty("message", "Login failed - Recaptcha verification error: " + e.getMessage());
-            out.write(responseJsonObject.toString());
+//        try {
 
-            out.close();
-            return;
-        }
+//        }
+//        catch (Exception e) {
+//            JsonObject responseJsonObject = new JsonObject();
+//            System.out.println("Entered catch block due to Recaptcha errror: " + e.getMessage());
+//            responseJsonObject.addProperty("status", "fail");
+//            responseJsonObject.addProperty("message", "Login failed - Recaptcha verification error: " + e.getMessage());
+//            out.write(responseJsonObject.toString());
+//
+//            out.close();
+//            return;
+//        }
 
 
         request.getServletContext().log("getting username: " + userEnteredUsername);
@@ -72,6 +66,14 @@ public class LoginServlet extends HttpServlet {
         JsonArray jsonArray = new JsonArray();
 
         try {
+
+            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+            JsonObject responseJsonObject = new JsonObject();
+            responseJsonObject.addProperty("status", "success");
+            responseJsonObject.addProperty("message", "success");
+            out.write(responseJsonObject.toString());
+            System.out.println("success - Writing " + responseJsonObject.toString() + " to out");
+            out.close();
 
             Connection conn = dataSource.getConnection();
             // Declare our statement
@@ -119,7 +121,7 @@ public class LoginServlet extends HttpServlet {
 
 
             // Output stream to STDOUT
-            JsonObject responseJsonObject = new JsonObject();
+//            JsonObject responseJsonObject = new JsonObject();
 
             if (loginCase == 1) {
                 // Login success:
@@ -158,14 +160,16 @@ public class LoginServlet extends HttpServlet {
 
         } catch (Exception e) {
             // Write error message JSON object to output
+            e.printStackTrace();
             JsonObject responseJsonObject = new JsonObject();
-            responseJsonObject.addProperty("errorMessage", e.getMessage());
+            responseJsonObject.addProperty("status", "fail");
+            responseJsonObject.addProperty("message", e.getMessage());
             String jsonOutput = responseJsonObject.toString();
             System.out.println("In catch block - Writing " + jsonOutput + " to out");
             response.getWriter().write(responseJsonObject.toString());
 
             // Set response status to 500 (Internal Server Error)
-            response.setStatus(500);
+            response.setStatus(200);
 //        } finally {
 //            out.close();
 //        }
