@@ -36,6 +36,12 @@ public class LoginServlet extends HttpServlet {
 
         String userEnteredUsername = request.getParameter("username");
         String userEnteredPassword = request.getParameter("password");
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+
+        System.out.println("================= Received:");
+        System.out.println("username: " + userEnteredUsername);
+        System.out.println("password: " + userEnteredPassword);
+        System.out.println("gRecaptchaResponse: " + gRecaptchaResponse);
 
         request.getServletContext().log("getting username: " + userEnteredUsername);
 
