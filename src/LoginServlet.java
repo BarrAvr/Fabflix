@@ -69,11 +69,11 @@ public class LoginServlet extends HttpServlet {
 
             RecaptchaVerifyUtils.verify(gRecaptchaResponse);
             JsonObject responseJsonObject = new JsonObject();
-            responseJsonObject.addProperty("status", "success");
-            responseJsonObject.addProperty("message", "success");
-            out.write(responseJsonObject.toString());
-            System.out.println("success - Writing " + responseJsonObject.toString() + " to out");
-            out.close();
+//            responseJsonObject.addProperty("status", "success");
+//            responseJsonObject.addProperty("message", "success");
+//            out.write(responseJsonObject.toString());
+//            System.out.println("success - Writing " + responseJsonObject.toString() + " to out");
+//            out.close();
 
             Connection conn = dataSource.getConnection();
             // Declare our statement
@@ -134,6 +134,11 @@ public class LoginServlet extends HttpServlet {
 
                 responseJsonObject.addProperty("status", "success");
                 responseJsonObject.addProperty("message", "success");
+                response.getWriter().write(responseJsonObject.toString());
+                String jsonOutput = responseJsonObject.toString();
+                System.out.println("In try block - Writing " + jsonOutput + " to out");
+
+                response.setStatus(200);
 //                responseJsonObject.addProperty("email, id", email + " " + id);
 
             } else {
@@ -145,16 +150,22 @@ public class LoginServlet extends HttpServlet {
                 if (loginCase == 3) {
 //                    responseJsonObject.addProperty("message", "user " + userEnteredUsername + " does not exist");
                     responseJsonObject.addProperty("message", "Login failed: either your username or password was incorrect");
+                    response.getWriter().write(responseJsonObject.toString());
+                    String jsonOutput = responseJsonObject.toString();
+                    System.out.println("In try block - Writing " + jsonOutput + " to out");
+
+                    response.setStatus(200);
                 } else {
 //                    responseJsonObject.addProperty("message", "user " + userEnteredUsername + " found, but password incorrect");
                     responseJsonObject.addProperty("message", "Login failed: either your username or password was incorrect");
+                    response.getWriter().write(responseJsonObject.toString());
+                    String jsonOutput = responseJsonObject.toString();
+                    System.out.println("In try block - Writing " + jsonOutput + " to out");
+
+                    response.setStatus(200);
                 }
             }
-            String jsonOutput = responseJsonObject.toString();
-            System.out.println("In try block - Writing " + jsonOutput + " to out");
-            response.getWriter().write(responseJsonObject.toString());
 
-            response.setStatus(200);
 
             conn.close();
 
