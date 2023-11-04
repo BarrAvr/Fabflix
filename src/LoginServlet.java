@@ -1,5 +1,6 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -105,6 +106,7 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("Found " + email + " " + pass);
                 boolean usernameMatch = email.equals(userEnteredUsername);
                 boolean passwordMatch = pass.equals(userEnteredPassword);
+                passwordMatch = VerifyPassword.verifyCredentials(userEnteredUsername, userEnteredPassword);
                 System.out.println("Comparison: " + usernameMatch + " " + passwordMatch);
                 if (usernameMatch && passwordMatch) {
                     loginCase = 1;
