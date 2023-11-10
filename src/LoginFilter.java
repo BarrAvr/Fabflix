@@ -23,8 +23,17 @@ public class LoginFilter implements Filter {
 
         System.out.println("LoginFilter: " + httpRequest.getRequestURI());
 
+        if (httpRequest.getRequestURI().endsWith("/_dashboard/index.html")) {
+            System.out.println("dashboard index match found!");
+            System.out.println(httpRequest.getSession().getAttribute("employee"));
+            if (httpRequest.getSession().getAttribute("employee") == null) {
+                System.out.println("Employee not logged in!");
+                httpResponse.sendRedirect("login.html");
+            }
+        }
         // Check if this URL is allowed to access without logging in
         if (this.isUrlAllowedWithoutLogin(httpRequest.getRequestURI())) {
+
             // Keep default action: pass along the filter chain
             System.out.println(" -> allowed");
             chain.doFilter(request, response);
