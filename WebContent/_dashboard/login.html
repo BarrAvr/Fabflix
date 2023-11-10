@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100vh;width:100vw;background-color: #0C1713;">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap" rel="stylesheet">
     <title>Employee Login</title>
 </head>
 <body>
-    <h1>Employee Login</h1>
+<div class="page-container all-movies" style="width:500px;height: 400px;margin: auto;display: flex;flex-direction: column;">
+    <!--<h2 id="login-header" style="margin-left: 50px;margin-top: 30px;color:white;font-family: 'Young Serif', serif;">Login to Fablix</h2>-->
+    <h2 id="login-header" style="margin-top: 200px;text-align: center;color:white;font-family: 'Young Serif', serif;">Employee Login</h2>
+    <!-- Set the method to POST to avoid showing the username/password in the URL
+         The default action is disabled to allow your own implementation. -->
+    <div class="project2-container">
+        <form id="login_form" method="post" action="#" style="display: flex;flex-direction: column">
+            <div class="form-input-div" style="width:216px;">
+                <label style="color: white; font-family: 'Young Serif', serif;"><b>Username</b></label>
+                <label>
+                    <input name="username" placeholder="Enter Username" type="text" style="padding:5px; border: 1px solid #5B616A; border-radius: 10px">
+                </label>
+            </div>
+            <br>
+            <div class="form-input-div" style="width:216px;">
+                <label style="color: white; font-family: 'Young Serif', serif;"><b>Password</b></label>
+                <label>
+                    <input name="password" placeholder="Enter Password" type="password" style="padding:5px; border: 1px solid #5B616A; border-radius: 10px">
+                </label>
+            </div>
+            <br>
+            <div class="g-recaptcha" data-sitekey="6LcbrugoAAAAAOvLg6FtHeLlGknw-ml7rluaplCr"></div>
+            <div id="login_error_message" style="height: 18.5px; color: #D33E43; margin: 20px auto; font-family: 'Young Serif', serif;"></div>
+            <input type="submit" value="Login" style="width:75px;padding:5px;border: 1px solid white; background: Transparent no-repeat; border-radius: 8px; margin: auto; font-family: 'Young Serif', serif; color: white;">
+        </form>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./login.js"></script>
 </body>
 </html>
