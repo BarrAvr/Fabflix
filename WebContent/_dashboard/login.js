@@ -17,7 +17,7 @@ function handleLoginResult(resultDataString) {
 
     // If login succeeds, it will redirect the user to index.html
     if (resultDataString["status"] === "success") {
-        window.location.replace("index.html");
+        window.location.replace("/_dashboard/index.html");
     } else {
         // If login fails, the web page will display
         // error messages on <div> with id "login_error_message"
@@ -32,7 +32,7 @@ function handleLoginResult(resultDataString) {
  * @param formSubmitEvent
  */
 function submitLoginForm(formSubmitEvent) {
-    console.log("submit login form");
+    console.log("submitted employee login form");
     /**
      * When users click the submit button, the browser will not direct
      * users to the url defined in HTML form. Instead, it will call this
@@ -41,7 +41,7 @@ function submitLoginForm(formSubmitEvent) {
     formSubmitEvent.preventDefault();
 
     $.ajax(
-        "api/login", {
+        "api/employee-login", {
             method: "POST",
             // Serialize the login form to the data sent by POST request
             data: login_form.serialize(),
