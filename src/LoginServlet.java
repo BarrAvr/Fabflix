@@ -105,8 +105,7 @@ public class LoginServlet extends HttpServlet {
             if (size > 0) {
                 System.out.println("Found " + email + " " + pass);
                 boolean usernameMatch = email.equals(userEnteredUsername);
-                boolean passwordMatch = pass.equals(userEnteredPassword);
-                passwordMatch = VerifyPassword.verifyCredentials(userEnteredUsername, userEnteredPassword);
+                boolean passwordMatch = VerifyPassword.verifyCredentials(userEnteredUsername, userEnteredPassword);
                 System.out.println("Comparison: " + usernameMatch + " " + passwordMatch);
                 if (usernameMatch && passwordMatch) {
                     loginCase = 1;
