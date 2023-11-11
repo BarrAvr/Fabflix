@@ -57,7 +57,7 @@ public class LoginFilter implements Filter {
             System.out.println("User logged in, but cannot access dashboard/index");
             return userCanAccess;
         }
-        
+
         boolean anonUserCanAccess = allowedURIs.stream().anyMatch(requestURI.toLowerCase()::endsWith);
         System.out.println("Anon user found, returning " + anonUserCanAccess);
         return anonUserCanAccess;
@@ -72,6 +72,7 @@ public class LoginFilter implements Filter {
         allowedURIs.add("/_dashboard/login.html");
         allowedURIs.add("/_dashboard/login.js");
         allowedURIs.add("/_dashboard/api/employee-login");
+        allowedURIs.add("/api/metadata");
 //        allowedURIs.add("/_dashboard/index.html");
     }
 
