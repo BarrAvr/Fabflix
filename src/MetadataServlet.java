@@ -55,7 +55,7 @@ public class MetadataServlet extends HttpServlet {
 
             int num = 1;
             System.out.println("Processing ResultSet " + num + "...");
-            JsonArray tableArray = new JsonArray();
+            JsonArray tableArray1 = new JsonArray();
             while(rs.next()) {
                 //Iterate through first resultset
                 String columnName = rs.getString("Field");
@@ -63,9 +63,13 @@ public class MetadataServlet extends HttpServlet {
                 JsonObject rowObject = new JsonObject();
                 rowObject.addProperty("columnName", columnName);
                 rowObject.addProperty("columnType", columnType);
-                tableArray.add(rowObject);
+                System.out.println("Added " + columnName + ", " + columnType + " to the 1st tableArray");
+                tableArray1.add(rowObject);
             }
-            responseJsonArray.add(tableArray);
+            System.out.println("Done with RS / Table 1");
+            System.out.println("Adding" + tableArray1 + " to responseJsonArray");
+            responseJsonArray.add(tableArray1);
+            System.out.println(responseJsonArray);
 
             num++;
 
@@ -73,6 +77,7 @@ public class MetadataServlet extends HttpServlet {
             if (call.getMoreResults()) {
                 rs = call.getResultSet();
                 System.out.println("Processing ResultSet " + num + "...");
+                JsonArray tableArray2 = new JsonArray();
                 while(rs.next()) {
                     //Iterate through second resultset
                     String columnName = rs.getString("Field");
@@ -80,10 +85,15 @@ public class MetadataServlet extends HttpServlet {
                     JsonObject rowObject = new JsonObject();
                     rowObject.addProperty("columnName", columnName);
                     rowObject.addProperty("columnType", columnType);
-                    tableArray.add(rowObject);
+                    System.out.println("Added " + columnName + ", " + columnType + " to the 2nd tableArray");
+                    tableArray2.add(rowObject);
                 }
+                System.out.println("Done with RS / Table 2");
+                System.out.println("Adding" + tableArray2 + " to responseJsonArray");
+                responseJsonArray.add(tableArray2);
+                System.out.println(responseJsonArray);
             }
-            responseJsonArray.add(tableArray);
+
 
             num++;
 
@@ -91,6 +101,7 @@ public class MetadataServlet extends HttpServlet {
             if (call.getMoreResults()) {
                 rs = call.getResultSet();
                 System.out.println("Processing ResultSet " + num + "...");
+                JsonArray tableArray3 = new JsonArray();
                 while(rs.next()) {
                     //Iterate through second resultset
                     String columnName = rs.getString("Field");
@@ -98,10 +109,14 @@ public class MetadataServlet extends HttpServlet {
                     JsonObject rowObject = new JsonObject();
                     rowObject.addProperty("columnName", columnName);
                     rowObject.addProperty("columnType", columnType);
-                    tableArray.add(rowObject);
+                    System.out.println("Added " + columnName + ", " + columnType + " to the 3rd tableArray");
+                    tableArray3.add(rowObject);
                 }
+                System.out.println("Done with RS / Table 3");
+                System.out.println("Adding" + tableArray3 + " to responseJsonArray");
+                responseJsonArray.add(tableArray3);
             }
-            responseJsonArray.add(tableArray);
+
 
             num++;
 
@@ -109,6 +124,7 @@ public class MetadataServlet extends HttpServlet {
             if (call.getMoreResults()) {
                 rs = call.getResultSet();
                 System.out.println("Processing ResultSet " + num + "...");
+                JsonArray tableArray4 = new JsonArray();
                 while(rs.next()) {
                     //Iterate through second resultset
                     String columnName = rs.getString("Field");
@@ -116,10 +132,14 @@ public class MetadataServlet extends HttpServlet {
                     JsonObject rowObject = new JsonObject();
                     rowObject.addProperty("columnName", columnName);
                     rowObject.addProperty("columnType", columnType);
-                    tableArray.add(rowObject);
+                    System.out.println("Added " + columnName + ", " + columnType + " to the 4th tableArray");
+                    tableArray4.add(rowObject);
                 }
+                System.out.println("Adding" + tableArray4 + " to responseJsonArray");
+                responseJsonArray.add(tableArray4);
+                System.out.println(responseJsonArray);
             }
-            responseJsonArray.add(tableArray);
+
 
             num++;
 
@@ -127,6 +147,7 @@ public class MetadataServlet extends HttpServlet {
             if (call.getMoreResults()) {
                 rs = call.getResultSet();
                 System.out.println("Processing ResultSet " + num + "...");
+                JsonArray tableArray5 = new JsonArray();
                 while(rs.next()) {
                     //Iterate through second resultset
                     String columnName = rs.getString("Field");
@@ -134,10 +155,14 @@ public class MetadataServlet extends HttpServlet {
                     JsonObject rowObject = new JsonObject();
                     rowObject.addProperty("columnName", columnName);
                     rowObject.addProperty("columnType", columnType);
-                    tableArray.add(rowObject);
+                    System.out.println("Added " + columnName + ", " + columnType + " to the 5th tableArray");
+                    tableArray5.add(rowObject);
                 }
+                System.out.println("Adding" + tableArray5 + " to responseJsonArray");
+                responseJsonArray.add(tableArray5);
+                System.out.println(responseJsonArray);
             }
-            responseJsonArray.add(tableArray);
+
 
             num++;
 
@@ -145,23 +170,7 @@ public class MetadataServlet extends HttpServlet {
             if (call.getMoreResults()) {
                 rs = call.getResultSet();
                 System.out.println("Processing ResultSet " + num + "...");
-                while(rs.next()) {
-                    //Iterate through second resultset
-                    String columnName = rs.getString("Field");
-                    String columnType = rs.getString("Type");
-                    JsonObject rowObject = new JsonObject();
-                    rowObject.addProperty("columnName", columnName);
-                    tableArray.add(rowObject);
-                }
-            }
-            responseJsonArray.add(tableArray);
-
-            num++;
-
-            rs.close();
-            if (call.getMoreResults()) {
-                rs = call.getResultSet();
-                System.out.println("Processing ResultSet " + num + "...");
+                JsonArray tableArray6 = new JsonArray();
                 while(rs.next()) {
                     //Iterate through second resultset
                     String columnName = rs.getString("Field");
@@ -169,10 +178,14 @@ public class MetadataServlet extends HttpServlet {
                     JsonObject rowObject = new JsonObject();
                     rowObject.addProperty("columnName", columnName);
                     rowObject.addProperty("columnType", columnType);
-                    tableArray.add(rowObject);
+                    System.out.println("Added " + columnName + ", " + columnType + " to the 6th tableArray");
+                    tableArray6.add(rowObject);
                 }
+                System.out.println("Adding" + tableArray6 + " to responseJsonArray");
+                responseJsonArray.add(tableArray6);
+                System.out.println(responseJsonArray);
             }
-            responseJsonArray.add(tableArray);
+
 
             num++;
 
@@ -180,6 +193,7 @@ public class MetadataServlet extends HttpServlet {
             if (call.getMoreResults()) {
                 rs = call.getResultSet();
                 System.out.println("Processing ResultSet " + num + "...");
+                JsonArray tableArray7 = new JsonArray();
                 while(rs.next()) {
                     //Iterate through second resultset
                     String columnName = rs.getString("Field");
@@ -187,10 +201,13 @@ public class MetadataServlet extends HttpServlet {
                     JsonObject rowObject = new JsonObject();
                     rowObject.addProperty("columnName", columnName);
                     rowObject.addProperty("columnType", columnType);
-                    tableArray.add(rowObject);
+                    System.out.println("Added " + columnName + ", " + columnType + " to the 7th tableArray");
+                    tableArray7.add(rowObject);
                 }
+                System.out.println("Adding" + tableArray7 + " to responseJsonArray");
+                responseJsonArray.add(tableArray7);
+                System.out.println(responseJsonArray);
             }
-            responseJsonArray.add(tableArray);
 
             num++;
 
@@ -198,6 +215,7 @@ public class MetadataServlet extends HttpServlet {
             if (call.getMoreResults()) {
                 rs = call.getResultSet();
                 System.out.println("Processing ResultSet " + num + "...");
+                JsonArray tableArray8 = new JsonArray();
                 while(rs.next()) {
                     //Iterate through second resultset
                     String columnName = rs.getString("Field");
@@ -205,10 +223,59 @@ public class MetadataServlet extends HttpServlet {
                     JsonObject rowObject = new JsonObject();
                     rowObject.addProperty("columnName", columnName);
                     rowObject.addProperty("columnType", columnType);
-                    tableArray.add(rowObject);
+                    System.out.println("Added " + columnName + ", " + columnType + " to the 8th tableArray");
+                    tableArray8.add(rowObject);
                 }
+                System.out.println("Adding" + tableArray8 + " to responseJsonArray");
+                responseJsonArray.add(tableArray8);
+                System.out.println(responseJsonArray);
             }
-            responseJsonArray.add(tableArray);
+
+
+            num++;
+
+            rs.close();
+            if (call.getMoreResults()) {
+                rs = call.getResultSet();
+                System.out.println("Processing ResultSet " + num + "...");
+                JsonArray tableArray9 = new JsonArray();
+                while(rs.next()) {
+                    //Iterate through second resultset
+                    String columnName = rs.getString("Field");
+                    String columnType = rs.getString("Type");
+                    JsonObject rowObject = new JsonObject();
+                    rowObject.addProperty("columnName", columnName);
+                    rowObject.addProperty("columnType", columnType);
+                    System.out.println("Added " + columnName + ", " + columnType + " to the 9th tableArray");
+                    tableArray9.add(rowObject);
+                }
+                System.out.println("Adding" + tableArray9 + " to responseJsonArray");
+                responseJsonArray.add(tableArray9);
+                System.out.println(responseJsonArray);
+            }
+
+            num++;
+
+            rs.close();
+            if (call.getMoreResults()) {
+                rs = call.getResultSet();
+                System.out.println("Processing ResultSet " + num + "...");
+                JsonArray tableArray10 = new JsonArray();
+                while(rs.next()) {
+                    //Iterate through second resultset
+                    String columnName = rs.getString("Field");
+                    String columnType = rs.getString("Type");
+                    JsonObject rowObject = new JsonObject();
+                    rowObject.addProperty("columnName", columnName);
+                    rowObject.addProperty("columnType", columnType);
+                    System.out.println("Added " + columnName + ", " + columnType + " to the 9th tableArray");
+                    tableArray10.add(rowObject);
+                }
+                System.out.println("Adding" + tableArray10 + " to responseJsonArray");
+                responseJsonArray.add(tableArray10);
+                System.out.println(responseJsonArray);
+            }
+
 
             rs.close();
             call.close();

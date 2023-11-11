@@ -3,14 +3,18 @@ function handleMetadataResult(resultData) {
     console.log("handleMetadataResult: populating metadata tables from resultData");
     console.log(resultData);
 
-    // Populate the star table
-    // Find the empty table body by id "star_table_body"
-    //let starTableBodyElement = jQuery("#star_table_body");
+for (let i = 0; i < 10; i++) {
     let metadataTableBodyElement = jQuery(`#metadata-table-${i}`);
+    for (let j = 0; j < resultData[i].length; j++) {
+        let rowHTML = `<tr><th style="width: 300px; height: 75px; border: 1px solid black;">${resultData[i][j]["columnName"]}</th><th style="width: 300px; height: 75px; border: 1px solid black;">${resultData[i][j]["columnType"]}</th></tr>`;
+        metadataTableBodyElement.append(rowHTML);
+    }
+}
+
 
 }
 
-console.log('index.js activated');
+// console.log('index.js activated');
 // Makes the HTTP GET request and registers on success callback function handleStarResult
 jQuery.ajax({
     dataType: "json", // Setting return data type
