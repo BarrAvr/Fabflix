@@ -23,40 +23,44 @@ public class LoginFilter implements Filter {
 
         System.out.println("LoginFilter: " + httpRequest.getRequestURI());
 
-        if (httpRequest.getRequestURI().endsWith("/_dashboard/index.html")) {
-            System.out.println("dashboard index match found!");
-            System.out.println(httpRequest.getSession().getAttribute("employee"));
-            if (httpRequest.getSession().getAttribute("employee") == null) {
-                System.out.println("Employee not logged in!");
-                httpResponse.sendRedirect("login.html");
-            }
-        }
+//        if (httpRequest.getRequestURI().endsWith("/_dashboard/index.html")) {
+//            System.out.println("dashboard index match found!");
+//            System.out.println(httpRequest.getSession().getAttribute("employee"));
+//            if (httpRequest.getSession().getAttribute("employee") == null) {
+//                System.out.println("Employee not logged in!");
+//                httpResponse.sendRedirect("login.html");
+//            }
+//        }
         // Check if this URL is allowed to access without logging in
-        if (this.isUrlAllowedWithoutLogin(httpRequest.getRequestURI())) {
+        if (this.isUrlAllowed(httpRequest, httpRequest.getRequestURI())) {
 
-            // Keep default action: pass along the filter chain
             System.out.println(" -> allowed");
             chain.doFilter(request, response);
             return;
-        }
-
-        // Redirect to login page if the "user" attribute doesn't exist in session
-        if (httpRequest.getSession().getAttribute("user") == null) {
-            System.out.println(" -> blocked");
-            httpResponse.sendRedirect("login.html");
         } else {
-            System.out.println(" -> allowed");
-            chain.doFilter(request, response);
+            httpResponse.sendRedirect("login.html");
         }
     }
 
-    private boolean isUrlAllowedWithoutLogin(String requestURI) {
-        /*
-         Setup your own rules here to allow accessing some resources without logging in
-         Always allow your own login related requests(html, js, servlet, etc..)
-         You might also want to allow some CSS files, etc..
-         */
-        return allowedURIs.stream().anyMatch(requestURI.toLowerCase()::endsWith);
+    private boolean isUrlAllowed(HttpServletRequest httpRequest, String requestURI) {
+
+        boolean isUser = httpRequest.getSession().getAttribute("user") != null;
+        boolean isEmployee = httpRequest.getSession().getAttribute("employee") != null;
+        // if not logged in at all, block both dashboards
+
+        if (isEmployee) {
+            System.out.println("Employee logged in, can access all pages");
+            return true;
+        }
+        else if (isUser) {
+            boolean userCanAccess = !requestURI.endsWith("/_dashboard/index.html");
+            System.out.println("User logged in, but cannot access dashboard/index");
+            return userCanAccess;
+        }
+        
+        boolean anonUserCanAccess = allowedURIs.stream().anyMatch(requestURI.toLowerCase()::endsWith);
+        System.out.println("Anon user found, returning " + anonUserCanAccess);
+        return anonUserCanAccess;
     }
 
     public void init(FilterConfig fConfig) {
@@ -68,7 +72,7 @@ public class LoginFilter implements Filter {
         allowedURIs.add("/_dashboard/login.html");
         allowedURIs.add("/_dashboard/login.js");
         allowedURIs.add("/_dashboard/api/employee-login");
-        allowedURIs.add("/_dashboard/index.html");
+//        allowedURIs.add("/_dashboard/index.html");
     }
 
     public void destroy() {
