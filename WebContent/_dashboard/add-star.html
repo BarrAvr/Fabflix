@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Star</title>
+</head>
+<body>
+  <h1>Add a Star</h1>
+  <h3>New Star Details</h3>
+  <form id="add_star_form" method="post" action="#">
+    <label><b>Star Name</b></label>
+    <label>
+      <input id="name" placeholder="Star Name" type="text">
+    </label>
+    <br>
+    <label><b>Birth Year</b></label>
+    <label>
+      <input id="birthYear" placeholder="Birth Year" type="text">
+    </label>
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <div id="add_star_message"></div>
+
+  <!-- include jQuery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- include our own JS file -->
+  <script src="./add-star.js"></script>
+</body>
+</html>
