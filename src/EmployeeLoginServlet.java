@@ -68,7 +68,7 @@ public class EmployeeLoginServlet extends HttpServlet {
             if (size > 0) {
                 System.out.println("Found " + email + " " + pass);
                 boolean employeeUsernameMatch = userEnteredUsername.equals(email);
-                boolean employeePasswordMatch = userEnteredPassword.equals(pass);
+                boolean employeePasswordMatch = VerifyPassword.verifyEmployeeCredentials(userEnteredUsername, userEnteredPassword);
                 System.out.println("Comparison: " + employeeUsernameMatch + " " + employeePasswordMatch);
 
                 if (employeeUsernameMatch && employeePasswordMatch) {
