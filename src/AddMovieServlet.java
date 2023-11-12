@@ -74,7 +74,7 @@ public class AddMovieServlet extends HttpServlet {
                         String genreId = rs.getString("newgenreid");
                         System.out.println(movieId + " " + starId + " " + genreId);
                         JsonObject responseJsonObject = new JsonObject();
-                        String message = "Success!";
+                        String message = "Success! ";
                         if (movieId != null) {
                             message += "Movie ID: " + movieId + " ";
                         }
@@ -120,10 +120,10 @@ public class AddMovieServlet extends HttpServlet {
 //                    // Move to the next result set
 //                    hasResults = call.getMoreResults();
 //                } else if (call.getUpdateCount() != -1) {
-                    // This handles any additional results (updates or count)
-                    // Do something with update count if needed
+            // This handles any additional results (updates or count)
+            // Do something with update count if needed
 
-                    // Move to the next result set
+            // Move to the next result set
 //                    hasResults = call.getMoreResults();
 //                }
 //            }
