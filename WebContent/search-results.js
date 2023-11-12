@@ -155,7 +155,7 @@ if (type === "general") {
             count: count
         },
         success: function (result) {
-            console.log(result);
+            console.log(JSON.parse(result));
             jQuery.ajax({
                 dataType: "json",
                 method: "GET",
