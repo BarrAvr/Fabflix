@@ -79,7 +79,7 @@ public class AddStarServlet extends HttpServlet {
                 String starId = rs.getString("starid");
                 JsonObject responseJsonObject = new JsonObject();
                 responseJsonObject.addProperty("status", "success");
-                responseJsonObject.addProperty("message", "starId: " + starId);
+                responseJsonObject.addProperty("message", "Success! Star ID: " + starId);
                 out.write(responseJsonObject.toString());
             }
 

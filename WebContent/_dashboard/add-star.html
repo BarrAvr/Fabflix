@@ -7,7 +7,7 @@
 <body>
   <h1>Add a Star</h1>
   <h3>New Star Details</h3>
-  <form id="add_star_form" method="post" action="#">
+  <form id="add_star_form" method="post" action="#" style="display: flex; flex-direction: column; align-items: center; margin: auto;">
     <label><b>Star Name</b></label>
     <label>
       <input id="name" placeholder="Star Name" type="text">
@@ -17,11 +17,12 @@
     <label>
       <input id="birthYear" placeholder="Birth Year" type="text">
     </label>
+    <div id="add_star_message" style="margin: 50px;"></div>
     <br>
     <input type="submit" value="Submit">
   </form>
 
-  <div id="add_star_message"></div>
+
 
   <!-- include jQuery-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
