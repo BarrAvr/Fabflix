@@ -73,21 +73,21 @@ public class MovieDBDomParser {
         printWriter = new PrintWriter(fileWriter);
 
         populateInitialStarHashmap();
-        System.out.println("Stars initially populated with " + initialStarHashMap.size() + " entries");
-        System.out.println("Stars table initially has " + initNumStars + " entries");
+//        System.out.println("Stars initially populated with " + initialStarHashMap.size() + " entries");
+//        System.out.println("Stars table initially has " + initNumStars + " entries");
         parseXmlFile("actors63.xml");
         parseStarsDocument();
         insertData();
     }
 
     private void insertActorData() {
-        System.out.println("Star SQL Inserts:");
+//        System.out.println("Star SQL Inserts:");
         AtomicInteger i = new AtomicInteger();
         starHashMap.forEach((name, star) -> {
-            System.out.println(star.toSQLInsertString());
+//            System.out.println(star.toSQLInsertString());
             i.getAndIncrement();
         });
-        System.out.println("Values inserted: " + i);
+//        System.out.println("Values inserted: " + i);
     }
 
     public void runExample() {
@@ -118,7 +118,7 @@ public class MovieDBDomParser {
 //            printWriter.close();
 //            fileWriter.close();
 
-            System.out.println("Parsing Meta Data has been written to the file.");
+//            System.out.println("Parsing Meta Data has been written to the file.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,7 +145,7 @@ public class MovieDBDomParser {
             statement.close();
             connection.close();
         } catch (Exception e) {
-            System.out.println(e.toString());
+//            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
 //        initNumGenres = genreHashMap.size();
@@ -171,7 +171,7 @@ public class MovieDBDomParser {
             statement.close();
             connection.close();
         } catch (Exception e) {
-            System.out.println(e.toString());
+//            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
 //        initNumGenres = genreHashMap.size();
@@ -204,7 +204,7 @@ public class MovieDBDomParser {
             statement.close();
             connection.close();
         } catch (Exception e) {
-            System.out.println(e.toString());
+//            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
         printWriter.println("Stars table initially has " + initNumStars + " entries");
@@ -230,7 +230,7 @@ public class MovieDBDomParser {
             statement.close();
             connection.close();
         } catch (Exception e) {
-            System.out.println(e.toString());
+//            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
 
@@ -256,7 +256,7 @@ public class MovieDBDomParser {
             statement.close();
             connection.close();
         } catch (Exception e) {
-            System.out.println(e.toString());
+//            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
 
@@ -323,7 +323,7 @@ public class MovieDBDomParser {
                                     moviesHashmap.put(film.getId(), film);
                                 }else{
                                     //todo
-                                    System.out.println("Movie Parser Error: Insert prevented because movie id already exists in table.");
+//                                    System.out.println("Movie Parser Error: Insert prevented because movie id already exists in table.");
                                 }
                                 parseGenres(filmElement, id);
                             }else{
@@ -372,7 +372,7 @@ public class MovieDBDomParser {
 //                            String starId = "s" + (initialStarHashMap.size() + starHashMap.size());
                             starHashMap.put(stageName, new Star(starId, stageName, birthYear));
                         }else{
-                            System.out.println("Stars Parser Error: Insert prevented because star with stageName " + stageName + " already exists in table");
+//                            System.out.println("Stars Parser Error: Insert prevented because star with stageName " + stageName + " already exists in table");
                         }
                 }
 //            });
@@ -406,7 +406,7 @@ public class MovieDBDomParser {
                             if(!initialStarInMovies.contains(starInMovie) && !starInMovies.contains(starInMovie)){
                                 starInMovies.add(starInMovie);
                             }else{
-                                System.out.println("Stars In Movies Parser Error: Insert prevented because starId " + stageName + " and movieId " + movieId + " already exist in the table");
+//                                System.out.println("Stars In Movies Parser Error: Insert prevented because starId " + stageName + " and movieId " + movieId + " already exist in the table");
                             }
                         }else if(initialStarHashMap.containsKey(stageName)){
                             String starId = initialStarHashMap.get(stageName).getId();
@@ -414,14 +414,14 @@ public class MovieDBDomParser {
                             if(!initialStarInMovies.contains(starInMovie) && !starInMovies.contains(starInMovie)){
                                 starInMovies.add(starInMovie);
                             }else{
-                                System.out.println("Stars In Movies Parser Error: Insert prevented because starId " + stageName + " and movieId " + movieId + " already exist in the table");
+//                                System.out.println("Stars In Movies Parser Error: Insert prevented because starId " + stageName + " and movieId " + movieId + " already exist in the table");
                             }
                         }else{
-                            System.out.println("Stars In Movies Parser Error: Insert prevented because no such star with stageName " + stageName);
+//                            System.out.println("Stars In Movies Parser Error: Insert prevented because no such star with stageName " + stageName);
                         }
                     }
                 }else{
-                    System.out.println("Stars In Movies Parser Error: Insert prevented because no such movie with id " + movieId);
+//                    System.out.println("Stars In Movies Parser Error: Insert prevented because no such movie with id " + movieId);
                 }
             }
         }
@@ -474,7 +474,7 @@ public class MovieDBDomParser {
                             if(!initialGenreInMovies.contains(genreInMovie) && !genreInMovies.contains(genreInMovie)){
                                 genreInMovies.add(genreInMovie);
                             }else{
-                                System.out.println("Genres In Movies Parser Error: Insert prevented because genreId " + genreId + " and movieId " + movieId + " already exist in the table");
+//                                System.out.println("Genres In Movies Parser Error: Insert prevented because genreId " + genreId + " and movieId " + movieId + " already exist in the table");
                             }
                         }else{
                             int genreId = 0;
@@ -488,7 +488,7 @@ public class MovieDBDomParser {
                             if(!initialGenreInMovies.contains(genreInMovie) && !genreInMovies.contains(genreInMovie)){
                                 genreInMovies.add(genreInMovie);
                             }else{
-                                System.out.println("Genres In Movies Parser Error: Insert prevented because genreId " + genreId + " and movieId " + movieId + " already exist in the table");
+//                                System.out.println("Genres In Movies Parser Error: Insert prevented because genreId " + genreId + " and movieId " + movieId + " already exist in the table");
                             }
                         }
                     }
@@ -542,33 +542,6 @@ public class MovieDBDomParser {
         return val;
     }
 
-    private String getGenreSQLInsertString(int id, String name) {
-        return String.format("INSERT INTO genres (id, name) VALUES (%s, '%s')", id, name);
-    }
-
-    /**
-     * Iterate through the list and print the
-     * content to console
-     */
-    private void printData() {
-
-        System.out.println("Initial Star SQL Inserts:");
-        if(initialStarHashMap.containsKey("Angelina Jolie")){
-            System.out.println("Angelina found");
-        }
-        initialStarHashMap.forEach((name, star) -> {
-            if(name.equals("Angelina Jolie")){
-                System.out.println(star.toSQLInsertString());
-            }
-        });
-        System.out.println("Star SQL Inserts:");
-        starHashMap.forEach((name, star) -> {
-            if(name.startsWith("Angelina J")){
-                System.out.println(star.toSQLInsertString());
-            }
-        });
-
-    }
 
 
     private void insertData() {
@@ -589,7 +562,7 @@ public class MovieDBDomParser {
 
             executor.submit(() -> {
                 // Task to be executed in parallel
-                System.out.println("Movie entries are being inserted on thread: " + Thread.currentThread().getName());
+//                System.out.println("Movie entries are being inserted on thread: " + Thread.currentThread().getName());
                 try (Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd)) {
                     moviesHashmap.forEach((movieId, movie) -> {
 //                        String insertQuery = movie.toSQLInsertString();
@@ -617,10 +590,9 @@ public class MovieDBDomParser {
             });
 
             executor.submit(() -> {
-                System.out.println("Genre entries are being inserted on thread: " + Thread.currentThread().getName());
+//                System.out.println("Genre entries are being inserted on thread: " + Thread.currentThread().getName());
                 try (Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd)) {
                     genreHashMap.forEach((name, id) -> {
-//                        System.out.println(getGenreSQLInsertString(id, name));
                         String sql = "INSERT INTO genres (id, name) VALUES (?, ?)";
                         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                             preparedStatement.setInt(1, id);
@@ -642,7 +614,7 @@ public class MovieDBDomParser {
             });
 
             executor.submit(() -> {
-                System.out.println("Star entries are being inserted on thread: " + Thread.currentThread().getName());
+//                System.out.println("Star entries are being inserted on thread: " + Thread.currentThread().getName());
                 try (Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd)) {
 //                    connection.setAutoCommit(false);
                     String sql = "INSERT INTO stars (id, name, birthYear) VALUES (?, ?, ?)";
@@ -712,7 +684,7 @@ public class MovieDBDomParser {
 //                        }
 
                     try (Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd)) {
-                        System.out.println("Genre_in_Movie in movies SQL Inserts:");
+//                        System.out.println("Genre_in_Movie in movies SQL Inserts:");
 
                         String sql = "INSERT INTO genres_in_movies (genreId, movieId) VALUES (?, ?)";
                         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -758,7 +730,7 @@ public class MovieDBDomParser {
 //                            throw new RuntimeException(e);
 //                        }
                     try (Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd)) {
-                        System.out.println("Star_in_Movie in movies SQL Inserts:");
+//                        System.out.println("Star_in_Movie in movies SQL Inserts:");
 
                         String sql = "INSERT INTO stars_in_movies (starId, movieId) VALUES (?, ?)";
                         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -767,11 +739,11 @@ public class MovieDBDomParser {
                                 preparedStatement.setString(2, starInMovie.getMovieId());
                                 preparedStatement.addBatch();
                                 numStarsInMoviesInserted.getAndIncrement();
-                                System.out.println(starInMovie.toSQLInsertString());
+//                                System.out.println(starInMovie.toSQLInsertString());
                             }
                             preparedStatement.executeBatch();
                         } catch (SQLException e) {
-                            System.out.println("SQL Error: " + e.toString());
+//                            System.out.println("SQL Error: " + e.toString());
                         }
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
@@ -779,17 +751,17 @@ public class MovieDBDomParser {
 //                        latch2.countDown(); // Signal task completion
 //                    });
 
-                    System.out.println("Parsed successfully " + moviesHashmap.size() + " movies");
-                    System.out.println("Parsed successfully " + starHashMap.size() + " stars");
-                    System.out.println("Parsed successfully " + genreHashMap.size() + " genres");
-                    System.out.println("Parsed successfully " + starInMovies.size() + " stars_in_movies");
-                    System.out.println("Parsed successfully " + genreInMovies.size() + " genres_in_movies");
+//                    System.out.println("Parsed successfully " + moviesHashmap.size() + " movies");
+//                    System.out.println("Parsed successfully " + starHashMap.size() + " stars");
+//                    System.out.println("Parsed successfully " + genreHashMap.size() + " genres");
+//                    System.out.println("Parsed successfully " + starInMovies.size() + " stars_in_movies");
+//                    System.out.println("Parsed successfully " + genreInMovies.size() + " genres_in_movies");
 
-                    System.out.println("Inserted " + numMoviesInserted.get() + " movies");
-                    System.out.println("Inserted " + numStarsInserted.get() + " stars");
-                    System.out.println("Inserted " + numGenresInserted.get() + " genres");
-                    System.out.println("Inserted " + numStarsInMoviesInserted.get() + " stars_in_movies");
-                    System.out.println("Inserted " + numGenresInMoviesInserted.get() + " genres_in_movies");
+//                    System.out.println("Inserted " + numMoviesInserted.get() + " movies");
+//                    System.out.println("Inserted " + numStarsInserted.get() + " stars");
+//                    System.out.println("Inserted " + numGenresInserted.get() + " genres");
+//                    System.out.println("Inserted " + numStarsInMoviesInserted.get() + " stars_in_movies");
+//                    System.out.println("Inserted " + numGenresInMoviesInserted.get() + " genres_in_movies");
 
 
                     printWriter.println("Inserted " + numMoviesInserted.get() + " movies");
