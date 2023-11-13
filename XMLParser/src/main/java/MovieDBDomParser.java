@@ -1522,7 +1522,7 @@ public class MovieDBDomParser {
                         }
 
                         String ratingInsertSql = "INSERT INTO ratings (movieId, rating, numVotes) VALUES (?, ?, ?)";
-                        try (PreparedStatement preparedStatement2 = connection.prepareStatement(sql)) {
+                        try (PreparedStatement preparedStatement2 = connection.prepareStatement(ratingInsertSql)) {
                             preparedStatement2.setString(1, movie.getId());
                             preparedStatement2.setFloat(2, 0);
                             preparedStatement2.setInt(3, 0);
