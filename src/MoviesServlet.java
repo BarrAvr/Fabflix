@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -47,7 +48,7 @@ public class MoviesServlet extends HttpServlet {
 
             Connection conn = dataSource.getConnection();
             // Declare our statement
-            Statement statement = conn.createStatement();
+//            Statement statement = conn.createStatement();
 
             String query = "with top_movies(id, title, year, director, rating) as (select mo.id, mo.title, mo.year, mo.director, r.rating " +
                     "from movies as mo, ratings as r where mo.id = r.movieId order by r.rating desc limit 20) " +
@@ -56,8 +57,11 @@ public class MoviesServlet extends HttpServlet {
 //            String query = "select * from movies as m, ratings as r, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
 //                    "where m.id = r.movieId and r.movieId = sim.movieId and sim.starId = s.id and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by r.rating desc";
 
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+
             // Perform the query
-            ResultSet rs = statement.executeQuery(query);
+//            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = preparedStatement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
 
@@ -86,7 +90,8 @@ public class MoviesServlet extends HttpServlet {
                 jsonArray.add(jsonObject);
             }
             rs.close();
-            statement.close();
+//            statement.close();
+            preparedStatement.close();
             conn.close();
 
             // Log to localhost log

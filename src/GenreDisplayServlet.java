@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Objects;
@@ -44,12 +45,16 @@ public class GenreDisplayServlet extends HttpServlet {
 
         try {
             Connection conn = dataSource.getConnection();
-            Statement statement = conn.createStatement();
+//            Statement statement = conn.createStatement();
 
             String query = "SELECT g.name from movies as m, genres as g, genres_in_movies as gim " +
                     "where m.id = gim.movieId and gim.genreId = g.id " +
                     "group by g.name";
-            ResultSet rs = statement.executeQuery(query);
+
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+//            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = preparedStatement.executeQuery();
             System.out.println(query);
             JsonArray jsonArray = new JsonArray();
             while (rs.next()) {
@@ -63,7 +68,8 @@ public class GenreDisplayServlet extends HttpServlet {
 
             // Close all structures
             rs.close();
-            statement.close();
+//            statement.close();
+            preparedStatement.close();
             conn.close();
 
             out.write(jsonArray.toString());

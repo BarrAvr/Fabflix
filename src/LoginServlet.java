@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -78,14 +79,17 @@ public class LoginServlet extends HttpServlet {
 
             Connection conn = dataSource.getConnection();
             // Declare our statement
-            Statement statement = conn.createStatement();
+//            Statement statement = conn.createStatement();
 
             String query = String.format("select email, password, id from customers where email = \"%s\"", userEnteredUsername);
 //            String query = "select * from movies as m, ratings as r, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
 //                    "where m.id = r.movieId and r.movieId = sim.movieId and sim.starId = s.id and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by r.rating desc";
 
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+
             // Perform the query
-            ResultSet rs = statement.executeQuery(query);
+//            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = preparedStatement.executeQuery();
             // The log message can be found in localhost log
             request.getServletContext().log("getting username: " + userEnteredUsername);
 
@@ -168,6 +172,8 @@ public class LoginServlet extends HttpServlet {
             }
 
 
+            rs.close();
+            preparedStatement.close();
             conn.close();
 
         } catch (Exception e) {

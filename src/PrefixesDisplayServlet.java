@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -38,12 +39,15 @@ public class PrefixesDisplayServlet extends HttpServlet {
 
         try {
             Connection conn = dataSource.getConnection();
-            Statement statement = conn.createStatement();
+//            Statement statement = conn.createStatement();
 
             String query = "select substring(movies.title, 1, 1) as prefix from movies group by prefix order by prefix";
 
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
 
-            ResultSet rs = statement.executeQuery(query);
+
+//            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = preparedStatement.executeQuery();
             System.out.println(query);
             JsonArray jsonArray = new JsonArray();
             while (rs.next()) {
@@ -57,7 +61,8 @@ public class PrefixesDisplayServlet extends HttpServlet {
 
             // Close all structures
             rs.close();
-            statement.close();
+//            statement.close();
+            preparedStatement.close();
             conn.close();
 
             out.write(jsonArray.toString());

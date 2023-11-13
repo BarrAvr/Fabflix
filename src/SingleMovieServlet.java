@@ -77,11 +77,13 @@ public class SingleMovieServlet extends HttpServlet {
 
 
             // Declaring statement
-            Statement statement = conn.createStatement();
+//            Statement statement = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
 
             // Perform the query
             System.out.println(query);
-            ResultSet rs = statement.executeQuery(query);
+//            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = preparedStatement.executeQuery();
 
             //JsonArray jsonArray = new JsonArray();
 
@@ -106,6 +108,7 @@ public class SingleMovieServlet extends HttpServlet {
             }
 
             rs.close();
+            preparedStatement.close();
 
 //          TEST CODE: Generating JsonArray of test stars to insert into response[1]
 //            JsonObject testObj = new JsonObject();
@@ -118,7 +121,9 @@ public class SingleMovieServlet extends HttpServlet {
 //            request.getServletContext().log(sampleStars.getAsString());
 //            jsonArray.add(testObj);
             System.out.println(starQuery);
-            rs = statement.executeQuery(starQuery);
+            preparedStatement = conn.prepareStatement(starQuery);
+            rs = preparedStatement.executeQuery();
+//            rs = statement.executeQuery(starQuery);
             // Initializing starArray, the array of star objs that will
             // eventually be stringified and put in response[1]
             JsonArray starArray = new JsonArray();
@@ -137,6 +142,7 @@ public class SingleMovieServlet extends HttpServlet {
             }
 
             rs.close();
+            preparedStatement.close();
 
             // Turn the final starArray into a string, + use addProperty
             // to assign it to "stars" attribute in thr final object
@@ -145,7 +151,9 @@ public class SingleMovieServlet extends HttpServlet {
 //            request.getServletContext().log(sampleStars.getAsString());
             jsonArray.add(starArray);
             System.out.println(genreQuery);
-            rs = statement.executeQuery(genreQuery);
+            preparedStatement = conn.prepareStatement(genreQuery);
+            rs = preparedStatement.executeQuery();
+//            rs = statement.executeQuery(genreQuery);
 
             JsonArray genreArray = new JsonArray();
             // Looping through genres in result set and then adding each to the
@@ -165,7 +173,8 @@ public class SingleMovieServlet extends HttpServlet {
             jsonArray.add(genreArray);
 
             rs.close();
-            statement.close();
+            preparedStatement.close();
+//            statement.close();
             conn.close();
 
         } catch (Exception e) {
