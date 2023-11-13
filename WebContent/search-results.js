@@ -155,7 +155,7 @@ if (type === "general") {
             count: count
         },
         success: function (result) {
-            console.log(JSON.parse(result));
+            // console.log(result);
             jQuery.ajax({
                 dataType: "json",
                 method: "GET",
@@ -193,7 +193,7 @@ else if (type === "genre") {
             count: count
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             jQuery.ajax({
                 dataType: "json",
                 method: "GET",
@@ -230,7 +230,7 @@ else {
             count: count
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             jQuery.ajax({
                 dataType: "json",
                 method: "GET",
