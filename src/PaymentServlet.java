@@ -56,15 +56,11 @@ public class PaymentServlet extends HttpServlet {
 
             Connection conn = dataSource.getConnection();
             // Declare our statement
-            String query = "select id, firstName, lastName, expiration from creditcards where id = ?");
-            PreparedStatement statement = conn.prepareStatement(query);
+            String query = "select id, firstName, lastName, expiration from creditcards where id = ?";
+            PreparedStatement stat = conn.prepareStatement(query);
+            stat.setString(1, id);
 
-
-//            String query = "select * from movies as m, ratings as r, stars_in_movies as sim, stars as s, genres_in_movies as gim, genres as g " +
-//                    "where m.id = r.movieId and r.movieId = sim.movieId and sim.starId = s.id and sim.starId = s.id and gim.movieId = m.id and gim.genreId = g.id order by r.rating desc";
-
-            // Perform the query
-            ResultSet rs = statement.executeQuery();
+            ResultSet rs = stat.executeQuery();
             // The log message can be found in localhost log
             request.getServletContext().log("getting id: " + id);
 
@@ -78,7 +74,7 @@ public class PaymentServlet extends HttpServlet {
                 dbExpiration = rs.getDate("expiration");
             }
             rs.close();
-            statement.close();
+            stat.close();
 
             if (size > 0) {
                 System.out.println("Found " + dbFirstName + " " + dbLastName + " " + dbExpiration.toString());
