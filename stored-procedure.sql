@@ -135,6 +135,7 @@ sp: BEGIN
 
     INSERT INTO stars_in_movies (starId, movieId) VALUES(starid, movieid);
     INSERT INTO genres_in_movies (genreId, movieId) VALUES(genreid, movieid);
+    INSERT INTO ratings (movieId, rating, numVotes) VALUES(movieid, 10, 0);
     SELECT newmovieid, newstarid, newgenreid;
     
 END $$
