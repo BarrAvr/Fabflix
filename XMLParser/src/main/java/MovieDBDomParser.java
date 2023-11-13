@@ -1506,6 +1506,7 @@ public class MovieDBDomParser {
                 try (Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd)) {
                     moviesHashmap.forEach((movieId, movie) -> {
 //                        String insertQuery = movie.toSQLInsertString();
+                        boolean insertSuccessful = false;
                         System.out.println(movie.toSQLInsertString());
                         String sql = "INSERT INTO movies (id, title, year, director) VALUES (?, ?, ?, ?)";
                         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -1516,21 +1517,23 @@ public class MovieDBDomParser {
                             preparedStatement.executeUpdate();
                             preparedStatement.close();
                             numMoviesInserted.getAndIncrement();
+                            insertSuccessful = true;
                         } catch (SQLException e) {
 //                            printWriter.println("SQL Error: " + e.toString());
 //                            throw new RuntimeException(e);
                         }
-
-                        String ratingInsertSql = "INSERT INTO ratings (movieId, rating, numVotes) VALUES (?, ?, ?)";
-                        try (PreparedStatement preparedStatement2 = connection.prepareStatement(ratingInsertSql)) {
-                            preparedStatement2.setString(1, movie.getId());
-                            preparedStatement2.setFloat(2, 0);
-                            preparedStatement2.setInt(3, 0);
-                            preparedStatement2.executeUpdate();
-                            preparedStatement2.close();
-                        } catch (SQLException e) {
+                        if(insertSuccessful){
+                            String ratingInsertSql = "INSERT INTO ratings (movieId, rating, numVotes) VALUES (?, ?, ?)";
+                            try (PreparedStatement preparedStatement2 = connection.prepareStatement(ratingInsertSql)) {
+                                preparedStatement2.setString(1, movie.getId());
+                                preparedStatement2.setFloat(2, 0);
+                                preparedStatement2.setInt(3, 0);
+                                preparedStatement2.executeUpdate();
+                                preparedStatement2.close();
+                            } catch (SQLException e) {
 //                            printWriter.println("SQL Error: " + e.toString());
 //                            throw new RuntimeException(e);
+                            }
                         }
                     });
                     connection.close();
