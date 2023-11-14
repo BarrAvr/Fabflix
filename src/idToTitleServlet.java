@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 /**
  * A servlet that takes input from a html <form> and talks to MySQL moviedbexample,
@@ -53,9 +54,9 @@ public class idToTitleServlet extends HttpServlet {
 
         try {
             Connection conn = dataSource.getConnection();
-            Statement statement = conn.createStatement();
+            PreparedStatement stat = conn.prepareStatement(query);
             request.getServletContext().log("query：" + query);
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = stat.executeQuery();
 
             JsonObject jsonObject = new JsonObject();
 
@@ -67,7 +68,7 @@ public class idToTitleServlet extends HttpServlet {
 
             // Close all structures
             rs.close();
-            statement.close();
+            stat.close();
             conn.close();
             System.out.println("results:");
             System.out.println(jsonObject.toString());

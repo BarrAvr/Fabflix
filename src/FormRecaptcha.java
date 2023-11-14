@@ -5,10 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 @WebServlet(name = "FormReCaptcha", urlPatterns = "/form-recaptcha")
 public class FormRecaptcha extends HttpServlet {
@@ -53,16 +50,17 @@ public class FormRecaptcha extends HttpServlet {
             Connection dbCon = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
 
             // Declare a new statement
-            Statement statement = dbCon.createStatement();
 
             // Retrieve parameter "name" from request, which refers to the value of <input name="name"> in index.html
             String name = request.getParameter("name");
 
             // Generate a SQL query
-            String query = String.format("SELECT * from stars where name like '%s'", name);
+            String query = "SELECT * from stars where name like ?";
 
             // Perform the query
-            ResultSet rs = statement.executeQuery(query);
+            PreparedStatement stat = dbCon.prepareStatement(query);
+            stat.setString(1, name);
+            ResultSet rs = stat.executeQuery();
 
             // building page head with title
             out.println("<html><head><title>MovieDB: Found Records</title></head>");
@@ -87,7 +85,7 @@ public class FormRecaptcha extends HttpServlet {
 
             // Close all structures
             rs.close();
-            statement.close();
+            stat.close();
             dbCon.close();
 
         } catch (Exception e) {

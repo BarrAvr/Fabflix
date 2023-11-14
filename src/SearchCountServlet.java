@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -75,9 +76,9 @@ public class SearchCountServlet extends HttpServlet {
 
         try {
             Connection conn = dataSource.getConnection();
-            Statement statement = conn.createStatement();
+            PreparedStatement stat = conn.prepareStatement(query);
             request.getServletContext().log("query：" + query);
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = stat.executeQuery();
 
             JsonObject jsonObject = new JsonObject();
 
@@ -89,7 +90,7 @@ public class SearchCountServlet extends HttpServlet {
 
             // Close all structures
             rs.close();
-            statement.close();
+            stat.close();
             conn.close();
             System.out.println("results:");
             System.out.println(jsonObject.toString());
