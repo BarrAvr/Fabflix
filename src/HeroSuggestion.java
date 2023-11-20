@@ -106,7 +106,16 @@ public class HeroSuggestion extends HttpServlet {
 
 			Connection conn = dataSource.getConnection();
 
-			String query = "select * from movies where match(title) against('good* u*' in boolean mode) limit 10";
+			String searchQuery = request.getParameter("query");
+			System.out.println("Search query: " + searchQuery);
+			String[] terms = searchQuery.split(" ");
+
+			String query = "select * from movies where match(title) against ('";
+			for (int i = 0; i < terms.length; i++) {
+				query += terms[i] + "* ";
+			}
+			query += "' in boolean mode)";
+//			String query = "select * from movies where match(title) against('good* u*' in boolean mode) limit 10";
 
 			System.out.println("Executing query " + query);
 			PreparedStatement statement = conn.prepareStatement(query);

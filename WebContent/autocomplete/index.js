@@ -76,7 +76,9 @@ function handleLookupAjaxSuccess(data, query, doneCallback) {
 function handleSelectSuggestion(suggestion) {
 	// TODO: jump to the specific result page based on the selected suggestion
 
-	console.log("you select " + suggestion["value"] + " with ID " + suggestion["data"]["heroID"])
+	console.log("In handleSelectSuggestion, suggestion:");
+	console.log(suggestion);
+	console.log("you selected " + suggestion["value"] + " with ID " + suggestion["data"]["id"])
 }
 
 
@@ -113,6 +115,9 @@ $('#autocomplete').autocomplete({
 function handleNormalSearch(query) {
 	console.log("doing normal search with query: " + query);
 	// TODO: you should do normal search here
+	let url = "search-results.html"
+	window.location.replace()
+
 }
 
 // bind pressing enter key to a handler function
