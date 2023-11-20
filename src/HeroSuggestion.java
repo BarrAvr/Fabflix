@@ -132,9 +132,10 @@ public class HeroSuggestion extends HttpServlet {
 				jsonObject.addProperty("director", director);
 				System.out.println("Found movie: " + jsonObject);
 
-				jsonArray.add(jsonObject);
+				jsonArray.add(generateJsonObject(title, year, id));
 				row++;
 			}
+
 			rs.close();
 			statement.close();
 			conn.close();
@@ -175,12 +176,13 @@ public class HeroSuggestion extends HttpServlet {
 	 * }
 	 * 
 	 */
-	private static JsonObject generateJsonObject(Integer heroID, String heroName) {
+	private static JsonObject generateJsonObject(String title, String year, String id) {
 		JsonObject jsonObject = new JsonObject();
-		jsonObject.addProperty("value", heroName);
+		String displayName = String.format("%s (%s)", title, year);
+		jsonObject.addProperty("value", displayName);
 		
 		JsonObject additionalDataJsonObject = new JsonObject();
-		additionalDataJsonObject.addProperty("heroID", heroID);
+		additionalDataJsonObject.addProperty("id", id);
 		
 		jsonObject.add("data", additionalDataJsonObject);
 		return jsonObject;
