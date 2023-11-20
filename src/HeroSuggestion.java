@@ -106,7 +106,7 @@ public class HeroSuggestion extends HttpServlet {
 
 			Connection conn = dataSource.getConnection();
 
-			String query = "select * from movies where match(title) against('good* u*' in boolean mode)";
+			String query = "select * from movies where match(title) against('good* u*' in boolean mode) limit 10";
 
 			System.out.println("Executing query " + query);
 			PreparedStatement statement = conn.prepareStatement(query);
