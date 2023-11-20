@@ -54,15 +54,16 @@ function handleLookupAjaxSuccess(data, query, doneCallback) {
 	console.log("lookup ajax successful")
 
 	// parse the string into JSON
-	var jsonData = JSON.parse(data);
-	console.log(jsonData)
+	// var jsonData = JSON.parse(data);
+	console.log("Received the following response from HeroSuggestion:");
+	console.log(data);
 
 	// TODO: if you want to cache the result into a global variable you can do it here
 
 	// call the callback function provided by the autocomplete library
 	// add "{suggestions: jsonData}" to satisfy the library response format according to
 	//   the "Response Format" section in documentation
-	doneCallback( { suggestions: jsonData } );
+	doneCallback( { suggestions: data } );
 }
 
 
