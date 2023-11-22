@@ -16,7 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 
-@WebServlet("/autocomplete/hero-suggestion")
+@WebServlet("/api/hero-suggestion")
 public class HeroSuggestion extends HttpServlet {
 	/*
 	 * populate the Super hero hash map.

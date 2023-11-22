@@ -2,7 +2,7 @@
 
     This .html performs two steps:
     1. Create a html template skeleton, with all the elements defined (some left empty) and named with ids.
-    2. Load index.js to populate the data into empty elements.
+    2. Load autocomplete.js to populate the data into empty elements.
     -->
 
 <!doctype html>
@@ -23,6 +23,7 @@
     <title>Movie List</title>
     <a href="shopping-cart.html" class="checkout-button" style="position: absolute; top: 20px; right: 20px;">Checkout</a>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="autocomplete-styles.css">
 </head>
 <div class="page-container all-movies">
 <body>
@@ -32,7 +33,7 @@
         <input type="hidden" name="type" value="general">
         Search By Title:
         <label>
-            <input TYPE="TEXT" name="title">
+            <input TYPE="TEXT" id="autocomplete" name="title">
         </label>
         Star:
         <label>
@@ -73,7 +74,7 @@
 <!--            &lt;!&ndash;        <th>Director</th>&ndash;&gt;-->
 <!--        </tr>-->
 <!--        </thead>-->
-<!--        &lt;!&ndash; Table body is left empty here, will be populated with the data retrieved with index.js &ndash;&gt;-->
+<!--        &lt;!&ndash; Table body is left empty here, will be populated with the data retrieved with autocomplete.js &ndash;&gt;-->
 <!--        &lt;!&ndash; Again, id "star_table_body" is useful for jQuery to find this html element &ndash;&gt;-->
 <!--        &lt;!&ndash;    <tbody id=star_table_body></tbody>&ndash;&gt;-->
 <!--        <tbody id=movie_table_body></tbody>-->
@@ -86,14 +87,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.11/jquery.autocomplete.min.js"></script>
 
     <!-- Load our own JS file -->
     <!-- The path is relative to index.html, since these two files are in the same directory -->
     <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
          otherwise the url is relative to the root path-->
-<!--    <script src="index.js"></script>-->
+<!--    <script src="autocomplete.js"></script>-->
     <script src="genre-browse-display.js"></script>
     <script src="prefix-browse-display.js"></script>
+    <script src="autocomplete.js"></script>
 </body>
 </div>
 

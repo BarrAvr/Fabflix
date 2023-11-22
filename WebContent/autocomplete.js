@@ -30,7 +30,7 @@ function handleLookup(query, doneCallback) {
 		"method": "GET",
 		// generate the request url from the query.
 		// escape the query string to avoid errors caused by special characters
-		"url": "hero-suggestion?query=" + escape(query),
+		"url": "api/hero-suggestion?query=" + escape(query),
 		"success": function(data) {
 			// pass the data, query, and doneCallback function into the success handler
 			handleLookupAjaxSuccess(data, query, doneCallback)
@@ -78,7 +78,7 @@ function handleSelectSuggestion(suggestion) {
 
 	console.log("In handleSelectSuggestion, suggestion:");
 	console.log(suggestion);
-	console.log("you selected " + suggestion["value"] + " with ID " + suggestion["data"]["id"])
+	console.log("you selected " + suggestion["value"] + " with ID " + suggestion["data"]["id"]);
 	let selectedMovieId = suggestion["data"]["id"];
 	let singleMovieURL = "single-movie.html?id=" + selectedMovieId;
 	window.location.replace(singleMovieURL);
@@ -118,8 +118,8 @@ $('#autocomplete').autocomplete({
 function handleNormalSearch(query) {
 	console.log("doing normal search with query: " + query);
 	// TODO: you should do normal search here
-	let url = "search-results.html"
-	window.location.replace()
+	let url = `search-results.html?type=general&title=${query}&star=&year=&director=&sortBy=title&titleOrder=asc&ratingOrder=desc&page=1&count=10`
+	window.location.replace(url);
 
 }
 

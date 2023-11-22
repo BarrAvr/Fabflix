@@ -16,6 +16,6 @@
     </resource-ref>
     <servlet-mapping>
         <servlet-name>HeroSuggestion</servlet-name>
-        <url-pattern>/autocomplete/hero-suggestion</url-pattern>
+        <url-pattern>/api/hero-suggestion</url-pattern>
     </servlet-mapping>
 </web-app>
