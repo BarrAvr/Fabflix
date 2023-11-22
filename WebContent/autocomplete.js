@@ -118,7 +118,7 @@ $('#autocomplete').autocomplete({
 function handleNormalSearch(query) {
 	console.log("doing normal search with query: " + query);
 	// TODO: you should do normal search here
-	let url = `search-results.html?type=general&title=${query}&star=&year=&director=&sortBy=title&titleOrder=asc&ratingOrder=desc&page=1&count=10`
+	let url = `search-results.html?type=general&title=${encodeURIComponent(query)}&star=&year=&director=&sortBy=title&titleOrder=asc&ratingOrder=desc&page=1&count=10`
 	window.location.replace(url);
 
 }
