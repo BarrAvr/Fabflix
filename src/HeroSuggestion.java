@@ -114,7 +114,7 @@ public class HeroSuggestion extends HttpServlet {
 			for (int i = 0; i < terms.length; i++) {
 				query += terms[i] + "* ";
 			}
-			query += "' in boolean mode)";
+			query += "' in boolean mode) limit 10";
 //			String query = "select * from movies where match(title) against('good* u*' in boolean mode) limit 10";
 
 			System.out.println("Executing query " + query);
