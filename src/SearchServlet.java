@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Objects;
@@ -80,7 +81,7 @@ public class SearchServlet extends HttpServlet {
 
 
             // Declare a new statement
-            Statement statement = conn.createStatement();
+//            Statement statement = conn.createStatement();
             System.out.println("statementing...");
 
 //            // Generate a SQL query
@@ -94,7 +95,9 @@ public class SearchServlet extends HttpServlet {
             // Perform the query
             System.out.println("querying...");
             System.out.println(query);
-            ResultSet rs = statement.executeQuery(query);
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+//            ResultSet rs = statement.executeQuery(query);
 
             JsonArray jsonArray = new JsonArray();
 
@@ -125,7 +128,8 @@ public class SearchServlet extends HttpServlet {
 
             // Close all structures
             rs.close();
-            statement.close();
+            preparedStatement.close();
+//            statement.close();
             conn.close();
 
             out.write(jsonArray.toString());
