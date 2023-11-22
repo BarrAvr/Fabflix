@@ -79,6 +79,9 @@ function handleSelectSuggestion(suggestion) {
 	console.log("In handleSelectSuggestion, suggestion:");
 	console.log(suggestion);
 	console.log("you selected " + suggestion["value"] + " with ID " + suggestion["data"]["id"])
+	let selectedMovieId = suggestion["data"]["id"];
+	let singleMovieURL = "single-movie.html?id=" + selectedMovieId;
+	window.location.replace(singleMovieURL);
 }
 
 
