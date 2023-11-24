@@ -23,23 +23,31 @@ function handleLookup(query, doneCallback) {
 	console.log("sending AJAX request to backend Java Servlet")
 
 	// TODO: if you want to check past query results first, you can do it here
+	if (localStorage.getItem(query) !== null) {
+		console.log("Retrieving suggestions for query " + query + " from frontend cache");
+		const cachedData = JSON.parse(localStorage.getItem(query));
+		console.log("cachedData:");
+		console.log(cachedData);
+		doneCallback({suggestions: cachedData});
 
-	// sending the HTTP GET request to the Java Servlet endpoint hero-suggestion
-	// with the query data
-	jQuery.ajax({
-		"method": "GET",
-		// generate the request url from the query.
-		// escape the query string to avoid errors caused by special characters
-		"url": "api/hero-suggestion?query=" + escape(query),
-		"success": function(data) {
-			// pass the data, query, and doneCallback function into the success handler
-			handleLookupAjaxSuccess(data, query, doneCallback)
-		},
-		"error": function(errorData) {
-			console.log("lookup ajax error")
-			console.log(errorData)
-		}
-	})
+	} else {
+		// sending the HTTP GET request to the Java Servlet endpoint hero-suggestion
+		// with the query data
+		jQuery.ajax({
+			"method": "GET",
+			// generate the request url from the query.
+			// escape the query string to avoid errors caused by special characters
+			"url": "api/hero-suggestion?query=" + escape(query),
+			"success": function (data) {
+				// pass the data, query, and doneCallback function into the success handler
+				handleLookupAjaxSuccess(data, query, doneCallback)
+			},
+			"error": function (errorData) {
+				console.log("lookup ajax error")
+				console.log(errorData)
+			}
+		})
+	}
 }
 
 
@@ -55,8 +63,11 @@ function handleLookupAjaxSuccess(data, query, doneCallback) {
 
 	// parse the string into JSON
 	// var jsonData = JSON.parse(data);
-	console.log("Received the following response from HeroSuggestion:");
+	console.log("Received the following response from ajax call:");
 	console.log(data);
+	localStorage.setItem(query, JSON.stringify(data));
+
+
 
 	// TODO: if you want to cache the result into a global variable you can do it here
 
