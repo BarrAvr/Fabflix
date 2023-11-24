@@ -90,8 +90,8 @@ function handleSearchResult(resultData) {
     }
     let addToCartButtons = document.getElementsByClassName("add-to-cart");
     for (let i = 0; i < addToCartButtons.length; i++) {
-        console.log("Row Info in addToCartButtons");
-        console.log(addToCartButtons[i]);
+        // console.log("Row Info in addToCartButtons");
+        // console.log(addToCartButtons[i]);
         addToCartButtons[i].onclick = function () {
 
             alert("Added " + resultData[iToIndexMapping[i]]["movie_title"] + " to cart!");

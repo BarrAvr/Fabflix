@@ -1,6 +1,6 @@
 function handleBrowsePrefixesDisplay(resultData) {
-    console.log("Displaying Browsing prefixes");
-    console.log(resultData);
+    // console.log("Displaying Browsing prefixes");
+    // console.log(resultData);
 
     let prefixBodyElement = jQuery("#prefixes");
 
