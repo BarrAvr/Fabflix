@@ -24,9 +24,9 @@ function handleLookup(query, doneCallback) {
 
 	// TODO: if you want to check past query results first, you can do it here
 	if (localStorage.getItem(query) !== null) {
-		console.log("Retrieving suggestions for query " + query + " from frontend cache");
+		console.log("using cached results");
 		const cachedData = JSON.parse(localStorage.getItem(query));
-		console.log("cachedData:");
+		// console.log("cachedData:");
 		console.log(cachedData);
 		doneCallback({suggestions: cachedData});
 
@@ -43,7 +43,7 @@ function handleLookup(query, doneCallback) {
 				handleLookupAjaxSuccess(data, query, doneCallback)
 			},
 			"error": function (errorData) {
-				console.log("lookup ajax error")
+				// console.log("lookup ajax error")
 				console.log(errorData)
 			}
 		})
@@ -59,11 +59,11 @@ function handleLookup(query, doneCallback) {
  *
  */
 function handleLookupAjaxSuccess(data, query, doneCallback) {
-	console.log("lookup ajax successful")
+	// console.log("lookup ajax successful")
 
 	// parse the string into JSON
 	// var jsonData = JSON.parse(data);
-	console.log("Received the following response from ajax call:");
+	// console.log("Received the following response from ajax call:");
 	console.log(data);
 	localStorage.setItem(query, JSON.stringify(data));
 
@@ -89,7 +89,7 @@ function handleSelectSuggestion(suggestion) {
 
 	console.log("In handleSelectSuggestion, suggestion:");
 	console.log(suggestion);
-	console.log("you selected " + suggestion["value"] + " with ID " + suggestion["data"]["id"]);
+	// console.log("you selected " + suggestion["value"] + " with ID " + suggestion["data"]["id"]);
 	let selectedMovieId = suggestion["data"]["id"];
 	let singleMovieURL = "single-movie.html?id=" + selectedMovieId;
 	window.location.replace(singleMovieURL);

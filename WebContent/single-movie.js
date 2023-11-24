@@ -38,7 +38,7 @@ function getParameterByName(target) {
 
 function handleResult(resultData) {
 
-    console.log("handleResult: populating star info from resultData");
+    // console.log("handleResult: populating star info from resultData");
     // console.log("JSON from api call:");
     // console.log(resultData);
 
@@ -55,7 +55,7 @@ function handleResult(resultData) {
         "<p>Director: " + resultData[0]["movie_director"] + "</p>" +
         "<p>Rating: " + resultData[0]["movie_rating"] + "</p>");
 
-    console.log("handleResult: populating movie table from resultData");
+    // console.log("handleResult: populating movie table from resultData");
 
     // Populate the star table
     // Find the empty table body by id "movie_table_body"
