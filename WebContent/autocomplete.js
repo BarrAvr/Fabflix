@@ -20,7 +20,6 @@
  */
 function handleLookup(query, doneCallback) {
 	console.log("autocomplete initiated")
-	console.log("sending AJAX request to backend Java Servlet")
 
 	// TODO: if you want to check past query results first, you can do it here
 	if (localStorage.getItem(query) !== null) {
@@ -32,6 +31,7 @@ function handleLookup(query, doneCallback) {
 
 	} else {
 		// sending the HTTP GET request to the Java Servlet endpoint hero-suggestion
+		console.log("sending AJAX request to backend Java Servlet")
 		// with the query data
 		jQuery.ajax({
 			"method": "GET",
@@ -87,8 +87,8 @@ function handleLookupAjaxSuccess(data, query, doneCallback) {
 function handleSelectSuggestion(suggestion) {
 	// TODO: jump to the specific result page based on the selected suggestion
 
-	console.log("In handleSelectSuggestion, suggestion:");
-	console.log(suggestion);
+	// console.log("In handleSelectSuggestion, suggestion:");
+	// console.log(suggestion);
 	// console.log("you selected " + suggestion["value"] + " with ID " + suggestion["data"]["id"]);
 	let selectedMovieId = suggestion["data"]["id"];
 	let singleMovieURL = "single-movie.html?id=" + selectedMovieId;
