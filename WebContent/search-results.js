@@ -20,9 +20,9 @@ function getParameterByName(target) {
 function handleSearchResult(resultData) {
     iToIndexMapping = new Array();
     iToIndexMapping.push(0);
-    console.log("handleResult: populating movie info from resultData");
-    console.log("JSON from api call:");
-    console.log(resultData);
+    // console.log("handleResult: populating movie info from resultData");
+    // console.log("JSON from api call:");
+    // console.log(resultData);
 
     let movieTableBodyElement = jQuery("#movie_table_body");
 
@@ -161,7 +161,7 @@ if (type === "general") {
                 method: "GET",
                 url: "list-state",
                 success: function (listResult) {
-                    console.log(listResult.type)
+                    // console.log(listResult.type)
                     jQuery.ajax({
                         dataType: "json",
                         method: "GET",
