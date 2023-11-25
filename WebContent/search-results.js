@@ -84,7 +84,7 @@ function handleSearchResult(resultData) {
         rowHTML += `<th class="clickable-text add-to-cart">Add to Cart</th>`;
         rowHTML += "</tr>";
 
-        console.log(iToIndexMapping.push(index));
+        // console.log(iToIndexMapping.push(index));
         movieTableBodyElement.append(rowHTML);
 
     }
