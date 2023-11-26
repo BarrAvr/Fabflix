@@ -165,6 +165,7 @@ public class AddMovieServlet extends HttpServlet {
 //            }
 //
             response.setStatus(200);
+            conn.close();
 
         } catch (Exception e) {
 

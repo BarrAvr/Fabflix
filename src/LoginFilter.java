@@ -75,6 +75,10 @@ public class LoginFilter implements Filter {
         allowedURIs.add("/api/metadata");
         allowedURIs.add("/_dashboard/api/add-star");
         allowedURIs.add("/_dashboard/api/add-movie");
+        allowedURIs.add("/autocomplete/index.html");
+        allowedURIs.add("/autocomplete/autocomplete.js");
+        allowedURIs.add("/api/hero-suggestion");
+        allowedURIs.add("autocomplete-styles.css");
 //        allowedURIs.add("/_dashboard/index.html");
     }
 

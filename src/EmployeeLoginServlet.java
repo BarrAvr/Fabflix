@@ -92,6 +92,7 @@ public class EmployeeLoginServlet extends HttpServlet {
             }
 
             response.setStatus(200);
+            conn.close();
 //
 
         } catch (Exception e) {
@@ -106,7 +107,5 @@ public class EmployeeLoginServlet extends HttpServlet {
             // Set response status to 500 (Internal Server Error)
             response.setStatus(200);
         }
-
-
     }
 }

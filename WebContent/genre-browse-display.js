@@ -14,8 +14,8 @@
  * @param resultData jsonObject
  */
 function handleBrowseGenresDisplay(resultData) {
-    console.log("Displaying Browsing Genres");
-    console.log(resultData);
+    // console.log("Displaying Browsing Genres");
+    // console.log(resultData);
 
     let genresBodyElement = jQuery("#genres");
 

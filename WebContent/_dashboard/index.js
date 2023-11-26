@@ -14,7 +14,7 @@ for (let i = 0; i < 10; i++) {
 
 }
 
-// console.log('index.js activated');
+// console.log('autocomplete.js activated');
 // Makes the HTTP GET request and registers on success callback function handleStarResult
 jQuery.ajax({
     dataType: "json", // Setting return data type

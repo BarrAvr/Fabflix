@@ -232,12 +232,22 @@ public class SearchServlet extends HttpServlet {
         return query;
     }
 
+    private static String generateMovieTitleMatchSectionForFullTextSearchQuery(String searchQuery) {
+        String[] terms = searchQuery.split(" ");
+        String result = "match(title) against('";
+        for (int i = 0; i < terms.length; i++) {
+            result += terms[i] + "* ";
+        }
+        result += "' in boolean mode)";
+        return result;
+    }
+
     private static String getGeneralSearchQuery(String star, String year, String title, String director, String sortBy, String titleOrder, String ratingOrder, String page, String count) {
         String query = "with top_movies(id, title, year, director, rating) as " +
                 "(with selected_movies(id, title, year, director) as ";
         if((star == null || star.isEmpty()) && (year == null || year.isEmpty())){
             query += String.format("(select m.id, m.title, m.year, m.director " +
-                    "from movies as m where m.title like \"%%%s%%\" and m.director like \"%%%s%%\") ", title, director);
+                    "from movies as m where %s and m.director like \"%%%s%%\") ", generateMovieTitleMatchSectionForFullTextSearchQuery(title), director);
         }else if(star == null || star.isEmpty()){
             query += String.format("(select m.id, m.title, m.year, m.director from movies as m " +
                     "where m.title like \"%%%s%%\" and m.director like \"%%%s%%\" and m.year = %s) ", title, director, year);

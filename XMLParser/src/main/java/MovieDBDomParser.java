@@ -1621,6 +1621,7 @@ public class MovieDBDomParser {
                         // Handle SQLException, you may want to log or throw an exception
                         System.out.println("SQL Error: " + e.toString());
                     }
+                    connection.close();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -1644,6 +1645,7 @@ public class MovieDBDomParser {
                     } catch (SQLException e) {
                         System.out.println("SQL Error: " + e.toString());
                     }
+                    connection.close();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

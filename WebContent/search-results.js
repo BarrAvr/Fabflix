@@ -20,9 +20,9 @@ function getParameterByName(target) {
 function handleSearchResult(resultData) {
     iToIndexMapping = new Array();
     iToIndexMapping.push(0);
-    console.log("handleResult: populating movie info from resultData");
-    console.log("JSON from api call:");
-    console.log(resultData);
+    // console.log("handleResult: populating movie info from resultData");
+    // console.log("JSON from api call:");
+    // console.log(resultData);
 
     let movieTableBodyElement = jQuery("#movie_table_body");
 
@@ -84,14 +84,14 @@ function handleSearchResult(resultData) {
         rowHTML += `<th class="clickable-text add-to-cart">Add to Cart</th>`;
         rowHTML += "</tr>";
 
-        console.log(iToIndexMapping.push(index));
+        // console.log(iToIndexMapping.push(index));
         movieTableBodyElement.append(rowHTML);
 
     }
     let addToCartButtons = document.getElementsByClassName("add-to-cart");
     for (let i = 0; i < addToCartButtons.length; i++) {
-        console.log("Row Info in addToCartButtons");
-        console.log(addToCartButtons[i]);
+        // console.log("Row Info in addToCartButtons");
+        // console.log(addToCartButtons[i]);
         addToCartButtons[i].onclick = function () {
 
             alert("Added " + resultData[iToIndexMapping[i]]["movie_title"] + " to cart!");
@@ -161,7 +161,7 @@ if (type === "general") {
                 method: "GET",
                 url: "list-state",
                 success: function (listResult) {
-                    console.log(listResult.type)
+                    // console.log(listResult.type)
                     jQuery.ajax({
                         dataType: "json",
                         method: "GET",
