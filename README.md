@@ -4,7 +4,7 @@
 
 [https://drive.google.com/file/d/1VtulH0Kd2tZyOflrhqeHBs_WfzPNTDoj/view?usp=sharing](https://drive.google.com/file/d/1VtulH0Kd2tZyOflrhqeHBs_WfzPNTDoj/view?usp=sharing)
 
-## Team Member Contributions
+### Team Member Contributions
 
 Mingjia:
 - Task 1 - Full Text Search and autocomplete
