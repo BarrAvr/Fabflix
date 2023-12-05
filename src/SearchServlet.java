@@ -9,8 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +38,7 @@ public class SearchServlet extends HttpServlet {
 
     // Use http GET
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        long startTime = System.nanoTime();
 
         String query = "";
         String type = request.getParameter("type");
@@ -74,6 +73,8 @@ public class SearchServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         System.out.println("searching...");
 
+        long jdbcStartTime = System.nanoTime();
+
         try {
             // Create a new connection to database
             Connection conn = dataSource.getConnection();
@@ -98,6 +99,8 @@ public class SearchServlet extends HttpServlet {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
 //            ResultSet rs = statement.executeQuery(query);
+
+            long jdbcEndTime = System.nanoTime();
 
             JsonArray jsonArray = new JsonArray();
 
@@ -135,6 +138,20 @@ public class SearchServlet extends HttpServlet {
             out.write(jsonArray.toString());
             response.setStatus(200);
 
+            long endTime = System.nanoTime();
+
+            try {
+                File file = new File("search-results-log.txt");
+
+                FileWriter fw = new FileWriter(file, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write((endTime - startTime) + " " + (jdbcEndTime - jdbcStartTime) + "\n");
+
+                bw.close();
+            } catch (IOException ioe) {
+                System.err.println("IOException: " + ioe.getMessage());
+                ioe.printStackTrace(); // Print the stack trace for debugging
+            }
 
         } catch (Exception e) {
             /*
