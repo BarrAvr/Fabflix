@@ -141,7 +141,7 @@ public class SearchServlet extends HttpServlet {
             long endTime = System.nanoTime();
 
             try {
-                File file = new File("search-results-log.txt");
+                File file = new File("/home/logs/search-results-log.txt");
 
                 FileWriter fw = new FileWriter(file, true);
                 BufferedWriter bw = new BufferedWriter(fw);
