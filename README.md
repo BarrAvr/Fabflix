@@ -20,7 +20,7 @@
 #### Explain how Connection Pooling is utilized in the Fabflix code, and how Connection Pooling works with two backend SQL:
 Connection pooling is a mechanism that helps manage and reuse database connections to reduce the overhead caused by opening and closing new connections which reduces average run time. Two backend servers can be configured to share a connection pool of database connections that both servers can efficiently reuse. 
 
-In this particular case, one of the servers is the primary/master and the second is the secondary/slave. The primary server returns reads and does insertions into the database while the secondary only does reads. If the primary inserts into the database that change gets replicated over to the secondary. The load balancer that sends reads and inserts over to the primary/secondary.
+In this particular case, one of the servers is the primary/master and the second is the secondary/slave. The primary server returns reads and does insertions into the database while the secondary only does reads. If the primary inserts into the database that change gets replicated over to the secondary. The load balancer sends reads and inserts over to the appropriate primary/secondary instance.
 
 # Master/Slave
 #### Include the filename/path of all code/configuration files in GitHub of routing queries to Master/Slave SQL.
