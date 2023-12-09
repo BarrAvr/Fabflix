@@ -32,13 +32,13 @@
 
 | **Single-instance Version Test Plan**          | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
 |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
-| Case 1: HTTP/1 thread                          | ![/img/case-1.png](/img/case-1.png)   | 274 ms                     | 86.69257212240184                   | 7.879062762124712         | ??           |
-| Case 2: HTTP/10 threads                        | ![](path to image in img/)   | 316 ms                         | 108.26929885287994                                  | 17.72411082165163                        | ??           |
-| Case 3: HTTPS/10 threads                       | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
-| Case 4: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
+| Case 1: HTTP/1 thread                          | ![/img/case-1.png](/img/case-1.png)   | 274                     | 86.69257212240184                   | 7.879062762124712         | ??           |
+| Case 2: HTTP/10 threads                        | ![/img/case-2.png](/img/case-2.png)   | 316                         | 108.26929885287994                                  | 17.72411082165163                        | ??           |
+| Case 3: HTTPS/10 threads                       | ![/img/case-3.png](/img/case-3.png)   | 413                         | 20.754675614134275            |                         | 15.781300658303886           |
+| Case 4: HTTP/10 threads/No connection pooling  | ![/img/case-4.png](/img/case-4.png)   | 336                         | 104.10815614904246                                  | 21.11881252775465                        | ??           |
 
 | **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
 |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
-| Case 1: HTTP/1 thread                          | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
-| Case 2: HTTP/10 threads                        | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
-| Case 3: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
+| Case 1: HTTP/1 thread                          | ![/img/case-5.png](/img/case-5.png)   | 266                         | 11.256315042156862                                  | 9.071428688235294                        | ??           |
+| Case 2: HTTP/10 threads                        | ![/img/case-6.png](/img/case-6.png)   | 266                         | 13.189380360321145                                  | 11.468891909266782                        | ??           |
+| Case 3: HTTP/10 threads/No connection pooling  | ![/img/case-7.png](/img/case-7.png)   | 263                         | 14.122508720702367                                  | 12.242715336340707                        | ??           |
