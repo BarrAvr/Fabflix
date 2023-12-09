@@ -16,7 +16,5 @@ for file in files:
             tj += tj_nano_time
             count += 1
 
-print('total ts:', ts, 'total tj:', tj, 'count:', count)
-
 print('average TS:', get_average(ts, count))
 print('average TJ:', get_average(tj, count))
