@@ -31,7 +31,7 @@ In this particular case, one of the servers is the primary/master and the second
 
 We followed the instructions under Task 3 and modeled our configuration after the session example to set up a Proxy named "Fabflix_balancer" to act as a load balancer and added new rules in the ody of the VirtualHost tag.
 
-This meant that all http requests that arrived at the load balancer instance's public IP on port 80 would be handled by the load balancer and redirected to either the master or slave SQL server, depending on which one was less busy at that moment. Load balancing prevents any one instance from getting overwhelmed by requests and allows for more availability to handle incoming queries. The provided examples and load balancer config files correctly routed the read//write requests to the appropriate Master or Slave SQL server, so we modeled our code off of them and let the Proxy setup in the apache2 config file handle the routing appropriately.
+This meant that all http requests that arrived at the load balancer instance's public IP on port 80 would be handled by the load balancer and redirected to either the master or slave SQL server, depending on which one was less busy at that moment. Load balancing prevents any one instance from getting overwhelmed by requests and allows for more availability to handle incoming queries. The provided examples and load balancer config files correctly routed the read/write requests to the appropriate Master or Slave SQL server, so we modeled our code off of them and let the Proxy setup in the apache2 config file handle the routing appropriately.
     
 # JMeter TS/TJ Time Logs
 #### Instructions of how to use the `log_processing.*` script to process the JMeter logs:
