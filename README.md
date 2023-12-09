@@ -34,7 +34,7 @@
 |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
 | Case 1: HTTP/1 thread                          | ![/img/case-1.png](/img/case-1.png)   | 274                     | 86.69257212240184                   | 7.879062762124712         | ??           |
 | Case 2: HTTP/10 threads                        | ![/img/case-2.png](/img/case-2.png)   | 316                         | 108.26929885287994                                  | 17.72411082165163                        | ??           |
-| Case 3: HTTPS/10 threads                       | ![/img/case-3.png](/img/case-3.png)   | 413                         | 20.754675614134275            |                         | 15.781300658303886           |
+| Case 3: HTTPS/10 threads                       | ![/img/case-3.png](/img/case-3.png)   | 413                         | 20.754675614134275            | 15.781300658303886                         |            |
 | Case 4: HTTP/10 threads/No connection pooling  | ![/img/case-4.png](/img/case-4.png)   | 336                         | 104.10815614904246                                  | 21.11881252775465                        | ??           |
 
 | **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
