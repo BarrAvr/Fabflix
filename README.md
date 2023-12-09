@@ -1,8 +1,8 @@
 # General
 
-#### Team #:
+#### Team #49 (based on Google Sheet):
     
-#### Names:
+#### Names: Mingjia Wang, Barr Avrahamov
     
 #### Project 5 Video Demo Link: [https://drive.google.com/file/d/17iLn5o-xdSNnuAISpivErR0__ebgROlT/view?usp=sharing](https://drive.google.com/file/d/17iLn5o-xdSNnuAISpivErR0__ebgROlT/view?usp=sharing)
 
@@ -25,7 +25,13 @@ In this particular case, one of the servers is the primary/master and the second
 # Master/Slave
 #### Include the filename/path of all code/configuration files in GitHub of routing queries to Master/Slave SQL.
 
+/etc/apache2/sites-enabled/000-default.conf (only available on AWS.)
+
 #### How read/write requests were routed to Master/Slave SQL?
+
+We followed the instructions under Task 3 and modeled our configuration after the session example to set up a Proxy named "Fabflix_balancer" to act as a load balancer and added new rules in the ody of the VirtualHost tag.
+
+This meant that all http requests that arrived at the load balancer instance's public IP on port 80 would be handled by the load balancer and redirected to either the master or slave SQL server, depending on which one was less busy at that moment. Load balancing prevents any one instance from getting overwhelmed by requests and allows for more availability to handle incoming queries. Because the examples under the Task 3 dropdown correctly routed the read//write requests to the appropriate Master or Slave SQL server, we modeled our code off of the examples and let the Proxy setup in the apache2 config file handle the routing appropriately.
     
 # JMeter TS/TJ Time Logs
 #### Instructions of how to use the `log_processing.*` script to process the JMeter logs:
