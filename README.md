@@ -12,7 +12,7 @@
 
 
 # Connection Pooling
-    - #### Include the filename/path of all code/configuration files in GitHub of using JDBC Connection Pooling.
+#### Include the filename/path of all code/configuration files in GitHub of using JDBC Connection Pooling.
     /WebContent/META-INF/context.xml sets up the connection pooling configuration, and the SingleStarServlet, SingleMovieServlet, SearchServlet, PrefixesDisplayServlet, PaymentServlet, LoginServlet, EmployeeLoginServlet, GenreDisplayServlet, idToTitleServlet, SearchCountServlet, and AndroidLoginServlet servlets use PreparedStatements and JDBC connection pooling.
     
     - #### Explain how Connection Pooling is utilized in the Fabflix code, and how Connection Pooling works with two backend SQL:
@@ -32,7 +32,7 @@
 
 | **Single-instance Version Test Plan**          | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
 |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
-| Case 1: HTTP/1 thread                          | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
+| Case 1: HTTP/1 thread                          | ![](path to image in img/)   | 274 ms                     | 86.69257212240184                   | 7.879062762124712         | ??           |
 | Case 2: HTTP/10 threads                        | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
 | Case 3: HTTPS/10 threads                       | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
 | Case 4: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
